@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Main {
     public static void main(String[] args) {
-        String initialString = "var int x=\"ff,fdf\"\n";
+        String initialString = "var int x=[2,2,3]\n";
         JobfileLexer lexer = new JobfileLexer(CharStreams.fromString(initialString));
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         JobfileParser parser = new JobfileParser(tokenStream);
