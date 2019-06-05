@@ -8,6 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <antlr.version>4.7.2</antlr.version>
+        <guava.version>27.0.1-jre</guava.version>
     </properties>
 
     <build>
@@ -51,6 +52,12 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
             <version>4.7.2</version>
+        </dependency>
+        <dependency>
+            <!-- Guava -->
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 </project>
