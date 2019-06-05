@@ -46,8 +46,17 @@ TYPE_STRING
    : 'STRING' | 'string'
    ;
 
-TYPE_LIST
-   : 'LIST' | 'list'
+TYPE_BOOLEAN
+   : TRUE
+   | FALSE
+   ;
+
+TRUE
+   : 'TRUE' | 'true'
+   ;
+
+FALSE
+   : 'FALSE' | 'false'
    ;
 
 COMMENT
@@ -57,12 +66,15 @@ COMMENT
 WORD
    : ('a' .. 'z' | 'A' .. 'Z') +
    ;
-DIGIT
+
+INT
    : ('0' .. '9')+
    ;
+
 FLOAT
-   : ('0' .. '9')* '.' ('0' .. '9') + (('e' | 'E') ('0' .. '9') +)*
+   : ('0' .. '9')* '.' ('0' .. '9')*
    ;
+
 WS
    : [ \r\n\t] + -> skip
    ;

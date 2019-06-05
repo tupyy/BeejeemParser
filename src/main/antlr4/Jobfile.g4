@@ -14,35 +14,44 @@ statement
     ;
 
 varstmt
-   : VAR? variabletype varname EQ exprlist
+   : VAR? variabletype varname EQ varvalue
    ;
 
 variabletype
     : TYPE_INT
     | TYPE_FLOAT
     | TYPE_STRING
-    | TYPE_LIST
+    | TYPE_BOOLEAN
     ;
+
 varname
    : WORD (WORD | number)*
    ;
 
-exprlist
+varvalue
    : number
    | string
    | list
    ;
 
 number
-   :  ('+' | '-')? (DIGIT | FLOAT)
+   :  ('+' | '-')? (INT | FLOAT)
    ;
 
 string
-   : QUOTE (WORD | DIGIT | COMMA)* QUOTE
+   : QUOTE (WORD | INT | COMMA)* QUOTE
    ;
 
 list
-   : LEFTPAREN (number | string) (COMMA (number | string))* RIGHTPAREN
+   : LEFTPAREN elements RIGHTPAREN
+   ;
+
+elements
+   : element (COMMA element)*
+   ;
+
+element
+   : number | string
    ;
 
 
