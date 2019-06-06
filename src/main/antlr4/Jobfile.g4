@@ -14,7 +14,7 @@ statement
     ;
 
 varstmt
-   : VAR? variabletype varname EQ varvalue
+   : VAR? variabletype varassignement
    ;
 
 variabletype
@@ -22,6 +22,10 @@ variabletype
     | TYPE_FLOAT
     | TYPE_STRING
     | TYPE_BOOLEAN
+    ;
+
+varassignement
+    : varname EQ varvalue
     ;
 
 varname
