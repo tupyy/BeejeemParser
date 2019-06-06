@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class LocalCommand extends AbstractCommand {
 
-    public LocalCommand(UUID parentID) {
-        super(parentID);
+    public LocalCommand(UUID parentID, CommandType type) {
+        super(parentID, type);
     }
 
     @Override

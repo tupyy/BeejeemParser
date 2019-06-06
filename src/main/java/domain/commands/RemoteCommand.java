@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class RemoteCommand extends AbstractCommand {
 
-    public RemoteCommand(UUID parentID) {
-        super(parentID);
+    public RemoteCommand(UUID parentID, CommandType type) {
+        super(parentID, type);
     }
 
     @Override
