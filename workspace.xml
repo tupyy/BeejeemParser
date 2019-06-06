@@ -87,7 +87,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/company/parser/TestLexer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.java" />
         <option value="$PROJECT_DIR$/src/main/java/TestParlerListener.java" />
         <option value="$PROJECT_DIR$/src/main/antlr4/test.g4" />
         <option value="$PROJECT_DIR$/src/main/java/antlr4/ExprLexer.java" />
@@ -215,7 +215,7 @@
     <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-listener" value="true" />
     <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-visitor" value="false" />
     <property name="$PROJECT_DIR$/src/main/resources/test.g4::/output-dir" value="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java" />
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/package" value="com.company.parser" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/package" value="com.company.com.beejeem.domain.parser" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Desktop/dice-notation-java-master" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -226,7 +226,7 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java\antlr4" />
       <recent name="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\antlr4" />
-      <recent name="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java\com\company\parser" />
+      <recent name="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java\com\company\com.beejeem.domain.parser" />
       <recent name="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\resources" />
     </key>
   </component>
@@ -332,8 +332,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/parser/TestLexer.tokens" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/parser/TestLexer.interp" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.tokens" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.interp" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4-runtime/4.7.2/antlr4-runtime-4.7.2.jar!/org/antlr/v4/runtime/Lexer.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2592">
@@ -341,7 +341,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/parser/TestLexer.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/TestParlerListener.java" />
     <entry file="file://$PROJECT_DIR$/target/generated-sources/antlr4/TestLexer.java" />
     <entry file="file://$PROJECT_DIR$/target/generated-sources/antlr4/ExprListener.java" />
