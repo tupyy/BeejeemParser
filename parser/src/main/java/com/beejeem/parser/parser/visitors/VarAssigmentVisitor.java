@@ -10,8 +10,4 @@ public class VarAssigmentVisitor extends JobfileBaseVisitor<Variable> {
         String varName = ctx.varname().getText();
         return ctx.varvalue().accept(new VariableVisitor(varName));
     }
-
-
-
-
 }
