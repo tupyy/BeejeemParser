@@ -55,11 +55,7 @@ list
    ;
 
 elements
-   : element (COMMA element)*
-   ;
-
-element
-   : number | string
+   : varvalue (COMMA varvalue)*
    ;
 
 
