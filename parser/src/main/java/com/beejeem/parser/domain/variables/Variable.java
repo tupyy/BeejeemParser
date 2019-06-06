@@ -1,4 +1,4 @@
-package domain.variables;
+package com.beejeem.parser.domain.variables;
 
 public interface Variable<T> {
 

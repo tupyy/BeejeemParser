@@ -1,6 +1,6 @@
-package domain.commands;
+package com.beejeem.parser.domain.commands;
 
-import domain.variables.Variable;
+import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
