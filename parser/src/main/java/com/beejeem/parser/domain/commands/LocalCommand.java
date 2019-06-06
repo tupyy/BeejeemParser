@@ -1,4 +1,4 @@
-package domain.commands;
+package com.beejeem.parser.domain.commands;
 
 import java.util.UUID;
 
