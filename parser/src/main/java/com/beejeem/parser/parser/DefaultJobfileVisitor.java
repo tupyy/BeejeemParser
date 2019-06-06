@@ -19,7 +19,6 @@ public class DefaultJobfileVisitor extends JobfileBaseVisitor<Program> {
 
         VarAssigmentVisitor variableVarAssigmentVisitor = new VarAssigmentVisitor();
         Variable  variable = ctx.varassignment().accept(variableVarAssigmentVisitor);
-        System.out.println(variable.getName());
         return null;
     }
 }
