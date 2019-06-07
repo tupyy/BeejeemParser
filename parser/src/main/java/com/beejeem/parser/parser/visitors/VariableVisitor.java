@@ -39,16 +39,7 @@ public class VariableVisitor extends JobfileBaseVisitor<Variable> {
         return new StringVariable(this.getVariableName(),ctx.getText());
     }
 
-    public Variable visitList(JobfileParser.ListContext ctx) {
-        VariableVisitor variableVisitor = new VariableVisitor(this.varName);
-        List<Variable> variables = ctx.elements().children
-                .stream()
-                .filter(v -> !(v instanceof TerminalNode))
-                .map(v -> v.accept(variableVisitor))
-                .collect(Collectors.toList());
-
-        ListVariable<Variable> variable = new ListVariable<>(this.varName);
-        variable.add(variables);
-        return variable;
+    public Variable visitBool(JobfileParser.BoolContext ctx) {
+        return new BooleanVariable(this.getVariableName(), Boolean.valueOf(ctx.getText()));
     }
 }
