@@ -18,15 +18,8 @@ statement
     ;
 
 varstmt
-   : VAR? variabletype varassignment
+   : VAR? varassignment
    ;
-
-variabletype
-    : TYPE_INT
-    | TYPE_FLOAT
-    | TYPE_STRING
-    | TYPE_BOOLEAN
-    ;
 
 varassignment
     : varname EQ varvalue
@@ -39,7 +32,7 @@ varname
 varvalue
    : number
    | string
-   | list
+   | bool
    ;
 
 number
@@ -50,13 +43,9 @@ string
    : QUOTE (WORD | INT | COMMA)* QUOTE
    ;
 
-list
-   : LEFTPAREN elements RIGHTPAREN
+bool
+   : TRUE
+   | FALSE
    ;
-
-elements
-   : varvalue (COMMA varvalue)*
-   ;
-
 
 

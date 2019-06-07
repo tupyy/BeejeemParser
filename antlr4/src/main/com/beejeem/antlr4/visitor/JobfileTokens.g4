@@ -31,25 +31,6 @@ COMMA
 QUOTE
    : '"'
    ;
-/*
- Types definition
-*/
-TYPE_INT
-   : 'INT' | 'int'
-   ;
-
-TYPE_FLOAT
-   : 'FLOAT' | 'float'
-   ;
-
-TYPE_STRING
-   : 'STRING' | 'string'
-   ;
-
-TYPE_BOOLEAN
-   : TRUE
-   | FALSE
-   ;
 
 TRUE
    : 'TRUE' | 'true'

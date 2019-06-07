@@ -10,7 +10,7 @@
         <artifactId>beejeemParser</artifactId>
     </parent>
 
-    <artifactId>antlrVisitor</artifactId>
+    <artifactId>antlr4</artifactId>
     <packaging>jar</packaging>
 
     <build>
@@ -20,7 +20,7 @@
                 <artifactId>antlr4-maven-plugin</artifactId>
                 <version>${antlr.version}</version>
                 <configuration>
-                    <sourceDirectory>src/main/antlr4/com/beejeem/antlr4/visitor</sourceDirectory>
+                    <sourceDirectory>src/main/com/beejeem/antlr4/visitor</sourceDirectory>
                     <grammars>Jobfile.g4</grammars>
                     <includes>
                         <include>JobfilemTokens.g4</include>
