@@ -14,9 +14,8 @@ public class DefaultJobfileVisitor extends JobfileBaseVisitor<Program> {
         return null;
     }
 
+    @Override
     public Program visitVarstmt(JobfileParser.VarstmtContext ctx) {
-        System.out.println(ctx.getText());
-
         VarAssigmentVisitor variableVarAssigmentVisitor = new VarAssigmentVisitor();
         Variable  variable = ctx.varassignment().accept(variableVarAssigmentVisitor);
         return null;
