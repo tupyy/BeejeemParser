@@ -1,8 +1,8 @@
 package com.beejeem.parser.parser;
 
 import com.beejeem.parser.domain.Program;
-import com.beejeem.antrl4.visitor.JobfileBaseVisitor;
-import com.beejeem.antrl4.visitor.JobfileParser;
+import com.beejeem.antrl4.JobfileBaseVisitor;
+import com.beejeem.antrl4.JobfileParser;
 import com.beejeem.parser.domain.variables.Variable;
 import com.beejeem.parser.parser.visitors.VarAssigmentVisitor;
 

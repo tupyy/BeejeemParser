@@ -20,7 +20,7 @@
                 <artifactId>antlr4-maven-plugin</artifactId>
                 <version>${antlr.version}</version>
                 <configuration>
-                    <sourceDirectory>src/main/com/beejeem/antlr4/visitor</sourceDirectory>
+                    <sourceDirectory>src/main/com/beejeem/antlr4</sourceDirectory>
                     <grammars>Jobfile.g4</grammars>
                     <includes>
                         <include>JobfilemTokens.g4</include>

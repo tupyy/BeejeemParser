@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>com.beejeem</groupId>
-            <artifactId>antlrVisitor</artifactId>
+            <artifactId>antlr4</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

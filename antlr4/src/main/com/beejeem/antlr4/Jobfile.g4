@@ -2,7 +2,7 @@ grammar Jobfile;
 import JobfileTokens;
 
 @header {
-package com.beejeem.antrl4.visitor;
+package com.beejeem.antrl4;
 }
 
 program
