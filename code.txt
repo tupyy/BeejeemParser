@@ -2,3 +2,5 @@ x=true
 y=2
 z=2.2
 
+copy "arg1" "arg2"
+rcopy "arg1" "arg2"
