@@ -1,7 +1,9 @@
 package com.beejeem.parser.parser;
 
-import com.beejeem.parser.domain.DefaultProgram;
+import com.beejeem.parser.domain.Program;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+
 
 public interface Parser {
-    DefaultProgram parse(String code);
+    Program parse(String code) throws ParseCancellationException;
 }
