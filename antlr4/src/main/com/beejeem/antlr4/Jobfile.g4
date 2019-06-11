@@ -14,12 +14,8 @@ line
     ;
 
 statement
-    : varstmt
+    : varassignment
     ;
-
-varstmt
-   : VAR? varassignment
-   ;
 
 varassignment
     : varname EQ varvalue
