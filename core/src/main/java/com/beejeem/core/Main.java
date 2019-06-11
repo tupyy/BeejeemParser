@@ -1,3 +1,5 @@
+package com.beejeem.core;
+
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.parser.DefaultParser;
 
