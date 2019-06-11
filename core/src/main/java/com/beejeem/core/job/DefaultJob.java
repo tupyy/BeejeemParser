@@ -1,6 +1,7 @@
 package com.beejeem.core.job;
 
 import com.beejeem.parser.domain.Program;
+import com.beejeem.parser.domain.commands.Command;
 
 import java.util.UUID;
 
@@ -50,5 +51,10 @@ public final class DefaultJob extends JobStateMachine implements Job {
     @Override
     public JobState getState() {
         return null;
+    }
+
+    @Override
+    public void doCommand(Command command) {
+
     }
 }

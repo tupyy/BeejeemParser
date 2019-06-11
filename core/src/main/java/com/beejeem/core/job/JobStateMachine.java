@@ -9,7 +9,7 @@ import com.github.oxo42.stateless4j.delegates.Action;
 import java.util.List;
 import java.util.UUID;
 
-public class JobStateMachine {
+public abstract class JobStateMachine {
 
     protected enum Trigger {
         doCommand,
@@ -29,16 +29,14 @@ public class JobStateMachine {
 
     private final StateMachine<UUID,Trigger> stateMachine;
 
-    // job program
-    private final Program program;
     private final Action changeStateAction;
 
     public JobStateMachine(Program program, Action changeStateAction) {
-        this.program = program;
+        // job program
         this.changeStateAction = changeStateAction;
 
         // state machine configuration
-        StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(this.program);
+        StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
         this.stateMachine = new StateMachine<UUID, Trigger>(READY_STATE,stateMachineConfig);
     }
 
@@ -49,6 +47,12 @@ public class JobStateMachine {
     protected StateMachine<UUID, Trigger> getStateMachine() {
         return stateMachine;
     }
+
+    /**
+     * Method called when entry into a command state
+     * @param command command to be executed
+     */
+    public abstract void doCommand(Command command);
 
     /**
      * Create the configuration of the state machine based on the job program.
@@ -68,10 +72,11 @@ public class JobStateMachine {
          */
         List<Command> commands = program.getCommands();
         for (int i = 0; i < commands.size(); i++) {
+            Command currentCommand = commands.get(i);
             if (i < commands.size() - 1) {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
-                        .onEntry(new DefaultCommandAction(commands.get(i)))
+                        .onEntry(() -> this.doCommand(currentCommand))
                         .permit(Trigger.doStop, STOP_STATE)
                         .permit(Trigger.doError, ERROR_STATE)
                         .permit(Trigger.doRestart, RESTART_STATE)
@@ -79,7 +84,7 @@ public class JobStateMachine {
             } else {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
-                        .onEntry(new DefaultCommandAction(commands.get(i)))
+                        .onEntry(() -> this.doCommand(currentCommand))
                         .permit(Trigger.doStop, STOP_STATE)
                         .permit(Trigger.doError, ERROR_STATE)
                         .permit(Trigger.doRestart, RESTART_STATE)
