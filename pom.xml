@@ -16,6 +16,7 @@
     <modules>
         <module>antlr4</module>
         <module>parser</module>
+        <module>core</module>
     </modules>
 
     <dependencies>
@@ -64,7 +65,7 @@
                         </descriptorRefs>
                         <archive>
                             <manifest>
-                                <mainClass>com.beejeem.parser.Main</mainClass>
+                                <mainClass>com.beejeem.parser.com.beejeem.core.Main</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
