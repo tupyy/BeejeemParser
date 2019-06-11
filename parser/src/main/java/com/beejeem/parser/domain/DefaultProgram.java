@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DefaultProgram implements Program {
+public final class DefaultProgram implements Program {
 
     private List<Variable> variables = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
