@@ -36,7 +36,7 @@ public class VariableVisitor extends JobfileBaseVisitor<Variable> {
     }
 
     public Variable visitString(JobfileParser.StringContext ctx) {
-        return new StringVariable(this.getVariableName(),ctx.getText());
+        return new StringVariable(this.getVariableName(),ctx.string_content().getText());
     }
 
     public Variable visitBool(JobfileParser.BoolContext ctx) {
