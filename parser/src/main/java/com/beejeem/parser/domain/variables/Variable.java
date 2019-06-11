@@ -1,6 +1,8 @@
 package com.beejeem.parser.domain.variables;
 
-public interface Variable<T> {
+import com.beejeem.parser.domain.Statement;
+
+public interface Variable<T> extends Statement {
 
     /**
      * Get variable name

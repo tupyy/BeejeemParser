@@ -1,11 +1,12 @@
 package com.beejeem.parser.domain.commands;
 
+import com.beejeem.parser.domain.Statement;
 import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface Command {
+public interface Command extends Statement {
 
     public enum CommandType {
         RUN,
