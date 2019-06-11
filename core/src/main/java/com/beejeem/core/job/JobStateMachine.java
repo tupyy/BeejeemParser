@@ -21,7 +21,6 @@ public abstract class JobStateMachine {
     }
 
     public final static UUID STOP_STATE = UUID.randomUUID();
-    public final static UUID START_STATE = UUID.randomUUID();
     public final static UUID RESTART_STATE = UUID.randomUUID();
     public final static UUID ERROR_STATE = UUID.randomUUID();
     public final static UUID FINISH_STATE = UUID.randomUUID();
@@ -95,24 +94,20 @@ public abstract class JobStateMachine {
         //add stop state configuration
         stateMachineConfig.configure(STOP_STATE)
                 .onEntry(changeStateAction)
-                .permit(Trigger.doStart, START_STATE);
+                .permit(Trigger.doStart, READY_STATE);
 
         //add error state configuration
         stateMachineConfig.configure(ERROR_STATE)
                 .onEntry(changeStateAction)
-                .permit(Trigger.doStart, START_STATE);
+                .permit(Trigger.doStart, READY_STATE);
 
         // add start state configuration. Permits trigger for the first command of the program
-        stateMachineConfig.configure(START_STATE)
+        stateMachineConfig.configure(READY_STATE)
                 .onEntry(changeStateAction)
                 .permit(Trigger.doStop, STOP_STATE)
                 .permit(Trigger.doError, ERROR_STATE)
                 .permit(Trigger.doCommand, program.getCommands().get(0).getID());
 
-        //add ready state configuration
-        stateMachineConfig.configure(READY_STATE)
-                .onEntry(changeStateAction)
-                .permit(Trigger.doStart, START_STATE);
 
         return stateMachineConfig;
 
