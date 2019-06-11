@@ -1,7 +1,7 @@
 package com.beejeem.parser.parser;
 
-import com.beejeem.parser.domain.Program;
+import com.beejeem.parser.domain.DefaultProgram;
 
 public interface Parser {
-    Program parse(String code);
+    DefaultProgram parse(String code);
 }
