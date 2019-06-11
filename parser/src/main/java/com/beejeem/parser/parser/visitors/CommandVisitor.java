@@ -36,7 +36,6 @@ public class CommandVisitor extends JobfileBaseVisitor<Command> {
         return generateCommand;
     }
 
-    @Override
     public Command visitCopystm(JobfileParser.CopystmContext ctx) {
         Command copyCommand = new LocalCommand(Command.CommandType.COPY);
         List<Variable> arguments = ctx.children.stream()
