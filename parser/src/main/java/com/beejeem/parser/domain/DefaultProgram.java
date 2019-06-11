@@ -6,19 +6,28 @@ import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DefaultProgram implements Program {
 
     private List<Variable> variables = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
+    private final UUID id = UUID.randomUUID();
 
     public DefaultProgram() {}
+
+    @Override
+    public UUID getID() {
+        return this.id;
+    }
 
     public void add(Statement statement) {
         if (statement instanceof Variable) {
             variables.add((Variable) statement);
         } else if (statement instanceof Command) {
-            commands.add((Command) statement);
+            Command command = (Command) statement;
+            command.setParentID(this.id);
+            commands.add(command);
         }
     }
 
@@ -30,15 +39,5 @@ public class DefaultProgram implements Program {
     @Override
     public List<Command> getCommands() {
         return commands;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return commands.iterator().hasNext();
-    }
-
-    @Override
-    public Command next() {
-        return commands.iterator().next();
     }
 }
