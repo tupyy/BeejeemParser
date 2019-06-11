@@ -15,6 +15,7 @@ line
 
 statement
     : varassignment
+    | commandstatement
     ;
 
 varassignment
@@ -29,6 +30,34 @@ varvalue
    : number
    | string
    | bool
+   ;
+
+commandstatement
+   : generatestm
+   | runstm
+   | copystm
+   | rcopystm
+   | submitstm
+   ;
+
+generatestm
+   : GENERATE string
+   ;
+
+runstm
+   : RUN string
+   ;
+
+copystm
+   : COPY string string
+   ;
+
+rcopystm
+   : RCOPY string string
+   ;
+
+submitstm
+   : SUBMIT string
    ;
 
 number

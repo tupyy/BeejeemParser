@@ -12,6 +12,22 @@ RUN
    : 'RUN' | 'run'
    ;
 
+GENERATE
+   : 'GENERATE' | 'generate'
+   ;
+
+COPY
+   : 'COPY' | 'copy'
+   ;
+
+RCOPY
+   : 'RCOPY' | 'rcopy'
+   ;
+
+SUBMIT
+   : 'SUBMIT' | 'submit'
+   ;
+
 EQ
    : '='
    ;
