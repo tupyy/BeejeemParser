@@ -5,6 +5,7 @@ import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.commands.LocalCommand;
 import com.beejeem.parser.domain.variables.*;
 import com.beejeem.parser.parser.DefaultParser;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -98,5 +99,11 @@ public class TestParser {
         Assert.assertEquals(Command.CommandType.RUN, commands.get(0).getType()  );
         Assert.assertEquals(1, commands.get(0).getVariables().size());
         Assert.assertEquals("arg", commands.get(0).getVariables().get(0).getValue());
+    }
+
+    @Test(expected = ParseCancellationException.class)
+    public void testParseException() {
+        String code = "run \"arg\"\nunknown_command \"ddd\"\n";
+        final Program result = new DefaultParser().parse(code);
     }
 }
