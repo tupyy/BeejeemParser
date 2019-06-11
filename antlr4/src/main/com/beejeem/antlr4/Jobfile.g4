@@ -65,7 +65,11 @@ number
    ;
 
 string
-   : QUOTE (WORD | INT | COMMA)* QUOTE
+   : QUOTE string_content QUOTE
+   ;
+
+string_content
+   : (WORD | INT | COMMA)*
    ;
 
 bool
