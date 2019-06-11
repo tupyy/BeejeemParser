@@ -1,24 +1,30 @@
 package com.beejeem.parser.domain;
 
-
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Program {
+public interface Program extends Iterator<Command> {
 
-    List<Variable> variables = new ArrayList<>();
-    List<Command> commands = new ArrayList<>();
+    /**
+     * Add statement
+     * A statement can be a variable assignment or a command
+     * @param statement statement to be added
+     */
+    public void add(Statement statement);
 
-    public Program() {}
+    /**
+     * get variables
+     * @return list of variables
+     */
+    public List<Variable> getVariables();
 
-    public void add(Statement statement) {
-        if (statement instanceof Variable) {
-            variables.add((Variable) statement);
-        } else if (statement instanceof Command) {
-            commands.add((Command) statement);
-        }
-    }
+    /**
+     * Get commands
+     * @return list of commands
+     */
+    public  List<Command> getCommands();
+
 }
