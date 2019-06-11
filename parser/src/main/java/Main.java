@@ -1,4 +1,4 @@
-import com.beejeem.parser.domain.DefaultProgram;
+import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.parser.DefaultParser;
 
 import java.nio.file.Files;
@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             String data = readFileAsString("/home/cosmin/Projects/BeejeemParser/code.txt");
-            final DefaultProgram result = new DefaultParser().parse(data);
+            final Program result = new DefaultParser().parse(data);
         } catch (Exception e) {
             e.printStackTrace();
         }
