@@ -13,7 +13,6 @@ public class DefaultJobfileVisitor extends JobfileBaseVisitor<Program> {
 
     private Program program = new Program();
 
-    @Override
     public Program visitProgram(JobfileParser.ProgramContext ctx) {
         List<Statement> statements = ctx.children.stream()
                                                  .map(lineCtx -> lineCtx.accept(new LineVisitor()))
