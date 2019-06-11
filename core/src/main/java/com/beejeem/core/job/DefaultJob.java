@@ -7,13 +7,14 @@ import java.util.UUID;
 
 public final class DefaultJob extends JobStateMachine implements Job {
 
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
     private final String name;
     private final Program program;
 
     public DefaultJob(String name, Program program) {
         super(program, new JobStateChangeAction());
         this.name = name;
+        this.id = program.getID();
         this.program = program;
     }
 
