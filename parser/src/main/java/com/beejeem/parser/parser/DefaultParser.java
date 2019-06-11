@@ -1,7 +1,7 @@
 package com.beejeem.parser.parser;
 
-import com.beejeem.antrl4.visitor.JobfileLexer;
-import com.beejeem.antrl4.visitor.JobfileParser;
+import com.beejeem.antrl4.JobfileLexer;
+import com.beejeem.antrl4.JobfileParser;
 import com.beejeem.parser.domain.Program;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;

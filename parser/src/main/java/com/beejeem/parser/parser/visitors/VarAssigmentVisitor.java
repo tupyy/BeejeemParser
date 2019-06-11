@@ -1,7 +1,7 @@
 package com.beejeem.parser.parser.visitors;
 
-import com.beejeem.antrl4.visitor.JobfileBaseVisitor;
-import com.beejeem.antrl4.visitor.JobfileParser;
+import com.beejeem.antrl4.JobfileBaseVisitor;
+import com.beejeem.antrl4.JobfileParser;
 import com.beejeem.parser.domain.variables.Variable;
 
 public class VarAssigmentVisitor extends JobfileBaseVisitor<Variable> {
