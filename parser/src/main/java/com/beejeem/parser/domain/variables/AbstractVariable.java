@@ -21,7 +21,7 @@ public abstract class AbstractVariable<T> implements Variable<T> {
 
     @Override
     public T getValue() {
-        return null;
+        return this.value;
     }
 
     @Override
