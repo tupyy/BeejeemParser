@@ -8,6 +8,10 @@ public class RemoteCommand extends AbstractCommand {
         super(parentID, type);
     }
 
+    public RemoteCommand(CommandType type) {
+        super(type);
+    }
+
     @Override
     public Boolean isRemote() {
         return true;

@@ -29,6 +29,12 @@ public interface Command extends Statement {
     public UUID getParentID();
 
     /**
+     * Set parent id
+     * @param parentID job id
+     */
+    public void setParentID(UUID parentID);
+
+    /**
      * Return the type of the command
      * @return type of command
      */

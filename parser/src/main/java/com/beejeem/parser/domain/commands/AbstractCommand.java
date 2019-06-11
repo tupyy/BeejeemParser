@@ -8,15 +8,19 @@ import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AbstractCommand implements Command {
+public abstract class AbstractCommand implements Command {
 
     private final UUID id = java.util.UUID.randomUUID();
-    private final UUID parentID;
+    private UUID parentID;
     private final CommandType type;
     private List<Variable> variables = new ArrayList<>();
 
     public AbstractCommand(UUID parentID, CommandType type) {
         this.parentID = parentID;
+        this.type = type;
+    }
+
+    public AbstractCommand(CommandType type) {
         this.type = type;
     }
 
@@ -28,6 +32,11 @@ public class AbstractCommand implements Command {
     @Override
     public UUID getParentID() {
         return this.parentID;
+    }
+
+    @Override
+    public void setParentID(UUID parentID) {
+        this.parentID = parentID;
     }
 
     @Override
@@ -73,9 +82,7 @@ public class AbstractCommand implements Command {
     }
 
     @Override
-    public Boolean isRemote() {
-        return null;
-    }
+    public abstract Boolean isRemote();
 
     private Variable getVariable(String variableName) {
         return (Variable) this.variables.stream().filter(variable -> variable.getName().equals(variableName));
