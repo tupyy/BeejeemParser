@@ -20,7 +20,7 @@ public class CopyInterpreter extends AbstractInterpreter {
                 .withArg(String.valueOf(command.getVariables().get(0).getValue()))
                 .withArg(String.valueOf(command.getVariables().get(1).getValue()));
 
-        return new LocalCommandExecutable(procBuilder);
+        return new LocalCommandExecutable(command.getParentID(), command.getID(), procBuilder);
     }
 
     private String getCommand(OS_TYPE os_type) {

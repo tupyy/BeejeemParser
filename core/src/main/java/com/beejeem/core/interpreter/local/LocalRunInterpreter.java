@@ -34,7 +34,7 @@ public class LocalRunInterpreter extends AbstractInterpreter {
             procBuilder.withVar(var.getKey(),var.getValue());
         }
 
-        return new LocalCommandExecutable(procBuilder);
+        return new LocalCommandExecutable(command.getParentID(), command.getID(), procBuilder);
     }
 
     private Map<String, String> getEnvVariables(List<Variable> variables) {
