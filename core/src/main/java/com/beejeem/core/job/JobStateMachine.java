@@ -20,7 +20,6 @@ public abstract class JobStateMachine {
         doError,
         doFinish,
         doRestart,
-        doStart,
         doStop
     }
 
