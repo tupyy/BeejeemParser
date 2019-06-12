@@ -72,7 +72,7 @@ public final class DefaultJob extends JobStateMachine implements Job {
     public void processCommandResult(CommandResult result) {
 
         // result command id must match the current state = command id
-        if (result.getCommandID() != this.getStateMachine().getState()) return;
+        assert (result.getCommandID() == this.getStateMachine().getState());
 
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
             if (program.getIterator().hasNext()) {
