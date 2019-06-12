@@ -5,6 +5,8 @@ import com.beejeem.parser.domain.commands.Command;
 import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
 import com.github.oxo42.stateless4j.delegates.Action;
+import com.github.oxo42.stateless4j.delegates.Action2;
+import com.github.oxo42.stateless4j.triggers.TriggerWithParameters2;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,15 +31,22 @@ public abstract class JobStateMachine {
     public final static UUID READY_STATE = UUID.randomUUID();
 
     private final StateMachine<UUID,Trigger> stateMachine;
+    private TriggerWithParameters2<Command,List, UUID, Trigger> commandTrigger
+            = new TriggerWithParameters2<>(Trigger.doCommand, Command.class, List.class);
 
+    private final Action2 commandAction;
     private final Action changeStateAction;
 
-    public JobStateMachine(Program program, Action changeStateAction) {
+    @SuppressWarnings("unchecked")
+    public JobStateMachine(Program program, Action changeStateAction, Action2 commandAction) {
 
         checkNotNull(program);
         checkNotNull(changeStateAction);
+        checkNotNull(commandAction);
 
+        this.commandAction = commandAction;
         this.changeStateAction = changeStateAction;
+
         StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
         this.stateMachine = new StateMachine<UUID, Trigger>(READY_STATE,stateMachineConfig);
     }
@@ -51,11 +60,11 @@ public abstract class JobStateMachine {
     }
 
     /**
-     * Method called when entry into a command state
-     * @param command command to be executed
+     * Return the command trigger
      */
-    public abstract void doCommand(Command command);
-
+    protected TriggerWithParameters2 getCommandTrigger() {
+        return this.commandTrigger;
+    }
     /**
      * Create the configuration of the state machine based on the job program.
      * For each command, a state is created. Each state will permit the transition to next command except for the last
@@ -64,23 +73,27 @@ public abstract class JobStateMachine {
      * @param program job program
      * @return state machine configuration
      */
+    @SuppressWarnings("unchecked")
     private StateMachineConfig createStateMachineConfiguration(Program program) {
         StateMachineConfig<UUID, Trigger> stateMachineConfig = new StateMachineConfig<>();
+
+        // define trigger for commands. It a trigger taking 2 arguments: command object and the list of variables
+
+
         List<Command> commands = program.getCommands();
         for (int i = 0; i < commands.size(); i++) {
-            Command currentCommand = commands.get(i);
             if (i < commands.size() - 1) {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
-                        .onEntry(() -> this.doCommand(currentCommand))
+                        .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
                         .permit(Trigger.doStop, STOP_STATE)
                         .permit(Trigger.doError, ERROR_STATE)
                         .permit(Trigger.doRestart, RESTART_STATE)
-                        .permit(Trigger.doCommand, commands.get(i + 1).getID());
+                        .permit(commandTrigger, commands.get(i + 1).getID());
             } else {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
-                        .onEntry(() -> this.doCommand(currentCommand))
+                        .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
                         .permit(Trigger.doStop, STOP_STATE)
                         .permit(Trigger.doError, ERROR_STATE)
                         .permit(Trigger.doRestart, RESTART_STATE)
