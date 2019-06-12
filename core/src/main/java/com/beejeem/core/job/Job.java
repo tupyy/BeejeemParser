@@ -59,4 +59,10 @@ public interface Job {
      */
     public JobState getState();
 
+    /**
+     * Process the result of a command
+     * @param result command result
+     */
+    public void processCommandResult(CommandResult result);
+
 }
