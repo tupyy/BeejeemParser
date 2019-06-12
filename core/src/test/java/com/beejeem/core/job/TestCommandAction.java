@@ -5,7 +5,7 @@ import com.github.oxo42.stateless4j.delegates.Action2;
 
 import java.util.List;
 
-public class CommandAction implements Action2<Command, List> {
+public class TestCommandAction implements Action2<Command, List> {
 
     @Override
     public void doIt(Command command, List list) {
