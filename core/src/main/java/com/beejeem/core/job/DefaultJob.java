@@ -41,17 +41,25 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     @Override
     public void start() {
-        this.getStateMachine().fire(this.getCommandTrigger(),program.getIterator().next(),program.getVariables());
+        if (this.getState() == JobDefaultStates.READY_STATE ||
+                this.getState() == JobDefaultStates.STOP_STATE) {
+            this.getStateMachine().fire(this.getCommandTrigger(), program.getIterator().next(), program.getVariables());
+        }
     }
 
     @Override
     public void stop() {
-        this.getStateMachine().fire(Trigger.doStop);
+        if (this.getState() != JobDefaultStates.STOP_STATE ||
+                this.getState() != JobDefaultStates.READY_STATE) {
+            this.getStateMachine().fire(Trigger.doStop);
+        }
     }
 
     @Override
     public void restart() {
-        this.getStateMachine().fire(Trigger.doRestart);
+        if (this.getState() != JobDefaultStates.READY_STATE) {
+            this.getStateMachine().fire(Trigger.doRestart);
+        }
     }
 
     @Override
@@ -64,9 +72,8 @@ public final class DefaultJob extends JobStateMachine implements Job {
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
             if (program.getIterator().hasNext()) {
                 Command nextCommand = program.getIterator().next();
-                this.getStateMachine().fire(this.getCommandTrigger(),nextCommand,program.getVariables());
-            }
-            else {
+                this.getStateMachine().fire(this.getCommandTrigger(), nextCommand, program.getVariables());
+            } else {
                 this.getStateMachine().fire(Trigger.doFinish);
             }
         } else {
