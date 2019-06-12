@@ -84,6 +84,6 @@ public class TestJob {
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.restart();
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
     }
 }
