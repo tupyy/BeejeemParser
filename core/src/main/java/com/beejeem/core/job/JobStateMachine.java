@@ -9,6 +9,8 @@ import com.github.oxo42.stateless4j.delegates.Action;
 import java.util.List;
 import java.util.UUID;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public abstract class JobStateMachine {
 
     protected enum Trigger {
@@ -31,10 +33,11 @@ public abstract class JobStateMachine {
     private final Action changeStateAction;
 
     public JobStateMachine(Program program, Action changeStateAction) {
-        // job program
-        this.changeStateAction = changeStateAction;
 
-        // state machine configuration
+        checkNotNull(program);
+        checkNotNull(changeStateAction);
+
+        this.changeStateAction = changeStateAction;
         StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
         this.stateMachine = new StateMachine<UUID, Trigger>(READY_STATE,stateMachineConfig);
     }
@@ -63,12 +66,6 @@ public abstract class JobStateMachine {
      */
     private StateMachineConfig createStateMachineConfiguration(Program program) {
         StateMachineConfig<UUID, Trigger> stateMachineConfig = new StateMachineConfig<>();
-
-        /*
-         * Configure a state for each command found in the program. Each state permits the triggers for
-         * stop, restart and error states.
-         * For each command state, we permit the trigger to the next command in program
-         */
         List<Command> commands = program.getCommands();
         for (int i = 0; i < commands.size(); i++) {
             Command currentCommand = commands.get(i);

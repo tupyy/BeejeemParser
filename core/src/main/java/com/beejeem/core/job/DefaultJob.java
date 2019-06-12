@@ -5,6 +5,8 @@ import com.beejeem.parser.domain.commands.Command;
 
 import java.util.UUID;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class DefaultJob extends JobStateMachine implements Job {
 
     private final UUID id;
@@ -13,6 +15,9 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     public DefaultJob(String name, Program program) {
         super(program, new JobStateChangeAction());
+
+        checkNotNull(name);
+
         this.name = name;
         this.id = program.getID();
         this.program = program;
