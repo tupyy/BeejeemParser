@@ -40,4 +40,14 @@ public final class DefaultProgram implements Program {
     public List<Command> getCommands() {
         return commands;
     }
+
+    @Override
+    public boolean hasNext() {
+        return commands.iterator().hasNext();
+    }
+
+    @Override
+    public Command next() {
+        return commands.iterator().next();
+    }
 }

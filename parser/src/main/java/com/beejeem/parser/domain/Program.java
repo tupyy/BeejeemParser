@@ -3,10 +3,11 @@ package com.beejeem.parser.domain;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public interface Program {
+public interface Program extends Iterator<Command> {
 
     /**
      * Get program ID
