@@ -5,6 +5,7 @@ import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,9 +13,12 @@ public final class DefaultProgram implements Program {
 
     private List<Variable> variables = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
+    private Iterator<Command> commandIterator = null;
     private final UUID id = UUID.randomUUID();
 
-    public DefaultProgram() {}
+    public DefaultProgram() {
+
+    }
 
     @Override
     public UUID getID() {
@@ -42,12 +46,11 @@ public final class DefaultProgram implements Program {
     }
 
     @Override
-    public boolean hasNext() {
-        return commands.iterator().hasNext();
+    public Iterator<Command> getIterator() {
+        if (this.commandIterator == null) {
+            this.commandIterator = this.commands.iterator();
+        }
+        return this.commandIterator;
     }
 
-    @Override
-    public Command next() {
-        return commands.iterator().next();
-    }
 }

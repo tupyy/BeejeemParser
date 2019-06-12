@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public interface Program extends Iterator<Command> {
+public interface Program {
 
     /**
      * Get program ID
@@ -33,5 +33,7 @@ public interface Program extends Iterator<Command> {
      * @return list of commands
      */
     public  List<Command> getCommands();
+
+    public Iterator<Command> getIterator();
 
 }
