@@ -6,7 +6,7 @@ import org.buildobjects.process.ProcResult;
 
 import java.util.UUID;
 
-public class LocalCommandExecutable implements CommandExecutable {
+public final class LocalCommandExecutable implements CommandExecutable {
 
     private final ProcBuilder procBuilder;
     private final UUID jobID;
