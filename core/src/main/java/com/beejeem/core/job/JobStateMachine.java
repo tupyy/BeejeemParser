@@ -37,7 +37,7 @@ public abstract class JobStateMachine {
         checkNotNull(program);
 
         // Allow at least one command
-        checkElementIndex(1, program.getCommands().size());
+        checkElementIndex(0, program.getCommands().size());
         checkNotNull(changeStateAction);
         checkNotNull(commandAction);
 
@@ -82,37 +82,52 @@ public abstract class JobStateMachine {
         List<Command> commands = program.getCommands();
         UUID firstStageID = commands.get(0).getID();
 
-        for (int i = 0; i < commands.size(); i++) {
-            if (i == 0) {
-                /*
-                 * Configure the first stage. Permit the reentry in the case of restart trigger
-                 */
-                stateMachineConfig.configure(commands.get(i).getID())
-                        .onEntry(changeStateAction)
-                        .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                        .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
-                        .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
-                        .permitReentry(Trigger.doRestart)
-                        .permit(Trigger.doCommand, commands.get(i + 1).getID());
-            } else if (i < commands.size() - 1) {
-                stateMachineConfig.configure(commands.get(i).getID())
-                        .onEntry(changeStateAction)
-                        .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                        .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
-                        .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
-                        .permit(Trigger.doRestart, firstStageID)
-                        .permit(Trigger.doCommand, commands.get(i + 1).getID());
-            } else {
-                /*
-                 * Last stage. The trigger doCommand will transit to finish state
-                 */
-                stateMachineConfig.configure(commands.get(i).getID())
-                        .onEntry(changeStateAction)
-                        .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                        .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
-                        .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
-                        .permit(Trigger.doRestart, firstStageID)
-                        .permit(Trigger.doCommand, JobDefaultStates.FINISH_STATE);
+        if (commands.size() == 1) {
+            /*
+             * Only one command in program hence the first state will be the last
+             */
+            stateMachineConfig.configure(commands.get(0).getID())
+                    .onEntry(changeStateAction)
+                    .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
+                    .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                    .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                    .permitReentry(Trigger.doRestart)
+                    .permit(Trigger.doCommand, JobDefaultStates.FINISH_STATE)
+                    .permit(Trigger.doFinish, JobDefaultStates.FINISH_STATE);
+        } else {
+            for (int i = 0; i < commands.size(); i++) {
+                if (i == 0) {
+                    /*
+                     * Configure the first state. Permit the reentry in the case of restart trigger
+                     */
+                    stateMachineConfig.configure(commands.get(i).getID())
+                            .onEntry(changeStateAction)
+                            .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
+                            .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                            .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                            .permitReentry(Trigger.doRestart)
+                            .permit(Trigger.doCommand, commands.get(i + 1).getID());
+                } else if (i < commands.size() - 1) {
+                    stateMachineConfig.configure(commands.get(i).getID())
+                            .onEntry(changeStateAction)
+                            .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
+                            .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                            .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                            .permit(Trigger.doRestart, firstStageID)
+                            .permit(Trigger.doCommand, commands.get(i + 1).getID());
+                } else {
+                    /*
+                     * Last state. The trigger doCommand will transit to finish state
+                     */
+                    stateMachineConfig.configure(commands.get(i).getID())
+                            .onEntry(changeStateAction)
+                            .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
+                            .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                            .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                            .permit(Trigger.doRestart, firstStageID)
+                            .permit(Trigger.doCommand, JobDefaultStates.FINISH_STATE)
+                            .permit(Trigger.doFinish, JobDefaultStates.FINISH_STATE);
+                }
             }
         }
 

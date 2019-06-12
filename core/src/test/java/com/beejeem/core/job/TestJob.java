@@ -31,6 +31,8 @@ public class TestJob {
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.processCommandResult(okResult);
         Assert.assertEquals(job.getState(), program.getCommands().get(1).getID());
+        job.processCommandResult(okResult);
+        Assert.assertEquals(job.getState(), JobDefaultStates.FINISH_STATE);
     }
 
     /**
@@ -85,5 +87,22 @@ public class TestJob {
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.restart();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
+    }
+
+    /**
+     * Test a simple job with 1 command job
+     */
+    @Test
+    public void testOneCommand() {
+        Program program = new DefaultProgram();
+        program.add(new LocalCommand(Command.CommandType.COPY));
+        program.add(new StringVariable("arg1","value"));
+
+        job = new DefaultJob("test", program, testCommandAction);
+        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        job.start();
+        Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
+        job.processCommandResult(okResult);
+        Assert.assertEquals(job.getState(), JobDefaultStates.FINISH_STATE);
     }
 }
