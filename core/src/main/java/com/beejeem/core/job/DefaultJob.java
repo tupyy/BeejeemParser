@@ -71,7 +71,9 @@ public final class DefaultJob extends JobStateMachine implements Job {
     @Override
     public void processCommandResult(CommandResult result) {
 
-        // TODO check if the result corresponds to the current running state
+        // result command id must match the current state = command id
+        if (result.getCommandID() != this.getStateMachine().getState()) return;
+
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
             if (program.getIterator().hasNext()) {
                 Command nextCommand = program.getIterator().next();
