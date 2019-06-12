@@ -2,6 +2,7 @@ package com.beejeem.core.interpreter;
 
 import com.beejeem.core.executable.CommandExecutable;
 import com.beejeem.core.interpreter.local.CopyInterpreter;
+import com.beejeem.core.interpreter.local.GenerateInterpreter;
 import com.beejeem.core.interpreter.local.LocalRunInterpreter;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.commands.LocalCommand;
@@ -21,6 +22,8 @@ public class DefaultCommandInterpreter implements CommandInterpreter<CommandExec
                     return new CopyInterpreter().interpret(command, variables);
                 case RUN:
                     return new LocalRunInterpreter().interpret(command, variables);
+                case GENERATE:
+                    return new GenerateInterpreter().interpret(command,variables);
             }
         }
         return null;
