@@ -11,6 +11,7 @@ import com.github.oxo42.stateless4j.triggers.TriggerWithParameters2;
 import java.util.List;
 import java.util.UUID;
 
+import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class JobStateMachine {
@@ -34,6 +35,9 @@ public abstract class JobStateMachine {
     public JobStateMachine(Program program, Action changeStateAction, Action2 commandAction) {
 
         checkNotNull(program);
+
+        // Allow at least one command
+        checkElementIndex(1, program.getCommands().size());
         checkNotNull(changeStateAction);
         checkNotNull(commandAction);
 
