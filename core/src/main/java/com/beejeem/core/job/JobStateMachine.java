@@ -24,12 +24,6 @@ public abstract class JobStateMachine {
         doStop
     }
 
-    public final static UUID STOP_STATE = UUID.randomUUID();
-    public final static UUID RESTART_STATE = UUID.randomUUID();
-    public final static UUID ERROR_STATE = UUID.randomUUID();
-    public final static UUID FINISH_STATE = UUID.randomUUID();
-    public final static UUID READY_STATE = UUID.randomUUID();
-
     private final StateMachine<UUID,Trigger> stateMachine;
     private TriggerWithParameters2<Command,List, UUID, Trigger> commandTrigger
             = new TriggerWithParameters2<>(Trigger.doCommand, Command.class, List.class);
@@ -48,7 +42,7 @@ public abstract class JobStateMachine {
         this.changeStateAction = changeStateAction;
 
         StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
-        this.stateMachine = new StateMachine<UUID, Trigger>(READY_STATE,stateMachineConfig);
+        this.stateMachine = new StateMachine<UUID, Trigger>(JobDefaultStates.READY_STATE,stateMachineConfig);
     }
 
     /**
@@ -86,38 +80,37 @@ public abstract class JobStateMachine {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
                         .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                        .permit(Trigger.doStop, STOP_STATE)
-                        .permit(Trigger.doError, ERROR_STATE)
-                        .permit(Trigger.doRestart, RESTART_STATE)
-                        .permit(commandTrigger, commands.get(i + 1).getID());
+                        .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                        .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                        .permit(Trigger.doRestart, JobDefaultStates.READY_STATE)
+                        .permit(Trigger.doCommand, commands.get(i + 1).getID());
             } else {
                 stateMachineConfig.configure(commands.get(i).getID())
                         .onEntry(changeStateAction)
                         .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                        .permit(Trigger.doStop, STOP_STATE)
-                        .permit(Trigger.doError, ERROR_STATE)
-                        .permit(Trigger.doRestart, RESTART_STATE)
-                        .permit(Trigger.doFinish, FINISH_STATE);
+                        .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                        .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
+                        .permit(Trigger.doRestart, JobDefaultStates.READY_STATE)
+                        .permit(Trigger.doCommand, JobDefaultStates.FINISH_STATE);
             }
         }
 
         //add stop state configuration
-        stateMachineConfig.configure(STOP_STATE)
+        stateMachineConfig.configure(JobDefaultStates.STOP_STATE)
                 .onEntry(changeStateAction)
-                .permit(Trigger.doStart, READY_STATE);
+                .permit(Trigger.doStart, JobDefaultStates.READY_STATE);
 
         //add error state configuration
-        stateMachineConfig.configure(ERROR_STATE)
+        stateMachineConfig.configure(JobDefaultStates.ERROR_STATE)
                 .onEntry(changeStateAction)
-                .permit(Trigger.doStart, READY_STATE);
+                .permit(Trigger.doStart, JobDefaultStates.READY_STATE);
 
         // add start state configuration. Permits trigger for the first command of the program
-        stateMachineConfig.configure(READY_STATE)
+        stateMachineConfig.configure(JobDefaultStates.READY_STATE)
                 .onEntry(changeStateAction)
-                .permit(Trigger.doStop, STOP_STATE)
-                .permit(Trigger.doError, ERROR_STATE)
+                .permit(Trigger.doStop, JobDefaultStates.STOP_STATE)
+                .permit(Trigger.doError, JobDefaultStates.ERROR_STATE)
                 .permit(Trigger.doCommand, program.getCommands().get(0).getID());
-
 
         return stateMachineConfig;
 

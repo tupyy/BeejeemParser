@@ -41,7 +41,7 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     @Override
     public void start() {
-        this.getStateMachine().fire(Trigger.doCommand);
+        this.getStateMachine().fire(this.getCommandTrigger(),program.getIterator().next(),program.getVariables());
     }
 
     @Override
@@ -51,20 +51,19 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     @Override
     public void restart() {
-        this.getStateMachine().fire(Trigger.doStop);
-        this.start();
+        this.getStateMachine().fire(Trigger.doRestart);
     }
 
     @Override
-    public JobState getState() {
-        return null;
+    public UUID getState() {
+        return this.getStateMachine().getState();
     }
 
     @Override
     public void processCommandResult(CommandResult result) {
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
-            if (program.hasNext()) {
-                Command nextCommand = program.next();
+            if (program.getIterator().hasNext()) {
+                Command nextCommand = program.getIterator().next();
                 this.getStateMachine().fire(this.getCommandTrigger(),nextCommand,program.getVariables());
             }
             else {

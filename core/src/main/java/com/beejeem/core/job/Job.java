@@ -14,9 +14,9 @@ public interface Job {
      */
     public enum JobState {
         READY,
+        RUN,
         STOP,
         ERROR,
-        RUN,
         FINISH
     }
 
@@ -57,7 +57,7 @@ public interface Job {
      * Get the current status of the job
      * @return current status of the job
      */
-    public JobState getState();
+    public UUID getState();
 
     /**
      * Process the result of a command
