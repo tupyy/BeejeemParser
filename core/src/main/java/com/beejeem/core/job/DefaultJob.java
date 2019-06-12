@@ -1,5 +1,6 @@
 package com.beejeem.core.job;
 
+import com.beejeem.core.job.actions.JobStateChangeAction;
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.domain.commands.Command;
 import com.github.oxo42.stateless4j.delegates.Action2;

@@ -1,4 +1,4 @@
-package com.beejeem.core.job;
+package com.beejeem.core.job.actions;
 
 import com.github.oxo42.stateless4j.delegates.Action;
 
