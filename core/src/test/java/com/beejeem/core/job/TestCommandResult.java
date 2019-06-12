@@ -1,5 +1,7 @@
 package com.beejeem.core.job;
 
+import com.beejeem.core.result.CommandResult;
+
 import java.util.UUID;
 
 public class TestCommandResult implements CommandResult {
@@ -9,6 +11,7 @@ public class TestCommandResult implements CommandResult {
     public TestCommandResult(CommandResultStatus status) {
         this.status = status;
     }
+
     @Override
     public CommandResultStatus getResultStatus() {
         return status;
@@ -16,6 +19,11 @@ public class TestCommandResult implements CommandResult {
 
     @Override
     public UUID getCommandID() {
+        return null;
+    }
+
+    @Override
+    public UUID getJobID() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.beejeem.core.job;
 
+import com.beejeem.core.result.CommandResult;
 import com.beejeem.parser.domain.Program;
 
 import java.util.UUID;

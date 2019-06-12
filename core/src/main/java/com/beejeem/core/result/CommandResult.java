@@ -1,4 +1,4 @@
-package com.beejeem.core.job;
+package com.beejeem.core.result;
 
 import java.util.UUID;
 
@@ -20,6 +20,12 @@ public interface CommandResult {
      * @return id of the command
      */
     public UUID getCommandID();
+
+    /**
+     * Get id of the job
+     * @return id the job
+     */
+    public UUID getJobID();
 
 
 }
