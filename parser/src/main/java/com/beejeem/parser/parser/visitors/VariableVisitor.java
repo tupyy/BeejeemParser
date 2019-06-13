@@ -1,12 +1,8 @@
 package com.beejeem.parser.parser.visitors;
 
 import com.beejeem.antrl4.JobfileBaseVisitor;
-import com.beejeem.parser.domain.variables.*;
 import com.beejeem.antrl4.JobfileParser;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.beejeem.parser.domain.variables.*;
 
 public class VariableVisitor extends JobfileBaseVisitor<Variable> {
 

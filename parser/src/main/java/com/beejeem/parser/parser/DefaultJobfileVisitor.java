@@ -15,6 +15,7 @@ public class DefaultJobfileVisitor extends JobfileBaseVisitor<Program> {
     private Program program = new DefaultProgram();
 
     public Program visitProgram(JobfileParser.ProgramContext ctx) {
+
         List<Statement> statements = ctx.children.stream()
                                                  .map(lineCtx -> lineCtx.accept(new LineVisitor()))
                                                  .collect(Collectors.toList());
