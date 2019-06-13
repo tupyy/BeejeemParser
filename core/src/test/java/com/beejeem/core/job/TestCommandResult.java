@@ -7,8 +7,10 @@ import java.util.UUID;
 public class TestCommandResult implements CommandResult {
 
     private final CommandResultStatus status;
+    private final UUID commandID;
 
-    public TestCommandResult(CommandResultStatus status) {
+    public TestCommandResult(UUID commandID, CommandResultStatus status) {
+        this.commandID = commandID;
         this.status = status;
     }
 
@@ -19,7 +21,7 @@ public class TestCommandResult implements CommandResult {
 
     @Override
     public UUID getCommandID() {
-        return null;
+        return this.commandID;
     }
 
     @Override
