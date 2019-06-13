@@ -7,13 +7,18 @@ import com.beejeem.parser.domain.commands.LocalCommand;
 import com.beejeem.parser.domain.commands.RemoteCommand;
 import com.beejeem.parser.domain.variables.Variable;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CommandVisitor extends JobfileBaseVisitor<Command> {
 
+    private static Logger logger = LogManager.getLogger(CommandVisitor.class);
+
     public Command visitCommandstatement(JobfileParser.CommandstatementContext ctx) {
+        logger.debug("Parsing command: " + ctx.getText());
         Command command = visitChildren(ctx);
         return command;
     }
