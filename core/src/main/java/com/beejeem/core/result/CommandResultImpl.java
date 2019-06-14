@@ -6,15 +6,19 @@ import java.util.*;
 
 public class CommandResultImpl implements CommandResult {
 
-    private final CommandResultStatus status;
+    private CommandResultStatus status = CommandResultStatus.OK; // default value
     private final UUID commandID;
     private final UUID jobID;
     private  List<Variable> outputVariables;
 
-    public CommandResultImpl(UUID jobID, UUID commandID, CommandResultStatus status) {
-        this.status = status;
-        this.commandID = commandID;
+    public CommandResultImpl(UUID jobID, UUID commandID) {
         this.jobID = jobID;
+        this.commandID = commandID;
+    }
+
+    public CommandResultImpl(UUID jobID, UUID commandID, CommandResultStatus status) {
+        this(jobID,commandID);
+        this.status = status;
     }
 
     public CommandResultImpl(UUID jobID, UUID commandID, CommandResultStatus status, List<Variable> outputVariables) {
@@ -23,8 +27,13 @@ public class CommandResultImpl implements CommandResult {
     }
 
     @Override
+    public void setCommandResultStatus(CommandResultStatus status) {
+        this.status = status;
+    }
+
+    @Override
     public CommandResultStatus getResultStatus() {
-        return null;
+        return this.status;
     }
 
     @Override
