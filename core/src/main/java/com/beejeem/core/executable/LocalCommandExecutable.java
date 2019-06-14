@@ -35,7 +35,7 @@ public final class LocalCommandExecutable implements CommandExecutable {
             logger.debug("Command " + this.commandID.toString() + " output :" + out.toString());
         }
         catch (ExternalProcessFailureException ex) {
-            logger.error("Command " + this.commandID.toString() + " failed: " + out.toString());
+            logger.error("Command " + this.commandID.toString() + " failed: " + ex.getMessage());
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
         }
         return commandResult;
