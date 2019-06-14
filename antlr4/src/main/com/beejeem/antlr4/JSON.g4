@@ -8,32 +8,40 @@ package com.beejeem.antrl4;
 }
 
 json
-   : value
+   : varvalue
    ;
 
 obj
-   : '{' pair (',' pair)* '}'
+   : '{' varassignment (',' varassignment)* '}'
    | '{' '}'
    ;
 
-pair
-   : STRING ':' value
+varassignment
+   : string ':' varvalue
    ;
 
-value
-   : STRING
-   | NUMBER
+varvalue
+   : string
+   | number
    | obj
-   | 'true'
-   | 'false'
+   | bool
    | 'null'
    ;
 
 
-STRING
+string
    : '"' (ESC | SAFECODEPOINT)* '"'
    ;
 
+
+number
+   :  ('+' | '-')? (INT | FLOAT)
+   ;
+
+bool
+   : TRUE
+   | FALSE
+   ;
 
 fragment ESC
    : '\\' (["\\/bfnrt] | UNICODE)
@@ -54,23 +62,25 @@ fragment SAFECODEPOINT
    : ~ ["\\\u0000-\u001F]
    ;
 
-
-NUMBER
-   : '-'? INT ('.' [0-9] +)? EXP?
-   ;
-
-
-fragment INT
-   : '0' | [1-9] [0-9]*
+INT
+   : ('0' .. '9')+
    ;
 
 // no leading zeros
 
-fragment EXP
-   : [Ee] [+\-]? INT
+FLOAT
+   : ('0' .. '9')* '.' ('0' .. '9')*
    ;
 
 // \- since - means "range" inside [...]
+
+TRUE
+   : 'TRUE' | 'true'
+   ;
+
+FALSE
+   : 'FALSE' | 'false'
+   ;
 
 WS
    : [ \t\n\r] + -> skip
