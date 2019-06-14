@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-public class DefaultParser implements Parser {
+public class DefaultParser implements Parser<Program> {
 
     private static Logger logger = LogManager.getLogger(DefaultParser.class);
 
