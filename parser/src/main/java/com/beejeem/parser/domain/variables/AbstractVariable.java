@@ -1,15 +1,17 @@
 package com.beejeem.parser.domain.variables;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public abstract class AbstractVariable<T> implements Variable<T> {
 
     private final String name;
-    private T value = null;
-
-    public  AbstractVariable(String name) {
-        this.name = name;
-    }
+    private T value;
 
     public AbstractVariable(String name, T value) {
+
+        checkNotNull(name, "Name cannot be null");
+        checkNotNull(value, "Value cannot be null");
+
         this.name = name;
         this.value = value;
     }
