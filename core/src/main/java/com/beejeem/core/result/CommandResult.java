@@ -12,6 +12,8 @@ public interface CommandResult {
         ERROR
     }
 
+    public void setCommandResultStatus(CommandResultStatus status);
+
     /**
      * Get command exit status
      * @return status
