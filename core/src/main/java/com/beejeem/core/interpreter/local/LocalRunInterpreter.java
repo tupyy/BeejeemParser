@@ -23,10 +23,11 @@ public class LocalRunInterpreter extends AbstractInterpreter {
         Map<String,String> envVariables = this.getEnvVariables(variables);
 
         if (this.get_os_type() == OS_TYPE.WINDOWS) {
-            procBuilder = new ProcBuilder(String.valueOf(command.getVariables().get(0).getValue()));
+            procBuilder = new ProcBuilder(String.valueOf(command.getVariables().get(0).getValue())).withNoTimeout();
         } else {
             procBuilder = new ProcBuilder("bash")
-                    .withArgs("-c", String.valueOf(command.getVariables().get(0).getValue()));
+                    .withArgs("-c", String.valueOf(command.getVariables().get(0).getValue()))
+                    .withNoTimeout();
         }
 
         // Adds variables as environment variables
