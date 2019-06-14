@@ -9,7 +9,7 @@ public class CommandResultImpl implements CommandResult {
     private CommandResultStatus status = CommandResultStatus.OK; // default value
     private final UUID commandID;
     private final UUID jobID;
-    private  List<Variable> outputVariables;
+    private  List<Variable> outputVariables = new ArrayList<>();
 
     public CommandResultImpl(UUID jobID, UUID commandID) {
         this.jobID = jobID;
@@ -48,38 +48,22 @@ public class CommandResultImpl implements CommandResult {
 
     @Override
     public List<Variable> getOutputVariables() {
-        if (this.outputVariables == null) {
-            return new ArrayList<>();
-        }
-
-        return this.outputVariables;
+              return this.outputVariables;
     }
 
     @Override
     public void setVariables(List<Variable> variables) {
-        if (this.outputVariables == null) {
-            this.outputVariables = variables;
-        } else {
-            this.outputVariables.addAll(variables);
-        }
+        this.outputVariables.addAll(variables);
     }
 
     @Override
     public void setVariables(Variable variable) {
-        if (this.outputVariables == null) {
-            this.outputVariables = Arrays.asList(variable);
-        } else {
-            this.outputVariables.add(variable);
-        }
+        this.outputVariables.add(variable);
+
     }
 
     @Override
     public void setVariables(Variable... variables) {
-        if (this.outputVariables == null) {
-            this.outputVariables = Arrays.asList(variables);
-        } else {
-            this.outputVariables.addAll(Arrays.asList(variables));
-        }
-
+        this.outputVariables.addAll(Arrays.asList(variables));
     }
 }
