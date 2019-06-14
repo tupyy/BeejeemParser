@@ -8,31 +8,31 @@ package com.beejeem.antrl4;
 }
 
 json
-   : varvalue
-   ;
-
-obj
-   : '{' varassignment (',' varassignment)* '}'
+   : '{' varassignment (',' varassignment )* '}'
    | '{' '}'
    ;
 
 varassignment
-   : string ':' varvalue
+   : varname ':' varvalue
    ;
 
 varvalue
    : string
    | number
-   | obj
    | bool
-   | 'null'
    ;
 
+varname
+   : '"'string_content '"'
+   ;
 
 string
-   : '"' (ESC | SAFECODEPOINT)* '"'
+   : '"' string_content '"'
    ;
 
+string_content
+   : WORD (WORD | number)*
+   ;
 
 number
    :  ('+' | '-')? (INT | FLOAT)
@@ -41,25 +41,6 @@ number
 bool
    : TRUE
    | FALSE
-   ;
-
-fragment ESC
-   : '\\' (["\\/bfnrt] | UNICODE)
-   ;
-
-
-fragment UNICODE
-   : 'u' HEX HEX HEX HEX
-   ;
-
-
-fragment HEX
-   : [0-9a-fA-F]
-   ;
-
-
-fragment SAFECODEPOINT
-   : ~ ["\\\u0000-\u001F]
    ;
 
 INT
@@ -80,6 +61,10 @@ TRUE
 
 FALSE
    : 'FALSE' | 'false'
+   ;
+
+WORD
+   : ('a' .. 'z' | 'A' .. 'Z') +
    ;
 
 WS
