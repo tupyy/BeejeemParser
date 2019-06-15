@@ -38,7 +38,17 @@ public interface CommandResult {
      */
     public List<Variable> getOutputVariables();
 
+    /**
+     * Set message
+     * @param message string
+     */
+    public void setMessage(String message);
 
+    /**
+     * Get message
+     * @return message
+     */
+    public String getMessage();
     /**
      * set variables
      * @param variables

@@ -7,6 +7,7 @@ import java.util.*;
 public class CommandResultImpl implements CommandResult {
 
     private CommandResultStatus status = CommandResultStatus.OK; // default value
+    private String message = "";
     private final UUID commandID;
     private final UUID jobID;
     private  List<Variable> outputVariables = new ArrayList<>();
@@ -24,6 +25,11 @@ public class CommandResultImpl implements CommandResult {
     public CommandResultImpl(UUID jobID, UUID commandID, CommandResultStatus status, List<Variable> outputVariables) {
         this(jobID,commandID,status);
         this.outputVariables = outputVariables;
+    }
+
+    public CommandResultImpl(UUID jobID, UUID commandID, CommandResultStatus status, String message) {
+        this(jobID, commandID, status);
+        this.message = message;
     }
 
     @Override
@@ -49,6 +55,16 @@ public class CommandResultImpl implements CommandResult {
     @Override
     public List<Variable> getOutputVariables() {
               return this.outputVariables;
+    }
+
+    @Override
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String getMessage() {
+        return this.message;
     }
 
     @Override
