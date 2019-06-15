@@ -1,11 +1,10 @@
-package com.beejeem.parser.parser;
+package com.beejeem.parser.parser.visitors;
 
 import com.beejeem.antrl4.JobfileBaseVisitor;
 import com.beejeem.antrl4.JobfileParser;
 import com.beejeem.parser.domain.DefaultProgram;
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.domain.Statement;
-import com.beejeem.parser.parser.visitors.LineVisitor;
 
 import java.util.List;
 import java.util.stream.Collectors;
