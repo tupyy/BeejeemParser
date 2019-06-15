@@ -11,6 +11,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+/**
+ * Execute a copy command. It do not create the destination folder.
+ * If the destination folder is not found, it returns an
+ * {@link com.beejeem.core.command.result.CommandResult.CommandResultStatus} Error
+ */
 public class CopyCommandExecutable extends AbstractCommandExecutable {
 
     private final static Logger logger = LogManager.getLogger(CopyCommandExecutable.class);
