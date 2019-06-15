@@ -39,6 +39,7 @@ public final class LocalCommandExecutable extends AbstractCommandExecutable {
         catch (ExternalProcessFailureException ex) {
             logger.error("Command " + this.commandID.toString() + " failed: " + ex.getMessage());
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
+            commandResult.setMessage(ex.getMessage());
         }
         return commandResult;
     }

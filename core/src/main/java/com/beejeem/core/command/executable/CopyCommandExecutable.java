@@ -35,6 +35,7 @@ public class CopyCommandExecutable extends AbstractCommandExecutable {
             logger.debug(String.format("Command %s: File copied %s -> %s", this.commandID.toString(), source.toString(), destination.toString()));
         } catch (IOException e) {
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
+            commandResult.setMessage(e.getMessage());
             logger.error(String.format("Command %s failed. Reason: %s", this.commandID.toString(), e.getMessage()));
         }
         return commandResult;
