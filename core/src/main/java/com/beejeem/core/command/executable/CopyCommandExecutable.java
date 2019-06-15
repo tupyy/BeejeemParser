@@ -30,7 +30,6 @@ public class CopyCommandExecutable extends AbstractCommandExecutable {
     public CommandResult execute() {
         CommandResult commandResult = new CommandResultImpl(this.jobID, this.commandID);
         try {
-
             Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.OK);
             logger.debug(String.format("Command %s: File copied %s -> %s", this.commandID.toString(), source.toString(), destination.toString()));
