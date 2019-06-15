@@ -1,4 +1,4 @@
-package com.beejeem.parser.parser;
+package com.beejeem.parser.parser.visitors;
 
 import com.beejeem.antrl4.JSONBaseVisitor;
 import com.beejeem.antrl4.JSONParser;
