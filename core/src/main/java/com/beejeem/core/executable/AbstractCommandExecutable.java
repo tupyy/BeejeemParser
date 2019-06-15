@@ -2,7 +2,7 @@ package com.beejeem.core.executable;
 
 import com.beejeem.core.result.JsonExtractor;
 import com.beejeem.parser.domain.variables.Variable;
-import com.beejeem.parser.parser.visitors.VariableParser;
+import com.beejeem.parser.parser.VariableParser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

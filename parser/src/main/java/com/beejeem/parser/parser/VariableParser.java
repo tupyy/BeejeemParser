@@ -1,7 +1,6 @@
-package com.beejeem.parser.parser.visitors;
+package com.beejeem.parser.parser;
 
 import com.beejeem.parser.domain.variables.Variable;
-import com.beejeem.parser.parser.Parser;
 
 import java.util.List;
 

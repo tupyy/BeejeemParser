@@ -4,7 +4,6 @@ import com.beejeem.antrl4.JSONLexer;
 import com.beejeem.antrl4.JSONParser;
 import com.beejeem.parser.domain.variables.Variable;
 import com.beejeem.parser.parser.visitors.JsonVisitor;
-import com.beejeem.parser.parser.visitors.VariableParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
