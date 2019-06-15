@@ -59,10 +59,10 @@ public class TestExecutable {
     @Test
     public void TestRunCommandOK() {
 
-        Command copyCommand = new LocalCommand(Command.CommandType.RUN);
+        Command runCommand = new LocalCommand(Command.CommandType.RUN);
         // add args
-        copyCommand.add(new StringVariable("echo", "uname -a"));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
+        runCommand.add(new StringVariable("echo", "echo meee"));
+        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
 
         CommandResult result = commandExecutable.execute();
@@ -72,10 +72,10 @@ public class TestExecutable {
     @Test
     public void TestRunCommandKO() {
 
-        Command copyCommand = new LocalCommand(Command.CommandType.RUN);
+        Command runCommand = new LocalCommand(Command.CommandType.RUN);
         // add args
-        copyCommand.add(new StringVariable("echo", "foo"));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
+        runCommand.add(new StringVariable("echo", "foo"));
+        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
 
         CommandResult result = commandExecutable.execute();
