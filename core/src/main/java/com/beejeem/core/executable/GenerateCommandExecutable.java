@@ -6,7 +6,7 @@ import com.hubspot.jinjava.Jinjava;
 import java.util.Map;
 import java.util.UUID;
 
-public final class GenerateCommandExecutable implements CommandExecutable {
+public final class GenerateCommandExecutable extends AbstractCommandExecutable {
 
     private final String templateName;
     private final Map<String, Object> context;
