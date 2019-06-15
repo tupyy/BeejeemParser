@@ -42,6 +42,16 @@ public class TestCommandResult implements CommandResult {
     }
 
     @Override
+    public void setMessage(String message) {
+
+    }
+
+    @Override
+    public String getMessage() {
+        return null;
+    }
+
+    @Override
     public void setVariables(List<Variable> variables) {
 
     }
