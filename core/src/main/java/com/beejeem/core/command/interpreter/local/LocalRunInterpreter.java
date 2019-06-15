@@ -1,8 +1,8 @@
-package com.beejeem.core.interpreter.local;
+package com.beejeem.core.command.interpreter.local;
 
-import com.beejeem.core.executable.CommandExecutable;
-import com.beejeem.core.executable.LocalCommandExecutable;
-import com.beejeem.core.interpreter.AbstractInterpreter;
+import com.beejeem.core.command.executable.CommandExecutable;
+import com.beejeem.core.command.executable.LocalCommandExecutable;
+import com.beejeem.core.command.interpreter.AbstractInterpreter;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 import org.buildobjects.process.ProcBuilder;

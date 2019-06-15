@@ -1,6 +1,6 @@
 package com.beejeem.core.job;
 
-import com.beejeem.core.result.JsonExtractor;
+import com.beejeem.core.command.result.JsonExtractor;
 import org.junit.Assert;
 import org.junit.Test;
 

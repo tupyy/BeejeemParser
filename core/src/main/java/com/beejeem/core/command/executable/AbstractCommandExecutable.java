@@ -1,6 +1,6 @@
-package com.beejeem.core.executable;
+package com.beejeem.core.command.executable;
 
-import com.beejeem.core.result.JsonExtractor;
+import com.beejeem.core.command.result.JsonExtractor;
 import com.beejeem.parser.domain.variables.Variable;
 import com.beejeem.parser.parser.VariableParser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;

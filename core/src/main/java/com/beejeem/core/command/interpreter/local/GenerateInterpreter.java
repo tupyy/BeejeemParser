@@ -1,11 +1,10 @@
-package com.beejeem.core.interpreter.local;
+package com.beejeem.core.command.interpreter.local;
 
-import com.beejeem.core.executable.CommandExecutable;
-import com.beejeem.core.executable.GenerateCommandExecutable;
-import com.beejeem.core.interpreter.AbstractInterpreter;
+import com.beejeem.core.command.executable.CommandExecutable;
+import com.beejeem.core.command.executable.GenerateCommandExecutable;
+import com.beejeem.core.command.interpreter.AbstractInterpreter;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
-import com.hubspot.jinjava.Jinjava;
 
 import java.util.List;
 import java.util.Map;

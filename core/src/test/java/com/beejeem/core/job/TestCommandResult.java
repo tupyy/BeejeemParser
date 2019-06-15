@@ -1,6 +1,6 @@
 package com.beejeem.core.job;
 
-import com.beejeem.core.result.CommandResult;
+import com.beejeem.core.command.result.CommandResult;
 import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.List;

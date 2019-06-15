@@ -1,6 +1,6 @@
-package com.beejeem.core.interpreter;
+package com.beejeem.core.command.interpreter;
 
-import com.beejeem.core.executable.CommandExecutable;
+import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 

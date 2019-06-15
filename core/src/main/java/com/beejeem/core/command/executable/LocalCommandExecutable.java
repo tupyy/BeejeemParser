@@ -1,7 +1,7 @@
-package com.beejeem.core.executable;
+package com.beejeem.core.command.executable;
 
-import com.beejeem.core.result.CommandResult;
-import com.beejeem.core.result.CommandResultImpl;
+import com.beejeem.core.command.result.CommandResult;
+import com.beejeem.core.command.result.CommandResultImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.buildobjects.process.ExternalProcessFailureException;

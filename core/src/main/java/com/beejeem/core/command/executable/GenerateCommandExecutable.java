@@ -1,6 +1,6 @@
-package com.beejeem.core.executable;
+package com.beejeem.core.command.executable;
 
-import com.beejeem.core.result.CommandResult;
+import com.beejeem.core.command.result.CommandResult;
 import com.hubspot.jinjava.Jinjava;
 
 import java.util.Map;

@@ -1,9 +1,10 @@
 package com.beejeem.core.job;
 
-import com.beejeem.core.executable.CommandExecutable;
-import com.beejeem.core.executable.LocalCommandExecutable;
-import com.beejeem.core.interpreter.DefaultCommandInterpreter;
-import com.beejeem.core.result.CommandResult;
+import com.beejeem.core.command.executable.CommandExecutable;
+import com.beejeem.core.command.executable.CopyCommandExecutable;
+import com.beejeem.core.command.executable.LocalCommandExecutable;
+import com.beejeem.core.command.interpreter.DefaultCommandInterpreter;
+import com.beejeem.core.command.result.CommandResult;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.commands.LocalCommand;
 import com.beejeem.parser.domain.variables.StringVariable;
@@ -35,7 +36,7 @@ public class TestExecutable {
         copyCommand.add(new StringVariable("source", this.tempSourceFile.toString()));
         copyCommand.add(new StringVariable("destination", this.tempFolderDest.toString()));
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
-        Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
+        Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
         CommandResult result = commandExecutable.execute();
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.OK);
@@ -50,7 +51,7 @@ public class TestExecutable {
         copyCommand.add(new StringVariable("source", "unknown_file"));
         copyCommand.add(new StringVariable("destination", this.tempFolderDest.toString()));
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
-        Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
+        Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
         CommandResult result = commandExecutable.execute();
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.ERROR);

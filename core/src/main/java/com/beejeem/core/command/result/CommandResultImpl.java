@@ -1,4 +1,4 @@
-package com.beejeem.core.result;
+package com.beejeem.core.command.result;
 
 import com.beejeem.parser.domain.variables.Variable;
 

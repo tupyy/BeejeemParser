@@ -1,4 +1,4 @@
-package com.beejeem.core.result;
+package com.beejeem.core.command.result;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,9 +1,9 @@
-package com.beejeem.core.interpreter;
+package com.beejeem.core.command.interpreter;
 
-import com.beejeem.core.executable.CommandExecutable;
-import com.beejeem.core.interpreter.local.CopyInterpreter;
-import com.beejeem.core.interpreter.local.GenerateInterpreter;
-import com.beejeem.core.interpreter.local.LocalRunInterpreter;
+import com.beejeem.core.command.executable.CommandExecutable;
+import com.beejeem.core.command.interpreter.local.CopyInterpreter;
+import com.beejeem.core.command.interpreter.local.GenerateInterpreter;
+import com.beejeem.core.command.interpreter.local.LocalRunInterpreter;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.commands.LocalCommand;
 import com.beejeem.parser.domain.variables.Variable;
