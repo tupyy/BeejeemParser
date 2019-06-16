@@ -84,7 +84,10 @@ public abstract class AbstractCommand implements Command {
     @Override
     public abstract Boolean isRemote();
 
-    private Variable getVariable(String variableName) {
+    @Override
+    public abstract Command clone();
+
+    public Variable getVariable(String variableName) {
         return (Variable) this.variables.stream().filter(variable -> variable.getName().equals(variableName));
     }
 }

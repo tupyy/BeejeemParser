@@ -30,4 +30,8 @@ public abstract class AbstractVariable<T> implements Variable<T> {
     public void setValue(T newValue) {
         this.value = newValue;
     }
+
+    @Override
+    public abstract Variable<T> clone();
+
 }

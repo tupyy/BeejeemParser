@@ -21,4 +21,10 @@ public interface Variable<T> extends Statement {
      * @param newValue
      */
     public void setValue(T newValue);
+
+    /**
+     * Clone the variable
+     * @return the clone
+     */
+    public Variable<T> clone();
 }

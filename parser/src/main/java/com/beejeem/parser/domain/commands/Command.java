@@ -81,4 +81,10 @@ public interface Command extends Statement {
      * @return true if remote
      */
     public Boolean isRemote();
+
+    /**
+     * Clone the command
+     * @return the clone
+     */
+    public Command clone();
 }

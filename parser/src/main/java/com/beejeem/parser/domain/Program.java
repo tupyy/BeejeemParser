@@ -23,14 +23,14 @@ public interface Program {
     public void add(Statement statement);
 
     /**
-     * get variables
-     * @return list of variables
+     * Get a list of cloned variables.
+     * @return list of cloned variables
      */
     public List<Variable> getVariables();
 
     /**
-     * Get commands
-     * @return list of commands
+     * Get the list of cloned commands.
+     * @return list of cloned commands.
      */
     public  List<Command> getCommands();
 

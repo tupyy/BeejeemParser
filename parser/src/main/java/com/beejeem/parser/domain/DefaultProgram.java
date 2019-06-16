@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public final class DefaultProgram implements Program {
 
@@ -37,12 +38,12 @@ public final class DefaultProgram implements Program {
 
     @Override
     public List<Variable> getVariables() {
-        return variables;
+        return variables.stream().map(Variable::clone).collect(Collectors.toList());
     }
 
     @Override
     public List<Command> getCommands() {
-        return commands;
+        return commands.stream().map(Command::clone).collect(Collectors.toList());
     }
 
     @Override
