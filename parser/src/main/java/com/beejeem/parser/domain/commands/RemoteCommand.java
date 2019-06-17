@@ -6,6 +6,10 @@ import java.util.UUID;
 
 public class RemoteCommand extends AbstractCommand {
 
+    public RemoteCommand(UUID parentID, UUID id, CommandType type) {
+        super(parentID, id, type);
+    }
+
     public RemoteCommand(UUID parentID, CommandType type) {
         super(parentID, type);
     }
@@ -21,7 +25,7 @@ public class RemoteCommand extends AbstractCommand {
 
     @Override
     public Command clone() {
-        Command clone = new RemoteCommand(this.getParentID(), this.getType());
+        Command clone = new RemoteCommand(this.getParentID(), this.getID(),this.getType());
         for (Variable variable: this.getVariables()) {
             clone.add(variable.clone());
         }

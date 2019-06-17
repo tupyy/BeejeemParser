@@ -6,6 +6,10 @@ import java.util.UUID;
 
 public class LocalCommand extends AbstractCommand {
 
+    public LocalCommand(UUID parentID, UUID id, CommandType type) {
+        super(parentID, id, type);
+    }
+
     public LocalCommand(UUID parentID, CommandType type) {
         super(parentID, type);
     }
@@ -21,7 +25,8 @@ public class LocalCommand extends AbstractCommand {
 
     @Override
     public Command clone() {
-        Command clone = new LocalCommand(this.getParentID(), this.getType());
+        Command clone = new LocalCommand(this.getParentID(),this.getID(), this.getType());
+
         for (Variable variable: this.getVariables()) {
             clone.add(variable.clone());
         }

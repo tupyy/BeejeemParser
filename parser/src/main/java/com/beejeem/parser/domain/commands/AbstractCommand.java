@@ -10,18 +10,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class AbstractCommand implements Command {
 
-    private final UUID id = java.util.UUID.randomUUID();
+    private final UUID id;
     private UUID parentID;
     private final CommandType type;
     private List<Variable> variables = new ArrayList<>();
 
-    public AbstractCommand(UUID parentID, CommandType type) {
+    public AbstractCommand(UUID parentID, UUID id, CommandType type) {
         this.parentID = parentID;
+        this.id = id;
         this.type = type;
+    }
+    public AbstractCommand(UUID parentID, CommandType type) {
+        this(parentID, UUID.randomUUID(), type);
     }
 
     public AbstractCommand(CommandType type) {
-        this.type = type;
+        this(UUID.randomUUID(), UUID.randomUUID(), type);
     }
 
     @Override
