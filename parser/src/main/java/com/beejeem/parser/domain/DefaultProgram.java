@@ -64,8 +64,9 @@ public final class DefaultProgram implements Program {
             if (v.getClass().equals(newVariable.getClass())) {
                 v.setValue(newVariable.getValue());
             } else {
-                logger.warn("You are updating a variable with a variable of different class." +
-                        "The old variable will be replaced by the new one.");
+                logger.warn("You are updating a variable with a variable of different class:" +
+                                "\nOld variable:" + v.getClass().toString() + "\nNew variable:" + newVariable.getClass().toString() +
+                                "\nThe old variable will be replaced by the new one.");
                 this.variables.remove(v);
                 this.add(newVariable);
             }
