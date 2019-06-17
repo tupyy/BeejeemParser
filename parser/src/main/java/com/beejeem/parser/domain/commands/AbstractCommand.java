@@ -16,6 +16,11 @@ public abstract class AbstractCommand implements Command {
     private List<Variable> variables = new ArrayList<>();
 
     public AbstractCommand(UUID parentID, UUID id, CommandType type) {
+
+        checkNotNull(parentID, "Parent id cannot be null");
+        checkNotNull(id, "Id cannot be null");
+        checkNotNull(type, "Type cannot be null");
+
         this.parentID = parentID;
         this.id = id;
         this.type = type;
