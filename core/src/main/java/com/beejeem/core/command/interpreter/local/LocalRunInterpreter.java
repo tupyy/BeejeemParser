@@ -1,8 +1,9 @@
 package com.beejeem.core.command.interpreter.local;
 
 import com.beejeem.core.command.executable.CommandExecutable;
-import com.beejeem.core.command.executable.LocalCommandExecutable;
+import com.beejeem.core.command.executable.RunCommandExecutable;
 import com.beejeem.core.command.interpreter.AbstractInterpreter;
+import com.beejeem.core.command.result.JsonResultParser;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.variables.Variable;
 import org.buildobjects.process.ProcBuilder;
@@ -36,7 +37,9 @@ public class LocalRunInterpreter extends AbstractInterpreter {
             procBuilder.withVar(var.getKey(),var.getValue());
         }
 
-        return new LocalCommandExecutable(command.getParentID(), command.getID(), procBuilder);
+        CommandExecutable runCommandExecutable = new RunCommandExecutable(command.getParentID(), command.getID(), procBuilder);
+        runCommandExecutable.setOutputParser(new JsonResultParser());
+        return runCommandExecutable;
     }
 
     private Map<String, String> getEnvVariables(List<Variable> variables) {
