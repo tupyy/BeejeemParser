@@ -2,7 +2,7 @@ package com.beejeem.core.job;
 
 import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.core.command.executable.CopyCommandExecutable;
-import com.beejeem.core.command.executable.LocalCommandExecutable;
+import com.beejeem.core.command.executable.RunCommandExecutable;
 import com.beejeem.core.command.interpreter.DefaultCommandInterpreter;
 import com.beejeem.core.command.result.CommandResult;
 import com.beejeem.parser.domain.commands.Command;
@@ -38,7 +38,7 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
-        CommandResult result = commandExecutable.execute();
+        CommandResult result = commandExecutable.get();
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.OK);
         Assert.assertTrue(Files.exists(Paths.get(this.tempFolderDest.toString(),tempSourceFile.getFileName().toString())));
     }
@@ -53,7 +53,7 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
-        CommandResult result = commandExecutable.execute();
+        CommandResult result = commandExecutable.get();
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.ERROR);
     }
 
@@ -62,11 +62,12 @@ public class TestExecutable {
 
         Command runCommand = new LocalCommand(Command.CommandType.RUN);
         // add args
-        runCommand.add(new StringVariable("echo", "echo meee"));
+        runCommand.add(new StringVariable("echo", "python3 /home/cosmin/Projects/BeejeemParser/core/src/test/java/com/beejeem/core/job/python_test.py"));
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
-        Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
+        Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
-        CommandResult result = commandExecutable.execute();
+        CommandResult result = commandExecutable.get();
+        Assert.assertEquals(result.getOutputVariables().size(), 3);
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.OK);
     }
 
@@ -77,9 +78,9 @@ public class TestExecutable {
         // add args
         runCommand.add(new StringVariable("echo", "foo"));
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
-        Assert.assertTrue(commandExecutable instanceof LocalCommandExecutable);
+        Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
-        CommandResult result = commandExecutable.execute();
+        CommandResult result = commandExecutable.get();
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.ERROR);
     }
 }

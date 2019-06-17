@@ -1,9 +1,12 @@
 package com.beejeem.core.command.executable;
 
 import com.beejeem.core.command.result.CommandResult;
+import com.beejeem.core.command.result.ResultParser;
 
-public interface CommandExecutable {
+import java.util.function.Supplier;
 
-    public CommandResult execute();
+public interface CommandExecutable extends Supplier<CommandResult> {
+
+    public void setOutputParser(ResultParser parser);
 
 }
