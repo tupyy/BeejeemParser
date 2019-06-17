@@ -21,7 +21,7 @@ public final class GenerateCommandExecutable implements LocalCommandExecutable {
         this.context = context;
     }
     @Override
-    public CommandResult get() {
+    public CommandResult call() {
 
         Jinjava jinjava = new Jinjava();
 

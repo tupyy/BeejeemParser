@@ -32,7 +32,7 @@ public class CopyCommandExecutable implements LocalCommandExecutable {
     }
 
     @Override
-    public CommandResult get() {
+    public CommandResult call() {
         CommandResult commandResult = new CommandResultImpl(this.jobID, this.commandID);
         try {
             Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);

@@ -28,7 +28,7 @@ public final class RunCommandExecutable implements LocalCommandExecutable {
     }
 
     @Override
-    public CommandResult get() {
+    public CommandResult call() {
         CommandResult commandResult = new CommandResultImpl(this.jobID, this.commandID);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
