@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class DefaultProgram implements Program {
 
     private List<Variable> variables = new ArrayList<>();
@@ -39,6 +41,19 @@ public final class DefaultProgram implements Program {
     @Override
     public List<Variable> getVariables() {
         return variables.stream().map(Variable::clone).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateVariable(Variable newVariable) {
+        checkNotNull(newVariable);
+
+        Variable v = variables.stream()
+                              .filter(variable -> variable.getName().equals(newVariable.getName()))
+                              .findAny()
+                              .orElse(null);
+        if (v != null) {
+            v.setValue(newVariable.getValue());
+        }
     }
 
     @Override

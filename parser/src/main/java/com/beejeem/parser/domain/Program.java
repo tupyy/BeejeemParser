@@ -29,6 +29,12 @@ public interface Program {
     public List<Variable> getVariables();
 
     /**
+     * Update the value of the variable
+     * @param newVariable new variable
+     */
+    public void updateVariable(Variable newVariable);
+
+    /**
      * Get the list of cloned commands.
      * @return list of cloned commands.
      */
