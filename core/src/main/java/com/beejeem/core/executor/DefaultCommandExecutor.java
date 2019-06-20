@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DefaultCommandExecutor implements CommandExecutor<CommandExecutable> {
+public final class DefaultCommandExecutor implements CommandExecutor<CommandExecutable> {
 
     private static Logger logger = LogManager.getLogger(DefaultCommandExecutor.class);
 
