@@ -16,6 +16,9 @@ public final class DefaultJob extends JobStateMachine implements Job {
     private final String name;
     private final Program program;
 
+    //it holds the current copy of the program when the job is running
+    private Program clone;
+
     public DefaultJob(String name, Program program, Action2 commandAction) {
         super(program, new JobStateChangeAction(), commandAction);
 
@@ -45,7 +48,8 @@ public final class DefaultJob extends JobStateMachine implements Job {
     public void start() {
         if (this.getState() == JobDefaultStates.READY_STATE ||
                 this.getState() == JobDefaultStates.STOP_STATE) {
-            this.getStateMachine().fire(this.getCommandTrigger(), program.getIterator().next(), program.getVariables());
+            this.clone = this.program.clone();
+            this.getStateMachine().fire(this.getCommandTrigger(), this.clone.getIterator().next(), this.clone.getVariables());
         }
     }
 
@@ -76,9 +80,9 @@ public final class DefaultJob extends JobStateMachine implements Job {
         assert (result.getCommandID() == this.getStateMachine().getState());
 
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
-            if (program.getIterator().hasNext()) {
-                Command nextCommand = program.getIterator().next();
-                this.getStateMachine().fire(this.getCommandTrigger(), nextCommand, program.getVariables());
+            if (this.clone.getIterator().hasNext()) {
+                Command nextCommand = this.clone.getIterator().next();
+                this.getStateMachine().fire(this.getCommandTrigger(), nextCommand, this.clone.getVariables());
             } else {
                 this.getStateMachine().fire(Trigger.doFinish);
             }
