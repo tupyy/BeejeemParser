@@ -13,7 +13,7 @@ import java.util.List;
  * This is the default state change action implementation.
  * It calls the command interpreter and submits the job to the executor.
  */
-public class DefaultJobCommandAction implements Action2<Command, List<Variable>> {
+public final class DefaultJobCommandAction implements Action2<Command, List<Variable>> {
 
     private final CommandInterpreter<CommandExecutable> commandInterpreter;
     private final CommandExecutor<CommandExecutable> commandExecutor;
