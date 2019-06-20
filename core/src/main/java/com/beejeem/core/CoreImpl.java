@@ -54,6 +54,9 @@ public final class CoreImpl implements Core{
 
     @Override
     public Job getJob(UUID jobID) {
-        return null;
+        return jobs.stream()
+                   .filter(j -> j.getID().equals(jobID))
+                   .findAny()
+                   .orElse(null);
     }
 }
