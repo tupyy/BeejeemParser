@@ -38,7 +38,12 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
-        CommandResult result = commandExecutable.get();
+        CommandResult result = null;
+        try {
+            result = commandExecutable.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.OK);
         Assert.assertTrue(Files.exists(Paths.get(this.tempFolderDest.toString(),tempSourceFile.getFileName().toString())));
     }
@@ -53,7 +58,12 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
-        CommandResult result = commandExecutable.get();
+        CommandResult result = null;
+        try {
+            result = commandExecutable.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.ERROR);
     }
 
@@ -66,7 +76,12 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
-        CommandResult result = commandExecutable.get();
+        CommandResult result = null;
+        try {
+            result = commandExecutable.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(result.getOutputVariables().size(), 3);
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.OK);
     }
@@ -80,7 +95,12 @@ public class TestExecutable {
         CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
-        CommandResult result = commandExecutable.get();
+        CommandResult result = null;
+        try {
+            result = commandExecutable.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(result.getResultStatus(), CommandResult.CommandResultStatus.ERROR);
     }
 }
