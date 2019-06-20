@@ -48,6 +48,16 @@ public final class RunCommandExecutable implements LocalCommandExecutable {
         return commandResult;
     }
 
+    @Override
+    public UUID getCommandID() {
+        return this.commandID;
+    }
+
+    @Override
+    public UUID getJobID() {
+        return this.jobID;
+    }
+
     /**
      * Set output parser
      * @param outputParser output parser
