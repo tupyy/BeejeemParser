@@ -21,10 +21,14 @@ public final class DefaultProgram implements Program {
     private List<Variable> variables = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
     private Iterator<Command> commandIterator = null;
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
 
     public DefaultProgram() {
+        this.id = UUID.randomUUID();
+    }
 
+    public DefaultProgram(UUID id) {
+        this.id = id;
     }
 
     @Override
@@ -84,6 +88,20 @@ public final class DefaultProgram implements Program {
             this.commandIterator = this.commands.iterator();
         }
         return this.commandIterator;
+    }
+
+    @Override
+    public Program clone() {
+        Program clone = new DefaultProgram(this.getID());
+        for (Command c: this.getCommands()) {
+            clone.add(c);
+        }
+
+        for (Variable v: this.getVariables()) {
+            clone.add(v);
+        }
+
+        return clone;
     }
 
     private boolean hasVariable(Variable variable) {

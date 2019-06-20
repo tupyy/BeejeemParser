@@ -42,4 +42,10 @@ public interface Program {
 
     public Iterator<Command> getIterator();
 
+    /**
+     * Clone
+     * @return clone
+     */
+    public Program clone();
+
 }
