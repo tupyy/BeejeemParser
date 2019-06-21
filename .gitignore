@@ -8,3 +8,5 @@ parser/target/
 *.class
 
 core/target/classes/META-INF/core\.kotlin_module
+
+*.kotlin_module
