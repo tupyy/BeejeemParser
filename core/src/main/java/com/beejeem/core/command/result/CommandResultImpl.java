@@ -4,7 +4,7 @@ import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.*;
 
-public class CommandResultImpl implements CommandResult {
+public final class CommandResultImpl implements CommandResult {
 
     private CommandResultStatus status = CommandResultStatus.OK; // default value
     private String message = "";

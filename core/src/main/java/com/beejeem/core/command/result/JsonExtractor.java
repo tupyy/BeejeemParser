@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * Class to extract a json from a text
  */
-public class JsonExtractor {
+public final class JsonExtractor {
 
     public static String extract(String text) {
         String EMPTY_JSON = "{}";

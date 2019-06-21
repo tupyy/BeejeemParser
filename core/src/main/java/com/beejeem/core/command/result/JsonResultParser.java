@@ -11,7 +11,7 @@ import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonResultParser implements ResultParser {
+public final class JsonResultParser implements ResultParser {
 
     private static Logger logger = LogManager.getLogger(JsonResultParser.class);
 
