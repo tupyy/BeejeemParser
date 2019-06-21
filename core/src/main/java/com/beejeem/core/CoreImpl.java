@@ -1,15 +1,8 @@
 package com.beejeem.core;
 
-import com.beejeem.core.command.executable.CommandExecutable;
-import com.beejeem.core.command.interpreter.CommandInterpreter;
-import com.beejeem.core.command.interpreter.DefaultCommandInterpreter;
-import com.beejeem.core.command.result.CommandResult;
-import com.beejeem.core.executor.CommandExecutor;
-import com.beejeem.core.executor.CommandResultManager;
-import com.beejeem.core.executor.CommandResultManagerImpl;
-import com.beejeem.core.executor.DefaultCommandExecutor;
 import com.beejeem.core.job.DefaultJob;
 import com.beejeem.core.job.Job;
+import com.beejeem.core.job.JobFactory;
 import com.beejeem.core.job.actions.DefaultJobCommandAction;
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.parser.DefaultParser;
@@ -18,17 +11,29 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public final class CoreImpl implements Core{
 
     private static Core instance = null;
 
-    private CommandExecutor<CommandExecutable> commandExecutor;
-    private CommandResultManager<CommandResult> commandResultManager = new CommandResultManagerImpl();
+    /**
+     * Create an executor for local jobs.
+     */
+    private ThreadPoolExecutor localExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+
+    /**
+     * Create a remote executor. This solution is used because there are problems with ssh session if
+     * more than 2 jobs are executed in parallel.
+     * TODO Find a better solution for executing remote commands
+     */
+    private ThreadPoolExecutor remoteExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+
     private List<Job> jobs = new ArrayList<>();
 
     private CoreImpl() {
-        this.commandExecutor = new DefaultCommandExecutor(commandResultManager);
     }
 
     public static Core getInstance() {
@@ -41,8 +46,7 @@ public final class CoreImpl implements Core{
     @Override
     public UUID createJob(String name, String programCode) throws ParseCancellationException {
         Program program = new DefaultParser().parse(programCode);
-        CommandInterpreter<CommandExecutable> interpreter = new DefaultCommandInterpreter();
-        Job job = new DefaultJob(name, program, new DefaultJobCommandAction(interpreter, this.commandExecutor));
+        Job job = JobFactory.createDefaultJob(name, program);
         jobs.add(job);
         return job.getID();
     }
@@ -58,5 +62,15 @@ public final class CoreImpl implements Core{
                    .filter(j -> j.getID().equals(jobID))
                    .findAny()
                    .orElse(null);
+    }
+
+    @Override
+    public ExecutorService getLocalExecutor() {
+        return localExecutor;
+    }
+
+    @Override
+    public ExecutorService getRemoteExecutor() {
+        return remoteExecutor;
     }
 }
