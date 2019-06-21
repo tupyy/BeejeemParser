@@ -47,6 +47,16 @@ public class CopyCommandExecutable implements LocalCommandExecutable {
     }
 
     @Override
+    public UUID getCommandID() {
+        return this.commandID;
+    }
+
+    @Override
+    public UUID getJobID() {
+        return this.jobID;
+    }
+
+    @Override
     public void setOutputParser(ResultParser parser) {
     }
 
