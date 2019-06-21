@@ -3,7 +3,7 @@ package com.beejeem.core.job;
 import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.core.command.executable.CopyCommandExecutable;
 import com.beejeem.core.command.executable.RunCommandExecutable;
-import com.beejeem.core.command.interpreter.DefaultCommandInterpreter;
+import com.beejeem.core.command.interpreter.CommandInterpreterImpl;
 import com.beejeem.core.command.result.CommandResult;
 import com.beejeem.parser.domain.commands.Command;
 import com.beejeem.parser.domain.commands.LocalCommand;
@@ -35,7 +35,7 @@ public class TestExecutable {
         // add args
         copyCommand.add(new StringVariable("source", this.tempSourceFile.toString()));
         copyCommand.add(new StringVariable("destination", this.tempFolderDest.toString()));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
+        CommandExecutable commandExecutable = new CommandInterpreterImpl().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
         CommandResult result = null;
@@ -55,7 +55,7 @@ public class TestExecutable {
         // add args
         copyCommand.add(new StringVariable("source", "unknown_file"));
         copyCommand.add(new StringVariable("destination", this.tempFolderDest.toString()));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(copyCommand, new ArrayList<>());
+        CommandExecutable commandExecutable = new CommandInterpreterImpl().interpret(copyCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof CopyCommandExecutable);
 
         CommandResult result = null;
@@ -73,7 +73,7 @@ public class TestExecutable {
         Command runCommand = new LocalCommand(Command.CommandType.RUN);
         // add args
         runCommand.add(new StringVariable("echo", "python3 /home/cosmin/Projects/BeejeemParser/core/src/test/java/com/beejeem/core/job/python_test.py"));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
+        CommandExecutable commandExecutable = new CommandInterpreterImpl().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
         CommandResult result = null;
@@ -92,7 +92,7 @@ public class TestExecutable {
         Command runCommand = new LocalCommand(Command.CommandType.RUN);
         // add args
         runCommand.add(new StringVariable("echo", "foo"));
-        CommandExecutable commandExecutable = new DefaultCommandInterpreter().interpret(runCommand, new ArrayList<>());
+        CommandExecutable commandExecutable = new CommandInterpreterImpl().interpret(runCommand, new ArrayList<>());
         Assert.assertTrue(commandExecutable instanceof RunCommandExecutable);
 
         CommandResult result = null;

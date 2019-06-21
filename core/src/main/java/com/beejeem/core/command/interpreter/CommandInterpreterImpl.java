@@ -10,9 +10,9 @@ import com.beejeem.parser.domain.variables.Variable;
 
 import java.util.List;
 
-public class DefaultCommandInterpreter implements CommandInterpreter<CommandExecutable> {
+public class CommandInterpreterImpl implements CommandInterpreter<CommandExecutable> {
 
-    public DefaultCommandInterpreter() {}
+    public CommandInterpreterImpl() {}
 
     @Override
     public CommandExecutable interpret(Command command, List<Variable> variables) {

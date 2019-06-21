@@ -11,13 +11,13 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public final class DefaultCommandExecutor implements CommandExecutor<CommandExecutable> {
+public final class CommandExecutorImpl implements CommandExecutor<CommandExecutable> {
 
-    private static Logger logger = LogManager.getLogger(DefaultCommandExecutor.class);
+    private static Logger logger = LogManager.getLogger(CommandExecutorImpl.class);
 
     private final CommandResultManager commandResultManager;
 
-    public DefaultCommandExecutor(CommandResultManager commandResultManager) {
+    public CommandExecutorImpl(CommandResultManager commandResultManager) {
         checkNotNull(commandResultManager, "Command result manager cannot be null");
         this.commandResultManager = commandResultManager;
     }
