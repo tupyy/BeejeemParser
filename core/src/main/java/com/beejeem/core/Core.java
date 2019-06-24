@@ -1,5 +1,6 @@
 package com.beejeem.core;
 
+import com.beejeem.core.executor.CommandExecutor;
 import com.beejeem.core.job.Job;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -35,15 +36,9 @@ public interface Core {
     public Job getJob(UUID jobID);
 
     /**
-     * Return the executor used to run local commands
-     * @return ThreadPoolExecutor
+     * Return the command executor
+     * @return command executor
      */
-    public ExecutorService getLocalExecutor();
-
-    /**
-     * Return the executor used to run remote commands
-     * @return ThreadPoolExecutor
-     */
-    public ExecutorService getRemoteExecutor();
+    public CommandExecutor getCommandExecutor();
 
 }
