@@ -19,12 +19,12 @@ public abstract class AbstractInterpreter implements CommandInterpreter<CommandE
     public abstract CommandExecutable interpret(Command command, List<Variable> variables);
 
     public OS_TYPE get_os_type() {
-        String OS = System.getProperty("os.name").toLowerCase();
-        if (OS.contains("nix") || OS.contains("nux")) {
+        final String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("nix") || os.contains("nux")) {
             return OS_TYPE.LINUX;
-        } else if (OS.contains("win")) {
+        } else if (os.contains("win")) {
             return OS_TYPE.WINDOWS;
-        } else if (OS.contains("mac")) {
+        } else if (os.contains("mac")) {
             return OS_TYPE.OSX;
         }
         return OS_TYPE.UNKNWON;

@@ -37,11 +37,11 @@ public class CopyCommandExecutable implements LocalCommandExecutable {
         try {
             Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.OK);
-            logger.debug(String.format("Command %s: File copied %s -> %s", this.commandID, source, destination));
+            logger.debug("Command {}: File copied {} -> {}", this.commandID, source, destination);
         } catch (IOException e) {
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
             commandResult.setMessage(e.getMessage());
-            logger.error(String.format("Command %s failed. Reason: %s", this.commandID, e.getMessage()));
+            logger.error("Command {} failed. Reason: {}", this.commandID, e.getMessage());
         }
         return commandResult;
     }

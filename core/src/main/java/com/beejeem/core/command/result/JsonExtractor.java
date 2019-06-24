@@ -13,7 +13,8 @@ public final class JsonExtractor {
     }
 
     public static String extract(String text) {
-        Pattern pattern = Pattern.compile(".*(\\{.*}).*");
+        final String patternExpression = ".*(\\{.*}).*";
+        Pattern pattern = Pattern.compile(patternExpression);
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
             return matcher.group(1);

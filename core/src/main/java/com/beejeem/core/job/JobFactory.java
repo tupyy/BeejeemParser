@@ -14,6 +14,10 @@ import com.beejeem.parser.domain.Program;
  */
 public class JobFactory {
 
+    private JobFactory() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Return a default job.
      * @param name job name

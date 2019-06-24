@@ -33,7 +33,7 @@ public final class RunCommandExecutable implements LocalCommandExecutable {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             this.procBuilder.withOutputStream(out).run();
-            logger.debug("Command " + this.commandID + " output :" + out);
+            logger.debug("Command {} output: {} ",this.commandID , out);
 
             if (this.getOutputParser() != null) {
                 commandResult.setVariables(this.getOutputParser().parse(out.toString()));
@@ -41,7 +41,7 @@ public final class RunCommandExecutable implements LocalCommandExecutable {
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.OK);
         }
         catch (ExternalProcessFailureException ex) {
-            logger.error("Command " + this.commandID + " failed: " + ex.getMessage());
+            logger.error("Command {} failed: {}" , this.commandID , ex.getMessage());
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
             commandResult.setMessage(ex.getMessage());
         }
