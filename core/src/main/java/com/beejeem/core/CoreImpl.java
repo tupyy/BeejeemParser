@@ -12,9 +12,8 @@ import com.beejeem.parser.parser.DefaultParser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
 
-public final class CoreImpl implements Core{
+public final class CoreImpl implements Core {
 
     private static Core instance = null;
 
