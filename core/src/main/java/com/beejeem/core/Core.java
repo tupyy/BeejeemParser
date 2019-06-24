@@ -19,7 +19,7 @@ public interface Core {
      * @throws ParseCancellationException if the code cannot be parsed
      * @return the ID of the job
      */
-    public UUID createJob(String name, String programCode) throws ParseCancellationException;
+    public UUID createJob(String name, String programCode);
 
     /**
      * Delete job.

@@ -13,7 +13,8 @@ public interface Command extends Statement {
         SUBMIT,
         COPY,
         RCOPY,
-        GENERATE
+        GENERATE,
+        UNKNOWN
     }
 
     /**

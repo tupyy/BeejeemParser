@@ -24,6 +24,8 @@ public class CommandInterpreterImpl implements CommandInterpreter<CommandExecuta
                     return new LocalRunInterpreter().interpret(command, variables);
                 case GENERATE:
                     return new GenerateInterpreter().interpret(command,variables);
+                default:
+                     break;
             }
         }
         return null;

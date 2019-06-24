@@ -15,12 +15,11 @@ public abstract class AbstractInterpreter implements CommandInterpreter<CommandE
         UNKNWON
     }
 
-    private static String OS = System.getProperty("os.name").toLowerCase();
-
     @Override
     public abstract CommandExecutable interpret(Command command, List<Variable> variables);
 
     public OS_TYPE get_os_type() {
+        String OS = System.getProperty("os.name").toLowerCase();
         if (OS.contains("nix") || OS.contains("nux")) {
             return OS_TYPE.LINUX;
         } else if (OS.contains("win")) {

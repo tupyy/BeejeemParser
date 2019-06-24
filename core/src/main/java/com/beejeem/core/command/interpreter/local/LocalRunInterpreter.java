@@ -43,9 +43,7 @@ public class LocalRunInterpreter extends AbstractInterpreter {
     }
 
     private Map<String, String> getEnvVariables(List<Variable> variables) {
-        Map<String, String> envVariables = variables.stream()
-                .collect(Collectors.toMap(Variable::getName, var -> String.valueOf(var.getValue())));
-        return envVariables;
+        return variables.stream().collect(Collectors.toMap(Variable::getName, var -> String.valueOf(var.getValue())));
     }
 
 }

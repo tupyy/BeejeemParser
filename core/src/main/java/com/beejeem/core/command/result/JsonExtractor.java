@@ -8,15 +8,17 @@ import java.util.regex.Pattern;
  */
 public final class JsonExtractor {
 
-    public static String extract(String text) {
-        String EMPTY_JSON = "{}";
+    private JsonExtractor() {
+        throw new IllegalStateException("Utility class");
+    }
 
+    public static String extract(String text) {
         Pattern pattern = Pattern.compile(".*(\\{.*}).*");
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
             return matcher.group(1);
         }
 
-        return EMPTY_JSON;
+        return "{}";
     }
 }

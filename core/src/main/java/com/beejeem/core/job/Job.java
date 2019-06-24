@@ -64,6 +64,6 @@ public interface Job {
      * Process the result of a command
      * @param result command result
      */
-    public void processCommandResult(CommandResult result);
+    public void processCommandResult(CommandResult result) throws IllegalAccessException;
 
 }

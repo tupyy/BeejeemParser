@@ -1,9 +1,7 @@
 package com.beejeem.core;
 
-import com.beejeem.core.job.DefaultJob;
 import com.beejeem.core.job.Job;
 import com.beejeem.core.job.JobFactory;
-import com.beejeem.core.job.actions.DefaultJobCommandAction;
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.parser.DefaultParser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -44,7 +42,7 @@ public final class CoreImpl implements Core{
     }
 
     @Override
-    public UUID createJob(String name, String programCode) throws ParseCancellationException {
+    public UUID createJob(String name, String programCode) {
         Program program = new DefaultParser().parse(programCode);
         Job job = JobFactory.createDefaultJob(name, program);
         jobs.add(job);
@@ -53,7 +51,7 @@ public final class CoreImpl implements Core{
 
     @Override
     public void deleteJob(UUID jobID) {
-
+        throw  new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override

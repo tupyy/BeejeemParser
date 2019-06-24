@@ -12,12 +12,8 @@ import java.util.List;
 
 public class CopyInterpreter extends AbstractInterpreter {
 
-    public CopyInterpreter() {
-    }
-
     @Override
     public CommandExecutable interpret(Command command, List<Variable> variables) {
-
         Path sourceFile = Paths.get(String.valueOf(command.getVariables().get(0).getValue()));
         Path destination = Paths.get(String.valueOf(command.getVariables().get(1).getValue()));
         return new CopyCommandExecutable(command.getParentID(), command.getID(), sourceFile, destination);

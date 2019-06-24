@@ -4,10 +4,10 @@ import java.util.UUID;
 
 public final class JobDefaultStates {
 
-    public final static UUID STOP_STATE = UUID.randomUUID();
-    public final static UUID ERROR_STATE = UUID.randomUUID();
-    public final static UUID FINISH_STATE = UUID.randomUUID();
-    public final static UUID READY_STATE = UUID.randomUUID();
+    public static final UUID STOP_STATE = UUID.randomUUID();
+    public static final UUID ERROR_STATE = UUID.randomUUID();
+    public static final UUID FINISH_STATE = UUID.randomUUID();
+    public static final UUID READY_STATE = UUID.randomUUID();
 
     public JobDefaultStates() {}
 }

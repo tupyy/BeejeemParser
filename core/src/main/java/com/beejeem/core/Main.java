@@ -16,7 +16,6 @@ public class Main {
     public static void main(String[] args) {
         try {
             String data = readFileAsString("/home/cosmin/Projects/BeejeemParser/code.txt");
-            final Program result = new DefaultParser().parse(data);
         } catch (Exception e) {
             e.printStackTrace();
         }

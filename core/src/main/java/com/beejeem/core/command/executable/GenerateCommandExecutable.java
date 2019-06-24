@@ -40,6 +40,6 @@ public final class GenerateCommandExecutable implements LocalCommandExecutable {
 
     @Override
     public void setOutputParser(ResultParser parser) {
-
+        throw new UnsupportedOperationException("Parser is not used here.");
     }
 }

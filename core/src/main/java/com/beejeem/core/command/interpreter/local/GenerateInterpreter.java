@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 public class GenerateInterpreter extends AbstractInterpreter {
 
-    public GenerateInterpreter() {}
-
     @Override
     public CommandExecutable interpret(Command command, List<Variable> variables) {
         Map<String,Object> vars = variables.stream()

@@ -45,7 +45,7 @@ public abstract class JobStateMachine {
         this.changeStateAction = changeStateAction;
 
         StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
-        this.stateMachine = new StateMachine<UUID, Trigger>(JobDefaultStates.READY_STATE, stateMachineConfig);
+        this.stateMachine = new StateMachine<>(JobDefaultStates.READY_STATE, stateMachineConfig);
     }
 
     /**

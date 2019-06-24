@@ -74,10 +74,12 @@ public final class DefaultJob extends JobStateMachine implements Job {
     }
 
     @Override
-    public void processCommandResult(CommandResult result) {
+    public void processCommandResult(CommandResult result) throws IllegalAccessException {
 
         // result command id must match the current state = command id
-        assert (result.getCommandID() == this.getStateMachine().getState());
+        if (result.getCommandID() != this.getStateMachine().getState()) {
+            throw new IllegalAccessException("Result ID do not match the current command ID.");
+        }
 
         if (result.getResultStatus() == CommandResult.CommandResultStatus.OK) {
             if (this.clone.getIterator().hasNext()) {

@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class CopyCommandExecutable implements LocalCommandExecutable {
 
-    private final static Logger logger = LogManager.getLogger(CopyCommandExecutable.class);
+    private static final Logger logger = LogManager.getLogger(CopyCommandExecutable.class);
     private final UUID jobID;
     private final UUID commandID;
     private final Path source;
@@ -37,11 +37,11 @@ public class CopyCommandExecutable implements LocalCommandExecutable {
         try {
             Files.copy(source, destination.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.OK);
-            logger.debug(String.format("Command %s: File copied %s -> %s", this.commandID.toString(), source.toString(), destination.toString()));
+            logger.debug(String.format("Command %s: File copied %s -> %s", this.commandID, source, destination));
         } catch (IOException e) {
             commandResult.setCommandResultStatus(CommandResult.CommandResultStatus.ERROR);
             commandResult.setMessage(e.getMessage());
-            logger.error(String.format("Command %s failed. Reason: %s", this.commandID.toString(), e.getMessage()));
+            logger.error(String.format("Command %s failed. Reason: %s", this.commandID, e.getMessage()));
         }
         return commandResult;
     }
@@ -58,6 +58,7 @@ public class CopyCommandExecutable implements LocalCommandExecutable {
 
     @Override
     public void setOutputParser(ResultParser parser) {
+       throw new UnsupportedOperationException("Parser is not used here.");
     }
 
 }
