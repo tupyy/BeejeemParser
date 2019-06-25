@@ -1,6 +1,5 @@
 package com.beejeem.core.job;
 
-import com.beejeem.core.CoreImpl;
 import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.core.command.interpreter.CommandInterpreter;
 import com.beejeem.core.command.interpreter.CommandInterpreterImpl;
