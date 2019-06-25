@@ -16,21 +16,12 @@ import java.util.UUID;
 @Service
 public final class CoreImpl implements Core {
 
-    private static Core instance = null;
-
     @Autowired
     private CommandExecutor<CommandExecutable> commandExecutor;
 
     private List<Job> jobs = new ArrayList<>();
 
     public CoreImpl() {
-    }
-
-    public static Core getInstance() {
-        if (instance == null) {
-            instance = new CoreImpl();
-        }
-        return instance;
     }
 
     @Override
