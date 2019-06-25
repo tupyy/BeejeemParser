@@ -34,10 +34,4 @@ public interface Core {
      */
     public Job getJob(UUID jobID);
 
-    /**
-     * Return the command executor
-     * @return command executor
-     */
-    public CommandExecutor getCommandExecutor();
-
 }

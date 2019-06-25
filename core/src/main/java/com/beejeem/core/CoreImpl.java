@@ -45,8 +45,4 @@ public final class CoreImpl implements Core {
                    .orElse(null);
     }
 
-    @Override
-    public CommandExecutor getCommandExecutor() {
-        return commandExecutor;
-    }
 }
