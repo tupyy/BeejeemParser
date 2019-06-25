@@ -25,7 +25,7 @@ public class CommandInterpreterImpl implements CommandInterpreter<CommandExecuta
                 case GENERATE:
                     return new GenerateInterpreter().interpret(command,variables);
                 default:
-                     break;
+                    throw new UnsupportedOperationException("Command type not implemented yet.");
             }
         }
         return null;
