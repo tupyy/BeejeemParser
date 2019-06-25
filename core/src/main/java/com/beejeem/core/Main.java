@@ -1,7 +1,7 @@
 package com.beejeem.core;
 
-import com.beejeem.parser.domain.Program;
-import com.beejeem.parser.parser.DefaultParser;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +15,11 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String data = readFileAsString("/home/cosmin/Projects/BeejeemParser/code.txt");
+            ApplicationContext context = new
+                    AnnotationConfigApplicationContext(CoreContext.class);
+
+            Core core = context.getBean(Core.class);
+            System.out.print("End");
         } catch (Exception e) {
             e.printStackTrace();
         }
