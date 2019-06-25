@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class Main {
 
@@ -19,6 +20,8 @@ public class Main {
                     AnnotationConfigApplicationContext(CoreContext.class);
 
             Core core = context.getBean(Core.class);
+            String data = readFileAsString("/home/cosmin/Projects/BeejeemParser/code.txt");
+            UUID job = core.createJob("test",data);
             System.out.print("End");
         } catch (Exception e) {
             e.printStackTrace();
