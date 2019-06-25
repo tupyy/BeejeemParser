@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class JobStateMachine {
 
+    // Trigger definitions
     protected enum Trigger {
         DO_COMMAND,
         DO_ERROR,
@@ -24,11 +25,31 @@ public abstract class JobStateMachine {
         DO_STOP
     }
 
+    /**
+     * Definition of default states. These states are common to every job
+     */
+    public static final UUID STOP_STATE = UUID.randomUUID();
+    public static final UUID ERROR_STATE = UUID.randomUUID();
+    public static final UUID FINISH_STATE = UUID.randomUUID();
+    public static final UUID READY_STATE = UUID.randomUUID();
+
+    // state machine
     private final StateMachine<UUID, Trigger> stateMachine;
+
+    //Trigger definition for command states
     private TriggerWithParameters2<Command, List, UUID, Trigger> commandTrigger
             = new TriggerWithParameters2<>(Trigger.DO_COMMAND, Command.class, List.class);
 
+    /**
+     * Action called at entry in a new command state.
+     * @see {@link Action2}
+     */
     private final Action2 commandAction;
+
+    /**
+     * Action called when state changes.
+     * @see {@link Action}
+     */
     private final Action changeStateAction;
 
     @SuppressWarnings("unchecked")
@@ -45,12 +66,11 @@ public abstract class JobStateMachine {
         this.changeStateAction = changeStateAction;
 
         StateMachineConfig stateMachineConfig = this.createStateMachineConfiguration(program);
-        this.stateMachine = new StateMachine<>(JobDefaultStates.READY_STATE, stateMachineConfig);
+        this.stateMachine = new StateMachine<>(READY_STATE, stateMachineConfig);
     }
 
     /**
      * Get the state machine
-     *
      * @return state machine
      */
     protected StateMachine<UUID, Trigger> getStateMachine() {
@@ -89,11 +109,11 @@ public abstract class JobStateMachine {
             stateMachineConfig.configure(commands.get(0).getID())
                     .onEntry(changeStateAction)
                     .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                    .permit(Trigger.DO_STOP, JobDefaultStates.STOP_STATE)
-                    .permit(Trigger.DO_ERROR, JobDefaultStates.ERROR_STATE)
+                    .permit(Trigger.DO_STOP, STOP_STATE)
+                    .permit(Trigger.DO_ERROR, ERROR_STATE)
                     .permitReentry(Trigger.DO_RESTART)
-                    .permit(Trigger.DO_COMMAND, JobDefaultStates.FINISH_STATE)
-                    .permit(Trigger.DO_FINISH, JobDefaultStates.FINISH_STATE);
+                    .permit(Trigger.DO_COMMAND, FINISH_STATE)
+                    .permit(Trigger.DO_FINISH, FINISH_STATE);
         } else {
             for (int i = 0; i < commands.size(); i++) {
                 if (i == 0) {
@@ -103,16 +123,16 @@ public abstract class JobStateMachine {
                     stateMachineConfig.configure(commands.get(i).getID())
                             .onEntry(changeStateAction)
                             .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                            .permit(Trigger.DO_STOP, JobDefaultStates.STOP_STATE)
-                            .permit(Trigger.DO_ERROR, JobDefaultStates.ERROR_STATE)
+                            .permit(Trigger.DO_STOP, STOP_STATE)
+                            .permit(Trigger.DO_ERROR, ERROR_STATE)
                             .permitReentry(Trigger.DO_RESTART)
                             .permit(Trigger.DO_COMMAND, commands.get(i + 1).getID());
                 } else if (i < commands.size() - 1) {
                     stateMachineConfig.configure(commands.get(i).getID())
                             .onEntry(changeStateAction)
                             .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                            .permit(Trigger.DO_STOP, JobDefaultStates.STOP_STATE)
-                            .permit(Trigger.DO_ERROR, JobDefaultStates.ERROR_STATE)
+                            .permit(Trigger.DO_STOP, STOP_STATE)
+                            .permit(Trigger.DO_ERROR, ERROR_STATE)
                             .permit(Trigger.DO_RESTART, firstStageID)
                             .permit(Trigger.DO_COMMAND, commands.get(i + 1).getID());
                 } else {
@@ -122,27 +142,27 @@ public abstract class JobStateMachine {
                     stateMachineConfig.configure(commands.get(i).getID())
                             .onEntry(changeStateAction)
                             .onEntryFrom(commandTrigger, commandAction, Command.class, List.class)
-                            .permit(Trigger.DO_STOP, JobDefaultStates.STOP_STATE)
-                            .permit(Trigger.DO_ERROR, JobDefaultStates.ERROR_STATE)
+                            .permit(Trigger.DO_STOP, STOP_STATE)
+                            .permit(Trigger.DO_ERROR, ERROR_STATE)
                             .permit(Trigger.DO_RESTART, firstStageID)
-                            .permit(Trigger.DO_COMMAND, JobDefaultStates.FINISH_STATE)
-                            .permit(Trigger.DO_FINISH, JobDefaultStates.FINISH_STATE);
+                            .permit(Trigger.DO_COMMAND, FINISH_STATE)
+                            .permit(Trigger.DO_FINISH, FINISH_STATE);
                 }
             }
         }
 
         //add stop state configuration
-        stateMachineConfig.configure(JobDefaultStates.STOP_STATE)
+        stateMachineConfig.configure(STOP_STATE)
                 .onEntry(changeStateAction)
                 .permit(Trigger.DO_COMMAND, firstStageID);
 
         //add error state configuration
-        stateMachineConfig.configure(JobDefaultStates.ERROR_STATE)
+        stateMachineConfig.configure(ERROR_STATE)
                 .onEntry(changeStateAction)
                 .permit(Trigger.DO_COMMAND,firstStageID);
 
         // add start state configuration. Permits trigger for the first command of the program
-        stateMachineConfig.configure(JobDefaultStates.READY_STATE)
+        stateMachineConfig.configure(READY_STATE)
                 .onEntry(changeStateAction)
                 .permit(Trigger.DO_COMMAND, firstStageID);
 

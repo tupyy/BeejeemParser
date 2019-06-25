@@ -46,8 +46,8 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     @Override
     public void start() {
-        if (this.getState() == JobDefaultStates.READY_STATE ||
-                this.getState() == JobDefaultStates.STOP_STATE) {
+        if (this.getState() == READY_STATE ||
+                this.getState() == STOP_STATE) {
             this.clone = this.program.clone();
             this.getStateMachine().fire(this.getCommandTrigger(), this.clone.getIterator().next(), this.clone.getVariables());
         }
@@ -55,15 +55,15 @@ public final class DefaultJob extends JobStateMachine implements Job {
 
     @Override
     public void stop() {
-        if (this.getState() != JobDefaultStates.STOP_STATE ||
-                this.getState() != JobDefaultStates.READY_STATE) {
+        if (this.getState() != STOP_STATE ||
+                this.getState() != READY_STATE) {
             this.getStateMachine().fire(Trigger.DO_STOP);
         }
     }
 
     @Override
     public void restart() {
-        if (this.getState() != JobDefaultStates.READY_STATE) {
+        if (this.getState() != READY_STATE) {
             this.getStateMachine().fire(Trigger.DO_RESTART);
         }
     }
