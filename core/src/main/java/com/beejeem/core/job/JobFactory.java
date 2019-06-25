@@ -4,16 +4,23 @@ import com.beejeem.core.CoreImpl;
 import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.core.command.interpreter.CommandInterpreter;
 import com.beejeem.core.command.interpreter.CommandInterpreterImpl;
+import com.beejeem.core.executor.CommandExecutor;
 import com.beejeem.core.job.actions.DefaultJobCommandAction;
 import com.beejeem.parser.domain.Program;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Job factory class.
  */
+@Component
 public class JobFactory {
 
-    private JobFactory() {
-        throw new IllegalStateException("Utility class");
+    private static CommandExecutor commandExecutor;
+
+    @Autowired
+    public void setCommandExecutor(CommandExecutor tmpCommandExecutor) {
+        commandExecutor = tmpCommandExecutor;
     }
 
     /**
@@ -24,7 +31,6 @@ public class JobFactory {
      */
     public static Job createDefaultJob(String name, Program program) {
         CommandInterpreter<CommandExecutable> commandInterpreter = new CommandInterpreterImpl();
-        return new DefaultJob(name, program, new DefaultJobCommandAction(commandInterpreter,
-                CoreImpl.getInstance().getCommandExecutor()));
+        return new DefaultJob(name, program, new DefaultJobCommandAction(commandInterpreter, commandExecutor));
     }
 }
