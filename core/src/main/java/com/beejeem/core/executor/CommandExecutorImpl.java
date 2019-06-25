@@ -5,13 +5,14 @@ import com.beejeem.core.command.executable.LocalCommandExecutable;
 import com.beejeem.core.command.result.CommandResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
+@Service
 public final class CommandExecutorImpl implements CommandExecutor<CommandExecutable> {
 
     private static Logger logger = LogManager.getLogger(CommandExecutorImpl.class);
@@ -27,11 +28,11 @@ public final class CommandExecutorImpl implements CommandExecutor<CommandExecuta
      * TODO Find a better solution for executing remote commands
      */
     private ThreadPoolExecutor remoteExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
-    private final CommandResultManager commandResultManager;
 
-    public CommandExecutorImpl(CommandResultManager commandResultManager) {
-        checkNotNull(commandResultManager, "Command result manager cannot be null");
-        this.commandResultManager = commandResultManager;
+    @Autowired
+    private CommandResultManager commandResultManager;
+
+    public CommandExecutorImpl() {
     }
 
     @Override

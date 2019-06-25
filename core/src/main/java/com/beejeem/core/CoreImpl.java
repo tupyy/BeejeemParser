@@ -2,26 +2,28 @@ package com.beejeem.core;
 
 import com.beejeem.core.command.executable.CommandExecutable;
 import com.beejeem.core.executor.CommandExecutor;
-import com.beejeem.core.executor.CommandExecutorImpl;
-import com.beejeem.core.executor.CommandResultManagerImpl;
 import com.beejeem.core.job.Job;
 import com.beejeem.core.job.JobFactory;
 import com.beejeem.parser.domain.Program;
 import com.beejeem.parser.parser.DefaultParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public final class CoreImpl implements Core {
 
     private static Core instance = null;
 
+    @Autowired
     private CommandExecutor<CommandExecutable> commandExecutor;
 
     private List<Job> jobs = new ArrayList<>();
 
-    private CoreImpl() {
+    public CoreImpl() {
     }
 
     public static Core getInstance() {
@@ -54,10 +56,6 @@ public final class CoreImpl implements Core {
 
     @Override
     public CommandExecutor getCommandExecutor() {
-        if (this.commandExecutor == null) {
-            commandExecutor = new CommandExecutorImpl(new CommandResultManagerImpl());
-        }
-
         return commandExecutor;
     }
 }
