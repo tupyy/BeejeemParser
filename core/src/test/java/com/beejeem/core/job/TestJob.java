@@ -32,38 +32,38 @@ public class TestJob {
      * Test a simple 2 commands job with ok results
      */
     @Test
-    public void testNominal() {
+    public void testNominal() throws IllegalAccessException {
         Program program = new DefaultProgram();
         program.add(this.testCommand1);
         program.add(this.testCommand2);
         program.add(new StringVariable("arg1","value"));
 
         job = new DefaultJob("test", program, testCommandAction);
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.READY_STATE);
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.processCommandResult(this.okResult1);
         Assert.assertEquals(job.getState(), program.getCommands().get(1).getID());
         job.processCommandResult(this.okResult2);
-        Assert.assertEquals(job.getState(), JobDefaultStates.FINISH_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.FINISH_STATE);
     }
 
     /**
      * Test a simple 2 commands job with ok results
      */
     @Test
-    public void testError() {
+    public void testError() throws IllegalAccessException {
         Program program = new DefaultProgram();
         program.add(this.testCommand1);
         program.add(this.testCommand2);
         program.add(new StringVariable("arg1","value"));
 
         job = new DefaultJob("test", program, testCommandAction);
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.READY_STATE);
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.processCommandResult(this.errorResult1);
-        Assert.assertEquals(job.getState(), JobDefaultStates.ERROR_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.ERROR_STATE);
     }
 
     /**
@@ -77,11 +77,11 @@ public class TestJob {
         program.add(new StringVariable("arg1","value"));
 
         job = new DefaultJob("test", program, testCommandAction);
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.READY_STATE);
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.stop();
-        Assert.assertEquals(job.getState(), JobDefaultStates.STOP_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.STOP_STATE);
     }
 
     /**
@@ -95,7 +95,7 @@ public class TestJob {
         program.add(new StringVariable("arg1","value"));
 
         job = new DefaultJob("test", program, testCommandAction);
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.READY_STATE);
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.restart();
@@ -106,16 +106,16 @@ public class TestJob {
      * Test a simple job with 1 command job
      */
     @Test
-    public void testOneCommand() {
+    public void testOneCommand() throws IllegalAccessException {
         Program program = new DefaultProgram();
         program.add(this.testCommand1);
         program.add(new StringVariable("arg1","value"));
 
         job = new DefaultJob("test", program, testCommandAction);
-        Assert.assertEquals(job.getState(), JobDefaultStates.READY_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.READY_STATE);
         job.start();
         Assert.assertEquals(job.getState(), program.getCommands().get(0).getID());
         job.processCommandResult(this.okResult1);
-        Assert.assertEquals(job.getState(), JobDefaultStates.FINISH_STATE);
+        Assert.assertEquals(job.getState(), DefaultJob.FINISH_STATE);
     }
 }
