@@ -18,7 +18,8 @@ public final class DefaultJobCommandAction implements Action2<Command, List<Vari
     private final CommandInterpreter<CommandExecutable> commandInterpreter;
     private final CommandExecutor<CommandExecutable> commandExecutor;
 
-    public DefaultJobCommandAction(CommandInterpreter<CommandExecutable> commandInterpreter, CommandExecutor<CommandExecutable> commandExecutor) {
+    public DefaultJobCommandAction(CommandInterpreter<CommandExecutable> commandInterpreter,
+                                   CommandExecutor<CommandExecutable> commandExecutor) {
         this.commandInterpreter = commandInterpreter;
         this.commandExecutor = commandExecutor;
     }
