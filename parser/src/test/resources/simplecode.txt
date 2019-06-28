@@ -1,0 +1,5 @@
+int function x(int i) {
+    return i;
+}
+
+a=x(2);
