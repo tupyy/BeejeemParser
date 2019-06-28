@@ -294,6 +294,7 @@ While    : W H I L E;
 To       : T O;
 Bool     : B O O L;
 Int      : I N T;
+In       : I N;
 Float    : F L O A T;
 Void     : V O I D;
 
