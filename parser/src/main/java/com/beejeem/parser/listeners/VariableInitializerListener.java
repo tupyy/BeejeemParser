@@ -19,20 +19,30 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.expression.ExpressionListener;
+import com.beejeem.parser.value.Value;
 
-public class BlockListener extends AbstractListener {
+public class VariableInitializerListener extends AbstractListener {
+    private Value value;
 
-    public BlockListener(ExecutionContext executionContext) {
+    public VariableInitializerListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
     @Override
-    public void enterBlock(bjmParser.BlockContext blockContext) {
-        if (blockContext.statement() != null) {
-            for (bjmParser.StatementContext statementContext: blockContext.statement()) {
-                StatementListener statementListener = new StatementListener(this.getExecutionContext());
-                statementListener.enterStatement(statementContext);
-            }
+    public void enterVariableInitializer(bjmParser.VariableInitializerContext variableInitializerContext) {
+        if (variableInitializerContext.expression() != null) {
+            ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
+            expressionListener.enterRule(variableInitializerContext.expression());
+            this.setValue(expressionListener.getValue());
         }
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
     }
 }

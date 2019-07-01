@@ -29,4 +29,8 @@ public class IntegerType implements Type {
    public Value createValue() {
       return new IntegerValue();
    }
+
+   public String toString() {
+      return "Integer";
+   }
 }

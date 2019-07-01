@@ -29,4 +29,8 @@ public class FloatType implements Type {
    public Value createValue() {
       return new FloatValue();
    }
+
+   public String toString() {
+      return "Float";
+   }
 }

@@ -15,24 +15,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners;
+package com.beejeem.parser.listeners.expression;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.value.FloatValue;
+import com.beejeem.parser.value.Value;
 
-public class BlockListener extends AbstractListener {
+public class FloatExpressionListener extends AbstractListener {
 
-    public BlockListener(ExecutionContext executionContext) {
+    private Value value;
+
+    public FloatExpressionListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
     @Override
-    public void enterBlock(bjmParser.BlockContext blockContext) {
-        if (blockContext.statement() != null) {
-            for (bjmParser.StatementContext statementContext: blockContext.statement()) {
-                StatementListener statementListener = new StatementListener(this.getExecutionContext());
-                statementListener.enterStatement(statementContext);
-            }
-        }
+    public void enterFloatExpression(bjmParser.FloatExpressionContext ctx) {
+        value = new FloatValue(Float.valueOf(ctx.getText()));
     }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
+    }
+
 }

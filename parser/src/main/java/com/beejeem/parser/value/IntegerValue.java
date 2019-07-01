@@ -19,11 +19,13 @@
 package com.beejeem.parser.value;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.type.IntegerType;
+import com.beejeem.parser.type.Type;
 
-public class IntegerValue implements AtomicValue {
-   public static final IntegerValue one = new IntegerValue(1);
-   public static final IntegerValue negativeone = new IntegerValue(1);
-   private int value;
+public class IntegerValue implements Value<Integer> {
+
+   private final Type type = new IntegerType();
+   private Integer value;
 
    public IntegerValue() {
       value = 0;
@@ -61,7 +63,7 @@ public class IntegerValue implements AtomicValue {
    @Override
    public Value div(Value v) {
       if (v instanceof IntegerValue) {
-         return new FloatValue((double) value / ((IntegerValue) v).getValue());
+         return new FloatValue((float) value / ((IntegerValue) v).getValue());
       } else if (v instanceof FloatValue) {
          return new FloatValue(value / ((FloatValue) v).getValue());
       } else {
@@ -72,9 +74,7 @@ public class IntegerValue implements AtomicValue {
    @Override
    public BooleanValue eq(Value v) {
       if (v instanceof IntegerValue) {
-         return new BooleanValue(value == ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value == ((FloatValue) v).getValue());
+         return new BooleanValue(value.equals(v.getValue()));
       } else {
          throw new InvalidOperationException();
       }
@@ -85,7 +85,7 @@ public class IntegerValue implements AtomicValue {
       return Integer.toString(value);
    }
 
-   public int getValue() {
+   public Integer getValue() {
       return value;
    }
 
@@ -109,11 +109,6 @@ public class IntegerValue implements AtomicValue {
       } else {
          throw new InvalidOperationException();
       }
-   }
-
-   @Override
-   public Value idiv(Value v) {
-      throw new InvalidOperationException();
    }
 
    @Override
@@ -171,9 +166,7 @@ public class IntegerValue implements AtomicValue {
    @Override
    public BooleanValue neq(Value v) {
       if (v instanceof IntegerValue) {
-         return new BooleanValue(value != ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value != ((FloatValue) v).getValue());
+         return new BooleanValue(value != ((IntegerValue) v).getValue().intValue());
       } else {
          throw new InvalidOperationException();
       }
@@ -194,15 +187,14 @@ public class IntegerValue implements AtomicValue {
       if (v instanceof IntegerValue) {
          value = ((IntegerValue) v).getValue();
       } else {
-         throw new InvalidOperationException();
+         throw new InvalidOperationException(
+                 String.format("Cannot cast %s to %s",v.getType(), this.getType()));
       }
    }
 
    @Override
-   public void setFromString(String s) {
-      if ((null != s) && (s.length() > 0)) {
-         value = Integer.parseInt(s);
-      }
+   public void set(Integer v) {
+      this.value = v;
    }
 
    public void setValue(int value) {
@@ -218,5 +210,10 @@ public class IntegerValue implements AtomicValue {
       } else {
          throw new InvalidOperationException();
       }
+   }
+
+   @Override
+   public Type getType() {
+      return this.type;
    }
 }

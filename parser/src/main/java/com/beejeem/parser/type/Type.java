@@ -23,4 +23,6 @@ public interface Type {
    boolean builtIn();
 
    Value createValue();
+
+   String toString();
 }

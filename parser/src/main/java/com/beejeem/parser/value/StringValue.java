@@ -19,12 +19,16 @@
 package com.beejeem.parser.value;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.type.StringType;
+import com.beejeem.parser.type.Type;
 
-public class StringValue implements AtomicValue {
+public class StringValue implements Value<String> {
+
    private String value;
+   private Type type = new StringType();
 
    public StringValue() {
-      value = "";
+      value = new String();
    }
 
    public StringValue(String value) {
@@ -56,11 +60,6 @@ public class StringValue implements AtomicValue {
       throw new InvalidOperationException();
    }
 
-   @Override
-   public String toString() {
-      return value;
-   }
-
    public String getValue() {
       return value;
    }
@@ -72,11 +71,6 @@ public class StringValue implements AtomicValue {
 
    @Override
    public BooleanValue gte(Value v) {
-      throw new InvalidOperationException();
-   }
-
-   @Override
-   public Value idiv(Value v) {
       throw new InvalidOperationException();
    }
 
@@ -127,17 +121,14 @@ public class StringValue implements AtomicValue {
 
    @Override
    public void set(Value v) {
-      if (v instanceof AtomicValue) {
-         value = v.toString();
-      } else {
-         throw new InvalidOperationException();
-      }
+      value = v.toString();
    }
 
    @Override
-   public void setFromString(String s) {
-      value = s;
+   public void set(String v) {
+      this.value = v;
    }
+
 
    public void setValue(String value) {
       this.value = value;
@@ -146,5 +137,15 @@ public class StringValue implements AtomicValue {
    @Override
    public Value subtract(Value v) {
       throw new InvalidOperationException();
+   }
+
+   @Override
+   public Type getType() {
+      return this.type;
+   }
+
+   @Override
+   public String toString() {
+      return value;
    }
 }

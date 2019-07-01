@@ -44,4 +44,8 @@ public class StringType implements Type {
    public int getLength() {
       return length;
    }
+
+   public String toString() {
+      return "String";
+   }
 }

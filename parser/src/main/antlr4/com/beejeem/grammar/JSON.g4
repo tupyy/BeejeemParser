@@ -3,10 +3,6 @@
 // Derived from http://json.org
 grammar JSON;
 
-@header {
-package com.beejeem.antrl4;
-}
-
 json
    : '{' varassignment (',' varassignment )* '}'
    | '{' '}'

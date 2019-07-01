@@ -35,7 +35,7 @@ statement
  ;
 
 assignment
- : Identifier indexes? '=' expression
+ : Identifier '=' expression
  ;
 
 variableDeclaration
@@ -126,7 +126,8 @@ expression
  | expression '||' expression                           #orExpression
  | expression '?' expression ':' expression             #ternaryExpression
  | expression In expression                             #inExpression
- | Number                                               #numberExpression
+ | Integer                                              #integerExpression
+ | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
  | functionCall indexes?                                #functionCallExpression
  | list indexes?                                        #listExpression
@@ -325,8 +326,12 @@ Comma    : ',';
 QMark    : '?';
 Colon    : ':';
 
-Number
- : Integer ( '.' Digit* )?
+Integer
+ : NUM_INT
+ ;
+
+FloatNumber
+ : NUM_REAL
  ;
 
 Identifier
@@ -358,7 +363,11 @@ Space
  : [ \t\r\n\u000C] -> skip
  ;
 
-fragment Integer
+fragment NUM_REAL
+ : NUM_INT ( '.' Digit* )?
+ ;
+
+fragment NUM_INT
  : [1-9] Digit*
  | '0'
  ;

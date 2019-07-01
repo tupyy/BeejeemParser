@@ -1,109 +1,53 @@
 package com.beejeem.parser.test;
 
-import com.beejeem.parser.domain.Program;
-import com.beejeem.parser.domain.commands.Command;
-import com.beejeem.parser.domain.commands.LocalCommand;
-import com.beejeem.parser.domain.variables.*;
-import com.beejeem.parser.parser.DefaultParser;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
+import com.beejeem.grammar.bjmLexer;
+import com.beejeem.grammar.bjmParser;
+import com.beejeem.grammar.bjmParser.ProgramContext;
+import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.Interpreter;
+import com.beejeem.parser.StackFrame;
+import com.beejeem.parser.listeners.ProgramListener;
+import com.beejeem.parser.value.IntegerValue;
+import com.beejeem.parser.value.Value;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.TokenStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class TestParser {
 
     @Test
-    public void testStringVariable() {
-        String code = "x=\"test\"\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(1, result.getVariables().size());
+    public void testVariableAssigment() {
+        Interpreter interpreter = new Interpreter();
+        try {
+            ExecutionContext executionContext = new ExecutionContext();
+            ProgramContext programContext =this.parse(readTestFile("simplecode.txt"));
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
 
-        List<Variable> variables = result.getVariables();
-
-        Assert.assertTrue(variables.get(0) instanceof StringVariable);
-        StringVariable s = (StringVariable) variables.get(0);
-        Assert.assertEquals("x", s.getName());
-        Assert.assertEquals("test", s.getValue());
+            StackFrame stackFrame = executionContext.getCurrentStackframe();
+            Value var = stackFrame.getVariable("a");
+            Assert.assertEquals(var.getType(), 2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    public void testIntegerVariable() {
-        String code = "x=2\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(1, result.getVariables().size());
-
-        List<Variable> variables = result.getVariables();
-
-        Assert.assertTrue(variables.get(0) instanceof IntegerVariable);
-        IntegerVariable s = (IntegerVariable) variables.get(0);
-        Assert.assertEquals("x", s.getName());
-        Assert.assertEquals(Integer.valueOf(2), s.getValue());
+    private InputStream readTestFile(String filename) {
+        return getClass().getClassLoader().getResourceAsStream(filename);
     }
 
-    @Test
-    public void testFloatVariable() {
-        String code = "x=2.2\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(1, result.getVariables().size());
-
-        List<Variable> variables = result.getVariables();
-
-        Assert.assertTrue(variables.get(0) instanceof FloatVariable);
-        Assert.assertEquals("x", variables.get(0).getName());
-        Assert.assertEquals(2.2f, variables.get(0).getValue());
+    private ProgramContext parse(InputStream stream) throws IOException {
+        final Lexer lexer = new bjmLexer(CharStreams.fromStream(stream));
+        final TokenStream tokenStream = new CommonTokenStream(lexer);
+        final bjmParser parser = new bjmParser(tokenStream);
+        return parser.program();
     }
 
-    @Test
-    public void testBooleanVariable() {
-        String code = "x=true\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(1, result.getVariables().size());
-
-        List<Variable> variables = result.getVariables();
-
-        Assert.assertTrue(variables.get(0) instanceof BooleanVariable);
-        Assert.assertEquals("x", variables.get(0).getName());
-        Assert.assertTrue((Boolean) variables.get(0).getValue());
-    }
-
-    @Test
-    public void testMultipleVariable() {
-        String code = "x=\"test\"\ny=2\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(2, result.getVariables().size());
-
-        List<Variable> variables = result.getVariables();
-
-        Assert.assertTrue(variables.get(0) instanceof StringVariable);
-        StringVariable s = (StringVariable) variables.get(0);
-        Assert.assertEquals("x", s.getName());
-        Assert.assertEquals("test", s.getValue());
-
-        Assert.assertTrue(variables.get(1) instanceof IntegerVariable);
-        Assert.assertEquals("y", variables.get(1).getName());
-        Assert.assertEquals(2, variables.get(1).getValue());
-    }
-
-    @Test
-    public void testRunCommand() {
-        String code = "run \"arg\"\n";
-        final Program result = new DefaultParser().parse(code);
-        Assert.assertEquals(0, result.getVariables().size());
-        Assert.assertEquals(1, result.getCommands().size());
-
-        List<Command> commands = result.getCommands();
-
-        Assert.assertTrue(commands.get(0) instanceof LocalCommand);
-        Assert.assertEquals(Command.CommandType.RUN, commands.get(0).getType()  );
-        Assert.assertEquals(1, commands.get(0).getVariables().size());
-        Assert.assertEquals("arg", commands.get(0).getVariables().get(0).getValue());
-    }
-
-    @Test(expected = ParseCancellationException.class)
-    public void testParseException() {
-        String code = "run \"arg\"\nunknown_command \"ddd\"\n";
-        final Program result = new DefaultParser().parse(code);
-    }
 }

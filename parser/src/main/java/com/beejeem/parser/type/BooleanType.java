@@ -29,4 +29,8 @@ public class BooleanType implements Type {
    public Value createValue() {
       return new BooleanValue();
    }
+
+   public String toString() {
+      return "Boolean";
+   }
 }

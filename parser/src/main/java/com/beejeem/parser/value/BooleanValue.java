@@ -19,9 +19,12 @@
 package com.beejeem.parser.value;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.type.BooleanType;
+import com.beejeem.parser.type.Type;
 
-public class BooleanValue implements AtomicValue {
+public class BooleanValue implements Value<Boolean> {
    private boolean value;
+   private Type type = new BooleanType();
 
    public BooleanValue() {
       value = false;
@@ -72,11 +75,6 @@ public class BooleanValue implements AtomicValue {
 
    @Override
    public BooleanValue gte(Value v) {
-      throw new InvalidOperationException();
-   }
-
-   @Override
-   public Value idiv(Value v) {
       throw new InvalidOperationException();
    }
 
@@ -142,19 +140,27 @@ public class BooleanValue implements AtomicValue {
       }
    }
 
-   @Override
-   public void setFromString(String s) {
-      if ((null != s) && (s.length() > 0)) {
-         value = Boolean.parseBoolean(s);
-      }
-   }
+    @Override
+    public void set(Boolean v) {
+        this.value = v;
+    }
 
-   public void setValue(boolean value) {
+    public void setValue(boolean value) {
       this.value = value;
    }
 
    @Override
    public Value subtract(Value v) {
       throw new InvalidOperationException();
+   }
+
+   @Override
+   public Type getType() {
+      return this.type;
+   }
+
+   @Override
+   public Boolean getValue() {
+      return value;
    }
 }

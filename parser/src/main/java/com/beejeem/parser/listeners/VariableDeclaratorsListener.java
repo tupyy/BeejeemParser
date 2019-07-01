@@ -19,20 +19,30 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.value.Value;
 
-public class BlockListener extends AbstractListener {
+import java.util.HashMap;
+import java.util.Map;
 
-    public BlockListener(ExecutionContext executionContext) {
+public class VariableDeclaratorsListener extends AbstractListener {
+
+    private Map<String, Value> values = new HashMap<>();
+
+    public VariableDeclaratorsListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
-    @Override
-    public void enterBlock(bjmParser.BlockContext blockContext) {
-        if (blockContext.statement() != null) {
-            for (bjmParser.StatementContext statementContext: blockContext.statement()) {
-                StatementListener statementListener = new StatementListener(this.getExecutionContext());
-                statementListener.enterStatement(statementContext);
-            }
+    public void enterVariableDeclarators(bjmParser.VariableDeclaratorsContext ctx) {
+        for (bjmParser.VariableDeclaratorContext variableDeclaratorContext: ctx.variableDeclarator()) {
+            VariableDeclaratorListener variableDeclaratorListener = new VariableDeclaratorListener(this.getExecutionContext());
+            variableDeclaratorListener.enterVariableDeclarator(variableDeclaratorContext);
+
+            this.getValues().put(variableDeclaratorListener.getVariableName(), variableDeclaratorListener.getValue());
         }
     }
+
+    public Map<String, Value> getValues() {
+        return values;
+    }
+
 }

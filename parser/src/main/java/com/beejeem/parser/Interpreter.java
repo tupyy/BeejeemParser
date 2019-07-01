@@ -47,7 +47,7 @@ public class Interpreter {
    }
 
    /**
-    * parse Pascal program from inputstream
+    * parse program from inputstream
     */
    private ProgramContext parse(InputStream inputStream) throws IOException {
       final Lexer lexer = new bjmLexer(CharStreams.fromStream(inputStream));
@@ -62,7 +62,7 @@ public class Interpreter {
           * parse program
           */
          final ProgramContext programContext = parse(inputStream);
-         if (null != programContext) {
+         if (programContext != null) {
             /*
              * enter program listener
              */

@@ -28,6 +28,11 @@ public class ProgramListener extends AbstractListener {
 
     @Override
     public void enterProgram(bjmParser.ProgramContext programContext) {
-
+        if (programContext.block() != null) {
+            getExecutionContext().pushStackframe();
+            BlockListener blockListener = new BlockListener(this.getExecutionContext());
+            blockListener.enterBlock(programContext.block());
+            getExecutionContext().popStackframe();
+        }
     }
 }

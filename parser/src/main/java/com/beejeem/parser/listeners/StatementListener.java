@@ -18,6 +18,7 @@
 package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
+import com.beejeem.grammar.bjmParser.LocalVariableDeclarationContext;
 import com.beejeem.parser.ExecutionContext;
 
 public class StatementListener extends AbstractListener {
@@ -29,5 +30,16 @@ public class StatementListener extends AbstractListener {
     @Override
     public void enterStatement(bjmParser.StatementContext statementContext) {
 
+        if (statementContext.assignment() != null) {
+            AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
+            assignmentListener.enterAssignment(statementContext.assignment());
+        }
+
+        if (statementContext.variableDeclaration() != null) {
+            LocalVariableDeclarationContext ctx = statementContext.variableDeclaration().localVariableDeclaration();
+            LocalVariableDeclarationListener localVariableDeclarationListener
+                    = new LocalVariableDeclarationListener(this.getExecutionContext());
+            localVariableDeclarationListener.enterLocalVariableDeclaration(ctx);
+        }
     }
 }

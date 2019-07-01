@@ -19,15 +19,18 @@
 package com.beejeem.parser.value;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.type.FloatType;
+import com.beejeem.parser.type.Type;
 
-public class FloatValue implements AtomicValue {
-   private double value;
+public class FloatValue implements Value<Float> {
+   private float value;
+   private Type type = new FloatType();
 
    public FloatValue() {
       value = 0;
    }
 
-   public FloatValue(double value) {
+   public FloatValue(float value) {
       this.value = value;
    }
 
@@ -70,7 +73,7 @@ public class FloatValue implements AtomicValue {
       }
    }
 
-   public double getValue() {
+   public Float getValue() {
       return value;
    }
 
@@ -94,11 +97,6 @@ public class FloatValue implements AtomicValue {
       } else {
          throw new InvalidOperationException();
       }
-   }
-
-   @Override
-   public Value idiv(Value v) {
-      throw new InvalidOperationException();
    }
 
    @Override
@@ -180,18 +178,16 @@ public class FloatValue implements AtomicValue {
    }
 
    @Override
+   public void set(Float v) {
+      this.value = v;
+   }
+
+   @Override
    public String toString() {
       return Double.toString(value);
    }
 
-   @Override
-   public void setFromString(String s) {
-      if ((null != s) && (s.length() > 0)) {
-         value = Double.parseDouble(s);
-      }
-   }
-
-   public void setValue(double value) {
+   public void setValue(float value) {
       this.value = value;
    }
 
@@ -204,6 +200,11 @@ public class FloatValue implements AtomicValue {
       } else {
          throw new InvalidOperationException();
       }
+   }
+
+   @Override
+   public Type getType() {
+      return this.type;
    }
 
    @Override

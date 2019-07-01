@@ -1,5 +1,3 @@
-int function x(int i) {
-    return i;
-}
+int a = 2;
 
-a=x(2);
+a = 3;
