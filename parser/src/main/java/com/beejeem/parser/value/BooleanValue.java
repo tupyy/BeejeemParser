@@ -108,6 +108,11 @@ public class BooleanValue implements Value<Boolean> {
    }
 
    @Override
+   public Value power(Value v) {
+      throw new InvalidOperationException("Power operation not allowed on booleans.");
+   }
+
+   @Override
    public Value neg() {
       throw new InvalidOperationException();
    }

@@ -159,6 +159,11 @@ public class IntegerValue implements Value<Integer> {
    }
 
    @Override
+   public Value power(Value v) {
+      return null;
+   }
+
+   @Override
    public Value neg() {
       return new IntegerValue(value * -1);
    }

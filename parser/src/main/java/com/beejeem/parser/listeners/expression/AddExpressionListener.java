@@ -17,8 +17,10 @@
 
 package com.beejeem.parser.listeners.expression;
 
+import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
 
@@ -29,8 +31,24 @@ public class AddExpressionListener extends AbstractListener {
         super(executionContext);
     }
 
-    public void enterAddExpression(bjmParser.AddExpressionContext context) {
+    public void enterAddExpression(bjmParser.AddExpressionContext ctx) {
+        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
+        leftExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(0));
+        Value leftValue = leftExprListener.getValue();
 
+        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
+        rightExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(2));
+
+        switch (ctx.op.getType()) {
+            case bjmLexer.Add:
+                this.setValue(leftValue.add(rightExprListener.getValue()));
+                break;
+            case bjmLexer.Subtract:
+                this.setValue(leftValue.subtract(rightExprListener.getValue()));
+                break;
+            default:
+                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+        }
     }
 
     public Value getValue() {

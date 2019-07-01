@@ -100,6 +100,11 @@ public class StringValue implements Value<String> {
    }
 
    @Override
+   public Value power(Value v) {
+      throw new InvalidOperationException("Power operation not allowed on string.");
+   }
+
+   @Override
    public Value neg() {
       throw new InvalidOperationException();
    }

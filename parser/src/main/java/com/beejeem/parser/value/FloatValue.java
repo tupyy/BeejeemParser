@@ -143,6 +143,11 @@ public class FloatValue implements Value<Float> {
    }
 
    @Override
+   public Value power(Value v) {
+      return null;
+   }
+
+   @Override
    public Value neg() {
       return new FloatValue(value * -1);
    }

@@ -94,6 +94,11 @@ public interface Value<T> extends Cloneable {
    Value mult(Value v);
 
    /**
+    * Power function
+    */
+   Value power(Value v);
+
+   /**
     * Not equal
     */
    Value neg();

@@ -17,8 +17,10 @@
 
 package com.beejeem.parser.listeners.expression;
 
+import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
 
@@ -30,7 +32,27 @@ public class MultExpressionListener extends AbstractListener {
     }
 
     @Override
-    public void enterMultExpression(bjmParser.MultExpressionContext multExpressionContext) {
+    public void enterMultExpression(bjmParser.MultExpressionContext ctx) {
+        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
+        leftExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(0));
+        Value leftValue = leftExprListener.getValue();
+
+        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
+        rightExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(2));
+
+        switch (ctx.op.getType()) {
+            case bjmLexer.Multiply:
+                this.setValue(leftValue.mult(rightExprListener.getValue()));
+                break;
+            case bjmLexer.Divide:
+                this.setValue(leftValue.div(rightExprListener.getValue()));
+                break;
+            case bjmLexer.Modulus:
+                this.setValue(leftValue.mod(rightExprListener.getValue()));
+                break;
+            default:
+                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+        }
 
     }
 
