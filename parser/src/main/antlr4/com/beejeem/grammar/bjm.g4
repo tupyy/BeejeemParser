@@ -122,8 +122,7 @@ expression
  | expression op=( '+' | '-' ) expression               #addExpression
  | expression op=( '>=' | '<=' | '>' | '<' ) expression #compExpression
  | expression op=( '==' | '!=' ) expression             #eqExpression
- | expression '&&' expression                           #andExpression
- | expression '||' expression                           #orExpression
+ | expression op=( '&&' | '||' ) expression             #logicExpression
  | expression '?' expression ':' expression             #ternaryExpression
  | expression In expression                             #inExpression
  | Integer                                              #integerExpression

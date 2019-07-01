@@ -17,10 +17,8 @@
 
 package com.beejeem.parser.listeners.expression;
 
-import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
 
@@ -28,51 +26,6 @@ public class ExpressionListener extends AbstractListener {
     private Value value;
     public ExpressionListener(ExecutionContext executionContext) {
         super(executionContext);
-    }
-
-    public void enterAddExpression(bjmParser.AddExpressionContext ctx) {
-        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
-        leftExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(0));
-        Value leftValue = leftExprListener.getValue();
-
-        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
-        rightExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(2));
-
-        switch (ctx.op.getType()) {
-            case bjmLexer.Add:
-                this.setValue(leftValue.add(rightExprListener.getValue()));
-                break;
-            case bjmLexer.Subtract:
-                this.setValue(leftValue.subtract(rightExprListener.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
-        }
-    }
-
-    @Override
-    public void enterMultExpression(bjmParser.MultExpressionContext ctx) {
-        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
-        leftExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(0));
-        Value leftValue = leftExprListener.getValue();
-
-        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
-        rightExprListener.enterRule((bjmParser.ExpressionContext) ctx.children.get(2));
-
-        switch (ctx.op.getType()) {
-            case bjmLexer.Multiply:
-                this.setValue(leftValue.mult(rightExprListener.getValue()));
-                break;
-            case bjmLexer.Divide:
-                this.setValue(leftValue.div(rightExprListener.getValue()));
-                break;
-            case bjmLexer.Modulus:
-                this.setValue(leftValue.mod(rightExprListener.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
-        }
-
     }
 
     public void enterRule(bjmParser.ExpressionContext expressionContext) {
@@ -94,6 +47,31 @@ public class ExpressionListener extends AbstractListener {
                     new MultExpressionListener(this.getExecutionContext());
             multExpressionListener.enterMultExpression((bjmParser.MultExpressionContext) expressionContext);
             this.setValue(multExpressionListener.getValue());
+        } else if (expressionContext instanceof bjmParser.CompExpressionContext) {
+            CompExpressionListener compExpressionListener =
+                    new CompExpressionListener(this.getExecutionContext());
+            compExpressionListener.enterCompExpression((bjmParser.CompExpressionContext) expressionContext);
+            this.setValue(compExpressionListener.getValue());
+        } else if (expressionContext instanceof bjmParser.LogicExpressionContext) {
+            LogicExpressionListener logicExpressionListener =
+                    new LogicExpressionListener(this.getExecutionContext());
+            logicExpressionListener.enterLogicExpression((bjmParser.LogicExpressionContext) expressionContext);
+            this.setValue(logicExpressionListener.getValue());
+        } else if (expressionContext instanceof bjmParser.EqExpressionContext) {
+            EqualExpressionListener equalExpressionListener =
+                    new EqualExpressionListener(this.getExecutionContext());
+            equalExpressionListener.enterEqExpression((bjmParser.EqExpressionContext) expressionContext);
+            this.setValue(equalExpressionListener.getValue());
+        } else if (expressionContext instanceof bjmParser.AddExpressionContext) {
+            AddExpressionListener addExpressionListener =
+                    new AddExpressionListener(this.getExecutionContext());
+            addExpressionListener.enterAddExpression((bjmParser.AddExpressionContext) expressionContext);
+            this.setValue(addExpressionListener.getValue());
+        } else if (expressionContext instanceof bjmParser.ExpressionExpressionContext) {
+            ExpressionListener expressionListener =
+                    new ExpressionListener(this.getExecutionContext());
+            expressionListener.enterRule(((bjmParser.ExpressionExpressionContext) expressionContext).expression());
+            this.setValue(expressionListener.getValue());
         }
     }
 

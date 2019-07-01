@@ -21,6 +21,7 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.VoidValue;
 
 public class VariableInitializerListener extends AbstractListener {
     private Value value;
@@ -31,11 +32,9 @@ public class VariableInitializerListener extends AbstractListener {
 
     @Override
     public void enterVariableInitializer(bjmParser.VariableInitializerContext variableInitializerContext) {
-        if (variableInitializerContext.expression() != null) {
-            ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
-            expressionListener.enterRule(variableInitializerContext.expression());
-            this.setValue(expressionListener.getValue());
-        }
+        ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
+        expressionListener.enterRule(variableInitializerContext.expression());
+        this.setValue(expressionListener.getValue());
     }
 
     public Value getValue() {

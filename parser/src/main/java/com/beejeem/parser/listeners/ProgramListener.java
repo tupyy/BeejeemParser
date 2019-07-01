@@ -19,6 +19,7 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.StackFrame;
 
 public class ProgramListener extends AbstractListener {
 
@@ -32,7 +33,14 @@ public class ProgramListener extends AbstractListener {
             getExecutionContext().pushStackframe();
             BlockListener blockListener = new BlockListener(this.getExecutionContext());
             blockListener.enterBlock(programContext.block());
-            getExecutionContext().popStackframe();
         }
+    }
+
+    /**
+     * Get the last stack. It holds the return code of the program
+     * @return last stack
+     */
+    public StackFrame getLastStack() {
+        return getExecutionContext().popStackframe();
     }
 }

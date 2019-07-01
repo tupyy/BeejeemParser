@@ -20,6 +20,7 @@ package com.beejeem.parser.listeners;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.VoidValue;
 
 public class VariableDeclaratorListener extends AbstractListener {
     private Value value;
@@ -33,11 +34,13 @@ public class VariableDeclaratorListener extends AbstractListener {
     public void enterVariableDeclarator(bjmParser.VariableDeclaratorContext variableDeclaratorContext) {
         this.variableName = variableDeclaratorContext.variableDeclaratorId().getText();
 
-        VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
-        variableInitializerListener.enterVariableInitializer(variableDeclaratorContext.variableInitializer());
-        this.getExecutionContext().getCurrentStackframe().declareVariable(variableName, variableInitializerListener.getValue());
-
-        this.setValue(variableInitializerListener.getValue());
+        this.setValue(new VoidValue());
+        if (variableDeclaratorContext.variableInitializer() != null) {
+            VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
+            variableInitializerListener.enterVariableInitializer(variableDeclaratorContext.variableInitializer());
+            this.setValue(variableInitializerListener.getValue());
+        }
+        this.getExecutionContext().getCurrentStackframe().declareVariable(variableName, this.getValue());
     }
 
     public Value getValue() {

@@ -31,9 +31,9 @@ public class TestParser {
             final ProgramListener programListener = new ProgramListener(executionContext);
             programContext.enterRule(programListener);
 
-            StackFrame stackFrame = executionContext.getCurrentStackframe();
-            Value var = stackFrame.getVariable("a");
-            Assert.assertEquals(var.getType(), 2);
+            StackFrame stackFrame = programListener.getLastStack();
+            Value var = stackFrame.getVariable("c");
+            Assert.assertEquals(1f, var.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }

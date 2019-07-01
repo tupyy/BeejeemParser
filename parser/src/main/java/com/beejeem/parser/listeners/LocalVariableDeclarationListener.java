@@ -22,6 +22,7 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.VoidValue;
 
 import java.util.Map;
 
@@ -40,11 +41,15 @@ public class LocalVariableDeclarationListener extends AbstractListener {
         // push variables to current stack
         for (Map.Entry<String, Value> entry: variableDeclaratorsListener.getValues().entrySet()) {
             // check if the all the variable has the defined type
-            if ( ! entry.getValue().getType().getClass().equals(variableType.getClass()) ) {
-                throw new InvalidOperationException("Wrong type"); // TODO better description
+            if (! (entry.getValue() instanceof VoidValue)) {
+                if (!entry.getValue().getType().getClass().equals(variableType.getClass())) {
+                    throw new InvalidOperationException("Wrong type"); // TODO better description
+                }
+                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
+            } else {
+                // now we know the type. Replace the void value with the proper one
+                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(),variableType.createValue());
             }
-
-            this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
         }
     }
 
