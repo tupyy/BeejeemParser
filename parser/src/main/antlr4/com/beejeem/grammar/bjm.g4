@@ -17,7 +17,7 @@
 
 grammar bjm;
 
-parse
+program
  : block EOF
  ;
 
@@ -88,7 +88,7 @@ elseStat
  ;
 
 functionDecl
- : resultType Function Identifier '(' idList? ')' OBrace block CBrace
+ : resultType Function Identifier '(' parameters? ')' OBrace block CBrace
  ;
 
 forStatement
@@ -103,11 +103,11 @@ whileStatement
  : While OParen expression CParen OBrace block CBrace
  ;
 
-idList
- : formalParameter ( ',' formalParameter )*
+parameters
+ : parameter ( ',' parameter )*
  ;
 
-formalParameter
+parameter
  : typeType Identifier;
 
 exprList

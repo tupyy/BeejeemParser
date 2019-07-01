@@ -33,10 +33,10 @@ public class StackFrame {
    /**
     * functions and procedures
     */
-   private final HashMap<String, FunctionOrProcedureDefinition> functionsAndProcedures = new HashMap<String, FunctionOrProcedureDefinition>();
+   private final HashMap<String, FunctionDefintion> functions = new HashMap<String, FunctionDefintion>();
 
-   public void declareFunctionOrProcedure(FunctionOrProcedureDefinition functionOrProcedureDefinition) {
-      functionsAndProcedures.put(functionOrProcedureDefinition.getName(), functionOrProcedureDefinition);
+   public void declareFunction(FunctionDefintion functionOrProcedureDefinition) {
+       functions.put(functionOrProcedureDefinition.getName(), functionOrProcedureDefinition);
    }
 
     /**
@@ -46,8 +46,8 @@ public class StackFrame {
       variables.put(name, value);
    }
 
-   public FunctionOrProcedureDefinition getFunctionOrProcedureDefinition(String name) {
-      return functionsAndProcedures.get(name.toLowerCase());
+   public FunctionDefintion getFunctionOrProcedureDefinition(String name) {
+      return functions.get(name.toLowerCase());
    }
 
    /**

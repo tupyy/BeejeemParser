@@ -18,11 +18,11 @@
  */
 package com.beejeem.parser;
 
-import com.khubla.kpascal.exception.InterpreterException;
-import com.khubla.kpascal.listener.ProgramListener;
-import com.khubla.pascal.pascalLexer;
-import com.khubla.pascal.pascalParser;
-import com.khubla.pascal.pascalParser.ProgramContext;
+import com.beejeem.grammar.bjmLexer;
+import com.beejeem.grammar.bjmParser;
+import com.beejeem.grammar.bjmParser.ProgramContext;
+import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.listeners.ProgramListener;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
@@ -38,21 +38,21 @@ public class Interpreter {
     */
    private final ExecutionContext executionContext;
 
-   public Interpreter(RemoteService service) {
-      executionContext = new ExecutionContext(service);
+   public Interpreter() {
+      executionContext = new ExecutionContext();
    }
 
-   public Interpreter(InputStream consoleInput, PrintStream consoleOut) {
-      executionContext = new ExecutionContext(consoleInput, consoleOut);
+   public Interpreter(PrintStream consoleOut) {
+      executionContext = new ExecutionContext(consoleOut);
    }
 
    /**
     * parse Pascal program from inputstream
     */
    private ProgramContext parse(InputStream inputStream) throws IOException {
-      final Lexer lexer = new pascalLexer(CharStreams.fromStream(inputStream));
+      final Lexer lexer = new bjmLexer(CharStreams.fromStream(inputStream));
       final TokenStream tokenStream = new CommonTokenStream(lexer);
-      final pascalParser parser = new pascalParser(tokenStream);
+      final bjmParser parser = new bjmParser(tokenStream);
       return parser.program();
    }
 

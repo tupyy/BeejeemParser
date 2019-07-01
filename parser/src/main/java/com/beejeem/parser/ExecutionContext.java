@@ -19,143 +19,134 @@
 package com.beejeem.parser;
 
 import com.beejeem.parser.exception.InterpreterException;
-import com.beejeem.parser.listener.ExpressionListener;
 import com.beejeem.parser.function.RuntimeFunction;
 import com.beejeem.parser.function.RuntimeFunctionFactory;
-import com.beejeem.parser.value.BooleanValue;
-import com.beejeem.parser.pascalParser.ExpressionContext;
+import com.beejeem.parser.type.*;
 import com.beejeem.parser.value.Value;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Stack;
 
 /**
  * the execution context.
- *
- * @author tom
  */
 public class ExecutionContext {
-   /**
-    * output
-    */
-   private final OutputStream consoleOut;
-   /**
-    * stack
-    */
-   private final Stack<StackFrame> stack = new Stack<StackFrame>();
-   /**
-    * function factory
-    */
-   private final RuntimeFunctionFactory runtimeFunctionFactory;
+    /**
+     * output
+     */
+    private final OutputStream consoleOut;
+    /**
+     * stack
+     */
+    private final Stack<StackFrame> stack = new Stack<StackFrame>();
+    /**
+     * function factory
+     */
+    private final RuntimeFunctionFactory runtimeFunctionFactory;
 
-   public ExecutionContext() {
-      runtimeFunctionFactory = new RuntimeFunctionFactory();
-      consoleOut = System.out;
-      consoleInput = System.in;
-   }
+    public ExecutionContext() {
+        runtimeFunctionFactory = new RuntimeFunctionFactory();
+        consoleOut = System.out;
+    }
 
-   public ExecutionContext(OutputStream consoleOut) {
-      runtimeFunctionFactory = new RuntimeFunctionFactory();
-      this.consoleOut = consoleOut;
-   }
+    public ExecutionContext(OutputStream consoleOut) {
+        runtimeFunctionFactory = new RuntimeFunctionFactory();
+        this.consoleOut = consoleOut;
+    }
 
-   public OutputStream getConsoleOut() {
-      return consoleOut;
-   }
+    public OutputStream getConsoleOut() {
+        return consoleOut;
+    }
 
-   public StackFrame getCurrentStackframe() {
-      return stack.peek();
-   }
+    public StackFrame getCurrentStackframe() {
+        return stack.peek();
+    }
 
-   public Stack<StackFrame> getStack() {
-      return stack;
-   }
+    public Stack<StackFrame> getStack() {
+        return stack;
+    }
 
-   public Value invokeFunction(String name, List<Value> values) {
-      final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
-      if (null != runtimeFunction) {
-         return runtimeFunction.execute(this, values);
-      } else {
-         final FunctionOrProcedureDefinition functionOrProcedureDefinition = resolveFunctionOrProcedure(name);
-         if (null != functionOrProcedureDefinition) {
-            return functionOrProcedureDefinition.execute(this, values);
-         } else {
-            throw new InterpreterException("Unknown procedure '" + name + "'");
-         }
-      }
-   }
+    public Value invokeFunction(String name, List<Value> values) {
+        final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
+        if (null != runtimeFunction) {
+            return runtimeFunction.execute(this, values);
+        } else {
+            final FunctionDefintion functionOrProcedureDefinition = resolveFunctionOrProcedure(name);
+            if (null != functionOrProcedureDefinition) {
+                return functionOrProcedureDefinition.execute(this, values);
+            } else {
+                throw new InterpreterException("Unknown procedure '" + name + "'");
+            }
+        }
+    }
 
-   public StackFrame popStackframe() {
-      return stack.pop();
-   }
+    public StackFrame popStackframe() {
+        return stack.pop();
+    }
 
-   public StackFrame pushStackframe() {
-      final StackFrame stackFrame = new StackFrame();
-      stack.push(stackFrame);
-      return stackFrame;
-   }
+    public StackFrame pushStackframe() {
+        final StackFrame stackFrame = new StackFrame();
+        stack.push(stackFrame);
+        return stackFrame;
+    }
 
-   /**
-    * walk the stack, top to bottom trying to find the function or procedure
-    */
-   private FunctionOrProcedureDefinition resolveFunctionOrProcedure(String name) {
-      for (final StackFrame stackFrame : stack) {
-         final FunctionOrProcedureDefinition functionOrProcedureDefinition = stackFrame.getFunctionOrProcedureDefinition(name);
-         if (null != functionOrProcedureDefinition) {
-            return functionOrProcedureDefinition;
-         }
-      }
-      return null;
-   }
+    /**
+     * walk the stack, top to bottom trying to find the function or procedure
+     */
+    private FunctionDefintion resolveFunctionOrProcedure(String name) {
+        for (final StackFrame stackFrame : stack) {
+            final FunctionDefintion functionOrProcedureDefinition = stackFrame.getFunctionOrProcedureDefinition(name);
+            if (null != functionOrProcedureDefinition) {
+                return functionOrProcedureDefinition;
+            }
+        }
+        return null;
+    }
 
-   /**
-    * walk the stack, top to bottom trying to find the variable or constant
-    */
-   public Value resolveVariable(String name) {
-      for (int i = 0; i < stack.size(); i++) {
-         final StackFrame stackFrame = stack.get(i);
-         Value value = stackFrame.getVariable(name);
-         if (null == value) {
-            value = stackFrame.getConstant(name);
-         }
-         if (null != value) {
-            return value;
-         }
-      }
-      /*
-       * it could be a function which takes no parameters, such as "readkey".
-       */
-      final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
-      if (null != runtimeFunction) {
-         /*
-          * no parameters
-          */
-         return runtimeFunction.execute(this, null);
-      } else {
-         final FunctionOrProcedureDefinition functionOrProcedureDefinition = resolveFunctionOrProcedure(name);
-         if (null != functionOrProcedureDefinition) {
-            /*
-             * no parameters
-             */
-            return functionOrProcedureDefinition.execute(this, null);
-         }
-      }
-      throw new InterpreterException("Unable to resolve '" + name + "'");
-   }
+    /**
+     * walk the stack, top to bottom trying to find the variable
+     */
+    public Value resolveVariable(String name) {
+        for (final StackFrame stackFrame : stack) {
+            return stackFrame.getVariable(name);
+        }
 
-   /**
-    * test an expression. used in while loop, etc
-    */
-   public boolean testExpression(ExpressionContext expressionContext) {
-      final ExpressionListener expressionListener = new ExpressionListener(this);
-      expressionListener.enterExpression(expressionContext);
-      final Value cond = expressionListener.getValue();
-      if (cond instanceof BooleanValue) {
-         return ((BooleanValue) cond).isValue();
-      } else {
-         throw new InterpreterException("Expected Boolean");
-      }
-   }
+        final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
+        if (null != runtimeFunction) {
+            return runtimeFunction.execute(this, null);
+        } else {
+            final FunctionDefintion functionDefintion = resolveFunctionOrProcedure(name);
+            if (functionDefintion != null) {
+                return functionDefintion.execute(this, null);
+            }
+        }
+        throw new InterpreterException("Unable to resolve '" + name + "'");
+    }
+
+    /**
+     * walk the stack, top to bottom trying to find the type
+     */
+    public Type resolveType(String name) {
+        final Type t = resolveBuiltinType(name);
+        if (t != null) {
+            return t;
+        }
+
+        throw new InterpreterException("Unable to resolve '" + name + "'");
+    }
+
+    private Type resolveBuiltinType(String name) {
+        if (name.toLowerCase().compareTo("int") == 0) {
+            return new IntegerType();
+        } else if (name.toLowerCase().compareTo("float") == 0) {
+            return new FloatType();
+        } else if (name.toLowerCase().compareTo("string") == 0) {
+            return new StringType();
+        } else if (name.toLowerCase().compareTo("boolean") == 0) {
+            return new BooleanType();
+        }
+        return null;
+    }
+
 }
