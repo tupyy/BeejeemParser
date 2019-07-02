@@ -23,11 +23,10 @@ import java.io.InputStream;
 public class TestParser {
 
     @Test
-    public void testVariableAssigment() {
-        Interpreter interpreter = new Interpreter();
+    public void testMathOperations() {
         try {
             ExecutionContext executionContext = new ExecutionContext();
-            ProgramContext programContext =this.parse(readTestFile("simplecode.txt"));
+            ProgramContext programContext =this.parse(readTestFile("math_op.txt"));
             final ProgramListener programListener = new ProgramListener(executionContext);
             programContext.enterRule(programListener);
 
@@ -35,6 +34,9 @@ public class TestParser {
             Value var = stackFrame.getVariable("c");
             Assert.assertEquals(1f, var.getValue());
             Assert.assertEquals(8f, stackFrame.getVariable("cc").getValue());
+            Assert.assertEquals(4f, stackFrame.getVariable("p").getValue());
+            Assert.assertEquals(24, stackFrame.getVariable("i1").getValue());
+            Assert.assertEquals(false, stackFrame.getVariable("b1").getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
