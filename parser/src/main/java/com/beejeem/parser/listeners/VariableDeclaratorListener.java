@@ -40,7 +40,6 @@ public class VariableDeclaratorListener extends AbstractListener {
             variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
             this.setValue(variableInitializerListener.getValue());
         }
-        this.getExecutionContext().getCurrentStackframe().declareVariable(variableName, this.getValue());
     }
 
     public Value getValue() {
