@@ -34,6 +34,7 @@ public class TestParser {
             StackFrame stackFrame = programListener.getLastStack();
             Value var = stackFrame.getVariable("c");
             Assert.assertEquals(1f, var.getValue());
+            Assert.assertEquals(8f, stackFrame.getVariable("cc").getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
