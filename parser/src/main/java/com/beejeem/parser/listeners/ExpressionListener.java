@@ -187,7 +187,11 @@ public class ExpressionListener extends AbstractListener {
     @Override
     public void enterIdentifierExpression(bjmParser.IdentifierExpressionContext ctx) {
         String variableName = ctx.getText();
-        this.setValue(this.getExecutionContext().getCurrentStackframe().getVariable(variableName));
+        Value value = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
+        if (value == null) {
+            throw new InvalidOperationException(String.format("Variable not found: %s",variableName));
+        }
+        this.setValue(value);
     }
 
     @Override
