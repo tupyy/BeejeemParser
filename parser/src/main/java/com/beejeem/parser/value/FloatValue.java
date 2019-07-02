@@ -177,7 +177,10 @@ public class FloatValue implements Value<Float> {
    public void set(Value v) {
       if (v instanceof FloatValue) {
          value = ((FloatValue) v).getValue();
-      } else {
+      } else if (v instanceof IntegerValue) {
+         value = ((IntegerValue) v).getValue();
+      }
+      else {
          throw new InvalidOperationException();
       }
    }

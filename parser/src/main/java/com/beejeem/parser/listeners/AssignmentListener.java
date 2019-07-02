@@ -20,7 +20,6 @@ package com.beejeem.parser.listeners;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
-import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
 
 public class AssignmentListener extends AbstractListener {
@@ -38,7 +37,7 @@ public class AssignmentListener extends AbstractListener {
             throw new InvalidOperationException(String.format("Variable not defined: %s", identifier));
         }
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
-        expressionListener.enterRule(assignmentContext.expression());
+        assignmentContext.expression().enterRule(expressionListener);
         identifierValue.set(expressionListener.getValue());
     }
 

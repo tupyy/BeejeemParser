@@ -37,7 +37,7 @@ public class VariableDeclaratorListener extends AbstractListener {
         this.setValue(new VoidValue());
         if (variableDeclaratorContext.variableInitializer() != null) {
             VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
-            variableInitializerListener.enterVariableInitializer(variableDeclaratorContext.variableInitializer());
+            variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
             this.setValue(variableInitializerListener.getValue());
         }
         this.getExecutionContext().getCurrentStackframe().declareVariable(variableName, this.getValue());

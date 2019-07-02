@@ -19,9 +19,7 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
-import com.beejeem.parser.value.VoidValue;
 
 public class VariableInitializerListener extends AbstractListener {
     private Value value;
@@ -33,7 +31,7 @@ public class VariableInitializerListener extends AbstractListener {
     @Override
     public void enterVariableInitializer(bjmParser.VariableInitializerContext variableInitializerContext) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
-        expressionListener.enterRule(variableInitializerContext.expression());
+        variableInitializerContext.expression().enterRule(expressionListener);
         this.setValue(expressionListener.getValue());
     }
 
