@@ -21,10 +21,7 @@ import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
-import com.beejeem.parser.value.BooleanValue;
-import com.beejeem.parser.value.FloatValue;
-import com.beejeem.parser.value.IntegerValue;
-import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.*;
 
 public class ExpressionListener extends AbstractListener {
     private Value value;
@@ -88,6 +85,10 @@ public class ExpressionListener extends AbstractListener {
 
     public void enterBoolExpression(bjmParser.BoolExpressionContext ctx) {
         this.setValue(new BooleanValue(Boolean.valueOf(ctx.getText())));
+    }
+
+    public void enterStringExpression(bjmParser.StringExpressionContext ctx) {
+        this.setValue(new StringValue(ctx.getText()));
     }
 
     @Override
