@@ -149,7 +149,7 @@ resultType
   ;
 
  typeType
-  : Bool
+  : Boolean
   | Int
   | Float
   | String
@@ -292,7 +292,7 @@ Return   : R E T U R N;
 For      : F O R;
 While    : W H I L E;
 To       : T O;
-Bool     : B O O L;
+Boolean  : B O O L;
 Int      : I N T;
 In       : I N;
 Float    : F L O A T;
@@ -333,17 +333,14 @@ FloatNumber
  : NUM_REAL
  ;
 
+Bool
+ : True
+ | False
+ ;
+
 Identifier
  : [a-zA-Z_] [a-zA-Z_0-9]*
  ;
-
-True
-   : T R U E
-   ;
-
-False
-   : F A L S E
-   ;
 
 String
  : ["] ( ~["\r\n\\] | '\\' ~[\r\n] )* ["]
@@ -361,6 +358,14 @@ BlockComment
 Space
  : [ \t\r\n\u000C] -> skip
  ;
+
+True
+   : T R U E
+   ;
+
+False
+   : F A L S E
+   ;
 
 fragment NUM_REAL
  : NUM_INT ( '.' Digit* )?
