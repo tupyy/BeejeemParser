@@ -86,6 +86,10 @@ public class ExpressionListener extends AbstractListener {
         this.setValue(new FloatValue(Float.valueOf(ctx.getText())));
     }
 
+    public void enterBoolExpression(bjmParser.BoolExpressionContext ctx) {
+        this.setValue(new BooleanValue(Boolean.valueOf(ctx.getText())));
+    }
+
     @Override
     public void enterPowerExpression(bjmParser.PowerExpressionContext ctx) {
         ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
@@ -170,10 +174,7 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
         Value v = expressionListener.getValue();
-        if ( !(v instanceof BooleanValue) ) {
-            throw new InvalidOperationException("Boolean value cannot be negated");
-        }
-        this.setValue(v.neg());
+        this.setValue(v.not());
     }
 
     @Override
