@@ -23,127 +23,127 @@ import com.beejeem.parser.type.BooleanType;
 import com.beejeem.parser.type.Type;
 
 public class BooleanValue implements Value<Boolean> {
-   private boolean value;
-   private Type type = new BooleanType();
+    private boolean value;
+    private Type type = new BooleanType();
 
-   public BooleanValue() {
-      value = false;
-   }
+    public BooleanValue() {
+        value = false;
+    }
 
-   public BooleanValue(boolean value) {
-      this.value = value;
-   }
+    public BooleanValue(boolean value) {
+        this.value = value;
+    }
 
-   @Override
-   public Value add(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value add(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value and(Value v) {
-      if (v instanceof BooleanValue) {
-         return new BooleanValue(value && ((BooleanValue) v).isValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value and(Value v) {
+        if (v instanceof BooleanValue) {
+            return new BooleanValue(value && ((BooleanValue) v).isValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Value clone() {
-      return new BooleanValue(value);
-   }
+    @Override
+    public Value clone() {
+        return new BooleanValue(value);
+    }
 
-   @Override
-   public Value div(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value div(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue eq(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue eq(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public String toString() {
-      return Boolean.toString(value);
-   }
+    @Override
+    public String toString() {
+        return Boolean.toString(value);
+    }
 
-   @Override
-   public BooleanValue gt(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue gt(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue gte(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue gte(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue in(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue in(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   public boolean isValue() {
-      return value;
-   }
+    public boolean isValue() {
+        return value;
+    }
 
-   @Override
-   public BooleanValue lt(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue lt(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue lte(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue lte(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value mod(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value mod(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value mult(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value mult(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value power(Value v) {
-      throw new InvalidOperationException("Power operation not allowed on booleans.");
-   }
+    @Override
+    public Value power(Value v) {
+        throw new InvalidOperationException("Power operation not allowed on booleans.");
+    }
 
-   @Override
-   public Value neg() {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value neg() {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue neq(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue neq(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value not() {
-      return new BooleanValue(!value);
-   }
+    @Override
+    public Value not() {
+        return new BooleanValue(!value);
+    }
 
-   @Override
-   public Value or(Value v) {
-      if (v instanceof BooleanValue) {
-         return new BooleanValue(value | ((BooleanValue) v).isValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value or(Value v) {
+        if (v instanceof BooleanValue) {
+            return new BooleanValue(value | ((BooleanValue) v).isValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public void set(Value v) {
-      if (v instanceof BooleanValue) {
-         value = ((BooleanValue) v).isValue();
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public void set(Value v) {
+        if (v instanceof BooleanValue) {
+            value = ((BooleanValue) v).isValue();
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
     @Override
     public void set(Boolean v) {
@@ -151,21 +151,21 @@ public class BooleanValue implements Value<Boolean> {
     }
 
     public void setValue(boolean value) {
-      this.value = value;
-   }
+        this.value = value;
+    }
 
-   @Override
-   public Value subtract(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value subtract(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Type getType() {
-      return this.type;
-   }
+    @Override
+    public Type getType() {
+        return this.type;
+    }
 
-   @Override
-   public Boolean getValue() {
-      return value;
-   }
+    @Override
+    public Boolean getValue() {
+        return value;
+    }
 }

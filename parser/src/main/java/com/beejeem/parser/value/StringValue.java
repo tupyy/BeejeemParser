@@ -24,133 +24,133 @@ import com.beejeem.parser.type.Type;
 
 public class StringValue implements Value<String> {
 
-   private String value;
-   private Type type = new StringType();
+    private String value;
+    private Type type = new StringType();
 
-   public StringValue() {
-      value = new String();
-   }
+    public StringValue() {
+        value = new String();
+    }
 
-   public StringValue(String value) {
-      this.value = value;
-   }
+    public StringValue(String value) {
+        this.value = value;
+    }
 
-   @Override
-   public Value add(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value add(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value and(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value and(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value clone() {
-      return new StringValue(value);
-   }
+    @Override
+    public Value clone() {
+        return new StringValue(value);
+    }
 
-   @Override
-   public Value div(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value div(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue eq(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue eq(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   public String getValue() {
-      return value;
-   }
+    public String getValue() {
+        return value;
+    }
 
-   @Override
-   public BooleanValue gt(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue gt(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue gte(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue gte(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue in(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue in(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue lt(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue lt(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue lte(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue lte(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value mod(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value mod(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value mult(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value mult(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value power(Value v) {
-      throw new InvalidOperationException("Power operation not allowed on string.");
-   }
+    @Override
+    public Value power(Value v) {
+        throw new InvalidOperationException("Power operation not allowed on string.");
+    }
 
-   @Override
-   public Value neg() {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value neg() {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public BooleanValue neq(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue neq(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value not() {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value not() {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value or(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value or(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public void set(Value v) {
-      value = v.toString();
-   }
+    @Override
+    public void set(Value v) {
+        value = v.toString();
+    }
 
-   @Override
-   public void set(String v) {
-      this.value = v;
-   }
+    @Override
+    public void set(String v) {
+        this.value = v;
+    }
 
 
-   public void setValue(String value) {
-      this.value = value;
-   }
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-   @Override
-   public Value subtract(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value subtract(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Type getType() {
-      return this.type;
-   }
+    @Override
+    public Type getType() {
+        return this.type;
+    }
 
-   @Override
-   public String toString() {
-      return value;
-   }
+    @Override
+    public String toString() {
+        return value;
+    }
 }

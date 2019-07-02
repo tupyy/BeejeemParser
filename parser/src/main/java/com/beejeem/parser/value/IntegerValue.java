@@ -24,201 +24,201 @@ import com.beejeem.parser.type.Type;
 
 public class IntegerValue implements Value<Integer> {
 
-   private final Type type = new IntegerType();
-   private Integer value;
+    private final Type type = new IntegerType();
+    private Integer value;
 
-   public IntegerValue() {
-      value = 0;
-   }
+    public IntegerValue() {
+        value = 0;
+    }
 
-   public IntegerValue(int value) {
-      this.value = value;
-   }
+    public IntegerValue(int value) {
+        this.value = value;
+    }
 
-   @Override
-   public Value add(Value v) {
-      if (v instanceof IntegerValue) {
-         return new IntegerValue(value + ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new FloatValue(value + ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value add(Value v) {
+        if (v instanceof IntegerValue) {
+            return new IntegerValue(value + ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new FloatValue(value + ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Value and(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value and(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   public void decrement() {
-      value = value - 1;
-   }
+    public void decrement() {
+        value = value - 1;
+    }
 
-   @Override
-   public Value clone() {
-      return new IntegerValue(value);
-   }
+    @Override
+    public Value clone() {
+        return new IntegerValue(value);
+    }
 
-   @Override
-   public Value div(Value v) {
-      if (v instanceof IntegerValue) {
-         return new FloatValue((float) value / ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new FloatValue(value / ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value div(Value v) {
+        if (v instanceof IntegerValue) {
+            return new FloatValue((float) value / ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new FloatValue(value / ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public BooleanValue eq(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value.equals(v.getValue()));
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue eq(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value.equals(v.getValue()));
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public String toString() {
-      return Integer.toString(value);
-   }
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 
-   public Integer getValue() {
-      return value;
-   }
+    public Integer getValue() {
+        return value;
+    }
 
-   @Override
-   public BooleanValue gt(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value > ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value > ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue gt(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value > ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new BooleanValue(value > ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public BooleanValue gte(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value >= ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value >= ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue gte(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value >= ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new BooleanValue(value >= ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public BooleanValue in(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public BooleanValue in(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   public void increment() {
-      value = value + 1;
-   }
+    public void increment() {
+        value = value + 1;
+    }
 
-   @Override
-   public BooleanValue lt(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value < ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value < ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue lt(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value < ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new BooleanValue(value < ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public BooleanValue lte(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value <= ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new BooleanValue(value <= ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue lte(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value <= ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new BooleanValue(value <= ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Value mod(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value mod(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value mult(Value v) {
-      if (v instanceof IntegerValue) {
-         return new IntegerValue(value * ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new FloatValue(value * ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value mult(Value v) {
+        if (v instanceof IntegerValue) {
+            return new IntegerValue(value * ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new FloatValue(value * ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Value power(Value v) {
-      return null;
-   }
+    @Override
+    public Value power(Value v) {
+        return null;
+    }
 
-   @Override
-   public Value neg() {
-      return new IntegerValue(value * -1);
-   }
+    @Override
+    public Value neg() {
+        return new IntegerValue(value * -1);
+    }
 
-   @Override
-   public BooleanValue neq(Value v) {
-      if (v instanceof IntegerValue) {
-         return new BooleanValue(value != ((IntegerValue) v).getValue().intValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public BooleanValue neq(Value v) {
+        if (v instanceof IntegerValue) {
+            return new BooleanValue(value != ((IntegerValue) v).getValue().intValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Value not() {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value not() {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public Value or(Value v) {
-      throw new InvalidOperationException();
-   }
+    @Override
+    public Value or(Value v) {
+        throw new InvalidOperationException();
+    }
 
-   @Override
-   public void set(Value v) {
-      if (v instanceof IntegerValue) {
-         value = ((IntegerValue) v).getValue();
-      } else {
-         throw new InvalidOperationException(
-                 String.format("Cannot cast %s to %s",v.getType(), this.getType()));
-      }
-   }
+    @Override
+    public void set(Value v) {
+        if (v instanceof IntegerValue) {
+            value = ((IntegerValue) v).getValue();
+        } else {
+            throw new InvalidOperationException(
+                    String.format("Cannot cast %s to %s",v.getType(), this.getType()));
+        }
+    }
 
-   @Override
-   public void set(Integer v) {
-      this.value = v;
-   }
+    @Override
+    public void set(Integer v) {
+        this.value = v;
+    }
 
-   public void setValue(int value) {
-      this.value = value;
-   }
+    public void setValue(int value) {
+        this.value = value;
+    }
 
-   @Override
-   public Value subtract(Value v) {
-      if (v instanceof IntegerValue) {
-         return new IntegerValue(value - ((IntegerValue) v).getValue());
-      } else if (v instanceof FloatValue) {
-         return new FloatValue(value - ((FloatValue) v).getValue());
-      } else {
-         throw new InvalidOperationException();
-      }
-   }
+    @Override
+    public Value subtract(Value v) {
+        if (v instanceof IntegerValue) {
+            return new IntegerValue(value - ((IntegerValue) v).getValue());
+        } else if (v instanceof FloatValue) {
+            return new FloatValue(value - ((FloatValue) v).getValue());
+        } else {
+            throw new InvalidOperationException();
+        }
+    }
 
-   @Override
-   public Type getType() {
-      return this.type;
-   }
+    @Override
+    public Type getType() {
+        return this.type;
+    }
 }
