@@ -22,6 +22,8 @@ import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.IntegerType;
 import com.beejeem.parser.type.Type;
 
+import static java.lang.Math.pow;
+
 public class IntegerValue implements Value<Integer> {
 
     private final Type type = new IntegerType();
@@ -160,7 +162,13 @@ public class IntegerValue implements Value<Integer> {
 
     @Override
     public Value power(Value v) {
-        return null;
+        if (v instanceof IntegerValue) {
+            return new FloatValue((float) pow(value ,((IntegerValue) v).getValue()));
+        } else if (v instanceof FloatValue) {
+            return new FloatValue((float) pow(value,((FloatValue) v).getValue()));
+        } else {
+            throw new InvalidOperationException();
+        }
     }
 
     @Override

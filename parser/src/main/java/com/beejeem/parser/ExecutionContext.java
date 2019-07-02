@@ -143,7 +143,7 @@ public class ExecutionContext {
             return new FloatType();
         } else if (name.toLowerCase().compareTo("string") == 0) {
             return new StringType();
-        } else if (name.toLowerCase().compareTo("boolean") == 0) {
+        } else if (name.toLowerCase().compareTo("bool") == 0) {
             return new BooleanType();
         }
         return null;
