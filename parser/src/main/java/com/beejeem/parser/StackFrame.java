@@ -21,6 +21,7 @@ package com.beejeem.parser;
 import com.beejeem.parser.value.Value;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * a stack frame, containing variables
@@ -29,7 +30,7 @@ public class StackFrame {
    /**
     * variables
     */
-   private HashMap<String, Value> variables = new HashMap<String, Value>();
+   private Map<String, Value> variables = new HashMap<String, Value>();
    /**
     * functions and procedures
     */
@@ -57,6 +58,22 @@ public class StackFrame {
       return variables.get(name);
    }
 
+   public boolean hasVariable(String name) {
+      return this.variables.containsKey(name);
+   }
+
+   /**
+    * Get the map of stack variables
+    * @return map
+    */
+   public Map<String,Value> getVariables() {
+      Map<String,Value> variables = new HashMap<>();
+      for(Map.Entry<String,Value> entry: this.variables.entrySet()) {
+         variables.put(entry.getKey(), entry.getValue());
+      }
+      return variables;
+   }
+
    /**
     * remove variable
     */
@@ -64,7 +81,7 @@ public class StackFrame {
       variables.remove(name);
    }
 
-   public void setVariables(HashMap<String, Value> variables) {
+   public void setVariables(Map<String, Value> variables) {
       this.variables = variables;
    }
 }
