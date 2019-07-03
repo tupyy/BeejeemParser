@@ -19,27 +19,47 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionDeclarationListener;
+import com.beejeem.parser.value.Value;
 
 public class BlockListener extends AbstractListener {
+    private Value value;
 
     public BlockListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
+    // TODO better handling. use antl4 hashtag def
     @Override
     public void enterBlock(bjmParser.BlockContext blockContext) {
-        if (blockContext.statement().size() > 0) {
-            for (bjmParser.StatementContext statementContext: blockContext.statement()) {
-                StatementListener statementListener = new StatementListener(this.getExecutionContext());
-                statementContext.enterRule(statementListener);
-            }
-        } else if (blockContext.functionDecl().size() > 0) {
+        if (blockContext.functionDecl().size() > 0) {
             for (bjmParser.FunctionDeclContext functionDeclContext: blockContext.functionDecl()) {
                 FunctionDeclarationListener functionDeclarationListener
                         = new FunctionDeclarationListener(this.getExecutionContext());
                 functionDeclContext.enterRule(functionDeclarationListener);
             }
         }
+
+        if (blockContext.statement().size() > 0) {
+            for (bjmParser.StatementContext statementContext: blockContext.statement()) {
+                StatementListener statementListener = new StatementListener(this.getExecutionContext());
+                statementContext.enterRule(statementListener);
+            }
+        }
+
+        if (blockContext.Return() != null) {
+            ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
+            blockContext.expression().enterRule(expressionListener);
+            this.setValue(expressionListener.getValue());
+        }
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
     }
 }
