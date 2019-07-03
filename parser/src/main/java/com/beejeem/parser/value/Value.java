@@ -140,6 +140,7 @@ public interface Value<T> extends Cloneable {
 
     /**
      * Getter
+     * @return
      */
     T getValue();
 

@@ -76,6 +76,27 @@ public class TestParser {
         }
     }
 
+    @Test
+    public void testIfs() {
+        try {
+            ExecutionContext executionContext = new ExecutionContext();
+            ProgramContext programContext =this.parse(readTestFile("ifstatements.txt"));
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
+
+            StackFrame stackFrame = programListener.getLastStack();
+            assertEquals(2, stackFrame.getVariable("c").getValue());
+            assertEquals(1, stackFrame.getVariable("d").getValue());
+            assertEquals(0, stackFrame.getVariable("e").getValue());
+            assertEquals(1, stackFrame.getVariable("f").getValue());
+            assertEquals(1, stackFrame.getVariable("g").getValue());
+            assertEquals(1, stackFrame.getVariable("h").getValue());
+            assertEquals(1, stackFrame.getVariable("i").getValue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private InputStream readTestFile(String filename) {
         return getClass().getClassLoader().getResourceAsStream(filename);
     }
