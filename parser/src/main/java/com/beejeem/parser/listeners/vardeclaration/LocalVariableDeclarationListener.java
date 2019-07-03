@@ -19,6 +19,7 @@ package com.beejeem.parser.listeners.vardeclaration;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
@@ -44,7 +45,12 @@ public class LocalVariableDeclarationListener extends AbstractListener {
             if (! (entry.getValue() instanceof VoidValue)) {
                 value.set(entry.getValue());
             }
-            this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(),value);
+            if (!this.getExecutionContext().getCurrentStackframe().hasVariable(entry.getKey())) {
+                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), value);
+            } else {
+                throw new InvalidOperationException(
+                        String.format("Line %d: Variable %s already defined.",ctx.start.getLine(),entry.getKey()));
+            }
         }
     }
 
