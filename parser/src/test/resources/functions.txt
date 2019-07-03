@@ -5,3 +5,16 @@ int function func1(int x, int y) {
 float function func2() {
     return 2;
 }
+
+string function func3() {
+    return "test";
+}
+
+bool function func4(bool x) {
+    return !x;
+}
+
+int a = func1(2,2);
+float b = func2();
+string c = func3();
+bool d = func4(true);
