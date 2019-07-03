@@ -199,7 +199,10 @@ public class IntegerValue implements Value<Integer> {
     public void set(Value v) {
         if (v instanceof IntegerValue) {
             value = ((IntegerValue) v).getValue();
-        } else {
+        } else if (v instanceof FloatValue) {
+            value = ((FloatValue) v).getValue().intValue();
+        }
+        else {
             throw new InvalidOperationException(
                     String.format("Cannot cast %s to %s",v.getType(), this.getType()));
         }
