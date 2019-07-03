@@ -18,8 +18,9 @@
 package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
-import com.beejeem.grammar.bjmParser.LocalVariableDeclarationContext;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.assignment.AssignmentListener;
+import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
 
 public class StatementListener extends AbstractListener {
 
@@ -37,6 +38,7 @@ public class StatementListener extends AbstractListener {
         }
     }
 
+    @Override
     public void enterAssignment(bjmParser.AssignmentContext ctx) {
         AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
         ctx.enterRule(assignmentListener);
@@ -47,5 +49,11 @@ public class StatementListener extends AbstractListener {
         LocalVariableDeclarationListener localVariableDeclarationListener
                 = new LocalVariableDeclarationListener(this.getExecutionContext());
         ctx.localVariableDeclaration().enterRule(localVariableDeclarationListener);
+    }
+
+    @Override
+    public void enterIfStatement(bjmParser.IfStatementContext ctx) {
+
+
     }
 }
