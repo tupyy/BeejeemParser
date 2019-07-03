@@ -15,30 +15,26 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners;
+package com.beejeem.parser.listeners.vardeclaration;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
 
-public class AssignmentListener extends AbstractListener {
-
+public class VariableInitializerListener extends AbstractListener {
     private Value value;
 
-    public AssignmentListener(ExecutionContext executionContext) {
+    public VariableInitializerListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
-    public void enterAssignment(bjmParser.AssignmentContext assignmentContext) {
-        String identifier = assignmentContext.Identifier().getText();
-        Value identifierValue = this.getExecutionContext().resolveVariable(identifier);
-        if (identifierValue == null) {
-            throw new InvalidOperationException(String.format("Variable not defined: %s", identifier));
-        }
+    @Override
+    public void enterVariableInitializer(bjmParser.VariableInitializerContext variableInitializerContext) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
-        assignmentContext.expression().enterRule(expressionListener);
-        identifierValue.set(expressionListener.getValue());
+        variableInitializerContext.expression().enterRule(expressionListener);
+        this.setValue(expressionListener.getValue());
     }
 
     public Value getValue() {

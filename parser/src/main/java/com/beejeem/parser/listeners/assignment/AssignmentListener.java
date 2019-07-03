@@ -15,31 +15,32 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners;
+package com.beejeem.parser.listeners.assignment;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
-import com.beejeem.parser.value.VoidValue;
 
-public class VariableDeclaratorListener extends AbstractListener {
+public class AssignmentListener extends AbstractListener {
+
     private Value value;
-    private String variableName;
 
-    public VariableDeclaratorListener(ExecutionContext executionContext) {
+    public AssignmentListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
-    @Override
-    public void enterVariableDeclarator(bjmParser.VariableDeclaratorContext variableDeclaratorContext) {
-        this.variableName = variableDeclaratorContext.variableDeclaratorId().getText();
-
-        this.setValue(new VoidValue());
-        if (variableDeclaratorContext.variableInitializer() != null) {
-            VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
-            variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
-            this.setValue(variableInitializerListener.getValue());
+    public void enterAssignment(bjmParser.AssignmentContext assignmentContext) {
+        String identifier = assignmentContext.Identifier().getText();
+        Value identifierValue = this.getExecutionContext().resolveVariable(identifier);
+        if (identifierValue == null) {
+            throw new InvalidOperationException(String.format("Variable not defined: %s", identifier));
         }
+        ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
+        assignmentContext.expression().enterRule(expressionListener);
+        identifierValue.set(expressionListener.getValue());
     }
 
     public Value getValue() {
@@ -48,9 +49,5 @@ public class VariableDeclaratorListener extends AbstractListener {
 
     public void setValue(Value value) {
         this.value = value;
-    }
-
-    public String getVariableName() {
-        return variableName;
     }
 }

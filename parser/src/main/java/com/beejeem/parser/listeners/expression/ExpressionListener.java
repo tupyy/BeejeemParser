@@ -15,12 +15,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners;
+package com.beejeem.parser.listeners.expression;
 
 import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.*;
 
 public class ExpressionListener extends AbstractListener {
