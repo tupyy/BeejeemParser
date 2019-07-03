@@ -1,0 +1,7 @@
+int function func1(int x, int y) {
+    return x+y;
+}
+
+float function func2() {
+    return 2;
+}

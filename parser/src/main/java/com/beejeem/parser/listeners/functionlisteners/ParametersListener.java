@@ -15,10 +15,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners;
+package com.beejeem.parser.listeners.functionlisteners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
 
@@ -62,7 +63,12 @@ public class ParametersListener extends AbstractListener {
     }
 
     public void enterParameters(bjmParser.ParametersContext parametersContext) {
-
+        for (bjmParser.ParameterContext parameterContext: parametersContext.parameter()) {
+            Type parameterType = this.getExecutionContext().resolveType(parameterContext.typeType().getText());
+            Parameter parameter =
+                    new Parameter(parameterContext.Identifier().getText(), parameterType.createValue(),parameterType);
+            parameters.add(parameter);
+        }
     }
 
     public List<Parameter> getParameters() {

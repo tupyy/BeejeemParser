@@ -19,6 +19,7 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.listeners.functionlisteners.FunctionDeclarationListener;
 
 public class BlockListener extends AbstractListener {
 
@@ -28,10 +29,16 @@ public class BlockListener extends AbstractListener {
 
     @Override
     public void enterBlock(bjmParser.BlockContext blockContext) {
-        if (blockContext.statement() != null) {
+        if (blockContext.statement().size() > 0) {
             for (bjmParser.StatementContext statementContext: blockContext.statement()) {
                 StatementListener statementListener = new StatementListener(this.getExecutionContext());
                 statementContext.enterRule(statementListener);
+            }
+        } else if (blockContext.functionDecl().size() > 0) {
+            for (bjmParser.FunctionDeclContext functionDeclContext: blockContext.functionDecl()) {
+                FunctionDeclarationListener functionDeclarationListener
+                        = new FunctionDeclarationListener(this.getExecutionContext());
+                functionDeclContext.enterRule(functionDeclarationListener);
             }
         }
     }

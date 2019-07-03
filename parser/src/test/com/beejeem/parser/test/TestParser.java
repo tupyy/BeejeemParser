@@ -4,9 +4,12 @@ import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.grammar.bjmParser.ProgramContext;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.FunctionDefinition;
 import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.ProgramListener;
+import com.beejeem.parser.type.FloatType;
+import com.beejeem.parser.type.IntegerType;
 import com.beejeem.parser.value.Value;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -18,8 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestParser {
@@ -91,6 +93,30 @@ public class TestParser {
         assertEquals(4, stackFrame.getVariable("c").getValue());
         assertEquals(450, stackFrame.getVariable("d").getValue());
         assertEquals(4500, stackFrame.getVariable("f").getValue());
+    }
+
+    @Test
+    public void testFunctions() {
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext =this.parse(readTestFile("functions.txt"));
+        final ProgramListener programListener = new ProgramListener(executionContext);
+        programContext.enterRule(programListener);
+
+        StackFrame stackFrame = programListener.getLastStack();
+
+        assertNotEquals(null, stackFrame.getFunctionDefinition("func1"));
+        FunctionDefinition func1 = stackFrame.getFunctionDefinition("func1");
+        assertEquals(2, func1.getParameters().size());
+        assertEquals("x", func1.getParameters().get(0).getName());
+        assertEquals("y", func1.getParameters().get(1).getName());
+        assertTrue(func1.getParameters().get(0).getParameterType() instanceof IntegerType);
+        assertTrue(func1.getParameters().get(1).getParameterType() instanceof IntegerType);
+        assertTrue(func1.getResultType() instanceof IntegerType);
+
+        assertNotEquals(null, stackFrame.getFunctionDefinition("func2"));
+        FunctionDefinition func2 = stackFrame.getFunctionDefinition("func2");
+        assertEquals(0, func2.getParameters().size());
+        assertTrue(func2.getResultType() instanceof FloatType);
     }
 
     private InputStream readTestFile(String filename) {
