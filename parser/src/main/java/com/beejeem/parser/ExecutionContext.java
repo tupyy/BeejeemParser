@@ -72,7 +72,7 @@ public class ExecutionContext {
         if (null != runtimeFunction) {
             return runtimeFunction.execute(this, values);
         } else {
-            final FunctionDefintion functionOrProcedureDefinition = resolveFunctionOrProcedure(name);
+            final FunctionDefinition functionOrProcedureDefinition = resolveFunction(name);
             if (null != functionOrProcedureDefinition) {
                 return functionOrProcedureDefinition.execute(this, values);
             } else {
@@ -106,7 +106,7 @@ public class ExecutionContext {
         if (null != runtimeFunction) {
             return runtimeFunction.execute(this, null);
         } else {
-            final FunctionDefintion functionDefintion = resolveFunctionOrProcedure(name);
+            final FunctionDefinition functionDefintion = resolveFunction(name);
             if (functionDefintion != null) {
                 return functionDefintion.execute(this, null);
             }
@@ -142,11 +142,11 @@ public class ExecutionContext {
     /**
      * walk the stack, top to bottom trying to find the function or procedure
      */
-    private FunctionDefintion resolveFunctionOrProcedure(String name) {
+    private FunctionDefinition resolveFunction(String name) {
         for (final StackFrame stackFrame : stack) {
-            final FunctionDefintion functionOrProcedureDefinition = stackFrame.getFunctionOrProcedureDefinition(name);
-            if (null != functionOrProcedureDefinition) {
-                return functionOrProcedureDefinition;
+            final FunctionDefinition functionDefinition = stackFrame.getFunctionDefinition(name);
+            if (functionDefinition != null) {
+                return functionDefinition;
             }
         }
         return null;
