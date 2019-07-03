@@ -22,6 +22,7 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.value.*;
 
 public class ExpressionListener extends AbstractListener {
@@ -209,6 +210,14 @@ public class ExpressionListener extends AbstractListener {
                 new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
         this.setValue(expressionListener.getValue());
+    }
+
+    @Override
+    public void enterFunctionCallExpression(bjmParser.FunctionCallExpressionContext ctx) {
+        FunctionCallListener functionCallListener =
+                new FunctionCallListener(this.getExecutionContext());
+        ctx.enterRule(functionCallListener);
+        this.setValue(functionCallListener.getValue());
     }
 
     public Value getValue() {
