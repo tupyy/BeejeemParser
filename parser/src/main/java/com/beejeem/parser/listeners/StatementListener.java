@@ -27,19 +27,25 @@ public class StatementListener extends AbstractListener {
         super(executionContext);
     }
 
+    public void enterStatement(bjmParser.StatementContext ctx) {
+        StatementListener statementListener =
+                new StatementListener(this.getExecutionContext());
+        if (ctx.assignment() != null) {
+            ctx.assignment().enterRule(statementListener);
+        } else if (ctx.variableDeclaration() != null) {
+            ctx.variableDeclaration().enterRule(statementListener);
+        }
+    }
+
+    public void enterAssignment(bjmParser.AssignmentContext ctx) {
+        AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
+        ctx.enterRule(assignmentListener);
+    }
+
     @Override
-    public void enterStatement(bjmParser.StatementContext statementContext) {
-
-        if (statementContext.assignment() != null) {
-            AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
-            assignmentListener.enterAssignment(statementContext.assignment());
-        }
-
-        if (statementContext.variableDeclaration() != null) {
-            LocalVariableDeclarationContext ctx = statementContext.variableDeclaration().localVariableDeclaration();
-            LocalVariableDeclarationListener localVariableDeclarationListener
-                    = new LocalVariableDeclarationListener(this.getExecutionContext());
-            localVariableDeclarationListener.enterLocalVariableDeclaration(ctx);
-        }
+    public void enterVariableDeclaration(bjmParser.VariableDeclarationContext ctx) {
+        LocalVariableDeclarationListener localVariableDeclarationListener
+                = new LocalVariableDeclarationListener(this.getExecutionContext());
+        ctx.localVariableDeclaration().enterRule(localVariableDeclarationListener);
     }
 }

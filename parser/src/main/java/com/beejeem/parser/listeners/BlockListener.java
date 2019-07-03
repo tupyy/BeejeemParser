@@ -31,7 +31,7 @@ public class BlockListener extends AbstractListener {
         if (blockContext.statement() != null) {
             for (bjmParser.StatementContext statementContext: blockContext.statement()) {
                 StatementListener statementListener = new StatementListener(this.getExecutionContext());
-                statementListener.enterStatement(statementContext);
+                statementContext.enterRule(statementListener);
             }
         }
     }

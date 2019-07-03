@@ -36,7 +36,7 @@ public class LocalVariableDeclarationListener extends AbstractListener {
     public void enterLocalVariableDeclaration(bjmParser.LocalVariableDeclarationContext ctx) {
         Type variableType = this.getExecutionContext().resolveType(ctx.typeType().getText());
         VariableDeclaratorsListener variableDeclaratorsListener = new VariableDeclaratorsListener(this.getExecutionContext());
-        variableDeclaratorsListener.enterVariableDeclarators(ctx.variableDeclarators());
+        ctx.variableDeclarators().enterRule(variableDeclaratorsListener);
 
         // push variables to current stack
         for (Map.Entry<String, Value> entry: variableDeclaratorsListener.getValues().entrySet()) {
