@@ -22,6 +22,7 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
 import com.beejeem.parser.listeners.forstatement.ForStatementListener;
+import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.listeners.ifstatement.IfStatementListener;
 import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
 import com.beejeem.parser.value.Value;
@@ -47,6 +48,8 @@ public class StatementListener extends AbstractListener {
         } else if (ctx.forStatement() != null) {
             ctx.forStatement().enterRule(statementListener);
             ctx.forStatement().exitRule(statementListener);
+        } else if (ctx.functionCall() != null) {
+            ctx.functionCall().enterRule(statementListener);
         }
     }
 
@@ -90,5 +93,11 @@ public class StatementListener extends AbstractListener {
 
     public void exitForStatement(bjmParser.ForStatementContext ctx) {
         this.getExecutionContext().popStackframe();
+    }
+
+    @Override
+    public void enterFunctionCall(bjmParser.FunctionCallContext ctx) {
+        FunctionCallListener functionCallListener = new FunctionCallListener(this.getExecutionContext());
+        ctx.enterRule(functionCallListener);
     }
 }
