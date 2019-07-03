@@ -68,7 +68,7 @@ arrayInitializer
     ;
 
 functionCall
- : Identifier '(' exprList? ')' #identifierFunctionCall
+ : Identifier '(' exprList? ')'
  ;
 
 ifStatement
@@ -133,7 +133,7 @@ expression
  | Integer                                              #integerExpression
  | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
- | functionCall indexes?                                #functionCallExpression
+ | functionCall                                         #functionCallExpression
  | list indexes?                                        #listExpression
  | Identifier indexes?                                  #identifierExpression
  | String indexes?                                      #stringExpression
@@ -157,7 +157,7 @@ resultType
   : Boolean
   | Int
   | Float
-  | String
+  | StringType
   ;
 
 fragment A
@@ -336,6 +336,10 @@ Integer
 
 FloatNumber
  : NUM_REAL
+ ;
+
+StringType
+ : S T R I N G
  ;
 
 Bool
