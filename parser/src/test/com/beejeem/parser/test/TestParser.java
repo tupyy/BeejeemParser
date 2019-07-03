@@ -76,7 +76,7 @@ public class TestParser {
         assertEquals(1, stackFrame.getVariable("f").getValue());
         assertEquals(1, stackFrame.getVariable("g").getValue());
         assertEquals(1, stackFrame.getVariable("h").getValue());
-        assertEquals(1, stackFrame.getVariable("i").getValue());
+        assertEquals(null, stackFrame.getVariable("i"));
     }
 
     @Test

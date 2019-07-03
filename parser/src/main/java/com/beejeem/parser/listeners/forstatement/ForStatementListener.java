@@ -38,11 +38,6 @@ public class ForStatementListener extends AbstractListener {
 
     @Override
     public void enterForStatement(bjmParser.ForStatementContext ctx) {
-
-        Map<String,Value> stackVariables = this.getExecutionContext().getCurrentStackframe().getVariables();
-        StackFrame currentStackFrame = this.getExecutionContext().pushStackframe();
-        currentStackFrame.setVariables(stackVariables);
-
         ForControlListener forControlListener = new ForControlListener(this.getExecutionContext());
         ctx.forControl().enterRule(forControlListener);
 
@@ -62,12 +57,6 @@ public class ForStatementListener extends AbstractListener {
             AssignmentListener incrementAssignmentListener = new AssignmentListener(this.getExecutionContext());
             ctx.forControl().assignment().enterRule(incrementAssignmentListener);
         }
-
-        /*
-            Done. done pop the stack frame
-         */
-        this.getExecutionContext().popStackframe();
-
     }
 
     public Value getValue() {

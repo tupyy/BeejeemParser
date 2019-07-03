@@ -19,10 +19,14 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
 import com.beejeem.parser.listeners.forstatement.ForStatementListener;
 import com.beejeem.parser.listeners.ifstatement.IfStatementListener;
 import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
+import com.beejeem.parser.value.Value;
+
+import java.util.Map;
 
 public class StatementListener extends AbstractListener {
 
@@ -39,8 +43,10 @@ public class StatementListener extends AbstractListener {
             ctx.variableDeclaration().enterRule(statementListener);
         } else if (ctx.ifStatement() != null) {
             ctx.ifStatement().enterRule(statementListener);
+            ctx.ifStatement().exitRule(statementListener);
         } else if (ctx.forStatement() != null) {
             ctx.forStatement().enterRule(statementListener);
+            ctx.forStatement().exitRule(statementListener);
         }
     }
 
@@ -59,12 +65,30 @@ public class StatementListener extends AbstractListener {
 
     @Override
     public void enterIfStatement(bjmParser.IfStatementContext ctx) {
+        // push new frame on the stack and copy all global variables
+        Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
+        StackFrame stackFrame = this.getExecutionContext().pushStackframe();
+        stackFrame.setVariables(variables);
+
         IfStatementListener ifStatementListener = new IfStatementListener(this.getExecutionContext());
         ctx.enterRule(ifStatementListener);
     }
 
+    public void exitIfStatement(bjmParser.IfStatementContext ctx) {
+        this.getExecutionContext().popStackframe();
+    }
+
     public void enterForStatement(bjmParser.ForStatementContext ctx) {
+        // push new frame on the stack and copy all global variables
+        Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
+        StackFrame stackFrame = this.getExecutionContext().pushStackframe();
+        stackFrame.setVariables(variables);
+
         ForStatementListener forStatementListener = new ForStatementListener(this.getExecutionContext());
         ctx.enterRule(forStatementListener);
+    }
+
+    public void exitForStatement(bjmParser.ForStatementContext ctx) {
+        this.getExecutionContext().popStackframe();
     }
 }

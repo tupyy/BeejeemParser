@@ -50,7 +50,9 @@ if (a < 2) {
     h=1;
 }
 
-int i;
+/**
+i should be null because is not in the global scope and we test only variables int the global scope
+*/
 if ( (a+2) > 4 || (b*2) == 2) {
-    i= 1;
+    int i= 1;
 }
