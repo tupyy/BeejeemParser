@@ -8,5 +8,5 @@ int i1 = a * (b * (a+b+1)); // = 24
 
 // test boolean operations
 
-bool b = true;
-bool b1 = !b; // false
+bool bb = true;
+bool bb1 = !bb; // false
