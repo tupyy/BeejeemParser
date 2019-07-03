@@ -20,27 +20,26 @@ package com.beejeem.parser;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.grammar.bjmParser.BlockContext;
-import com.beejeem.parser.exception.NotImplementedException;
 import com.beejeem.parser.listeners.BlockListener;
-import com.beejeem.parser.listeners.ParametersListener.Parameter;
+import com.beejeem.parser.listeners.functionlisteners.ParametersListener.Parameter;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
 
 import java.util.List;
 
-public class FunctionDefintion {
+public class FunctionDefinition {
     private final String name;
     private final List<Parameter> parameters;
-    private final String resultTypeName;
+    private final Type resultType;
     private final bjmParser.BlockContext blockContext;
 
     /**
      * function
      */
-    public FunctionDefintion(String name, List<Parameter> parameters, BlockContext blockContext, String resultTypeName) {
+    public FunctionDefinition(String name, List<Parameter> parameters, BlockContext blockContext, Type resultTypeName) {
         this.name = name;
         this.parameters = parameters;
-        this.resultTypeName = resultTypeName;
+        this.resultType = resultTypeName;
         this.blockContext = blockContext;
     }
 
@@ -56,11 +55,7 @@ public class FunctionDefintion {
         for (final Parameter parameter : parameters) {
             stackFrame.declareVariable(parameter.getName(), args.get(i++));
         }
-        /*
-         * its a function, and we need to put a variable into scope, with the name of the function and type of the function return type
-         */
 
-        final Type resultType = executionContext.resolveType(resultTypeName);
         stackFrame.declareVariable(getName(), resultType.createValue());
 
         /*
@@ -86,11 +81,11 @@ public class FunctionDefintion {
         return parameters;
     }
 
-    public String getResultTypeName() {
-        return resultTypeName;
+    public Type getResultType() {
+        return resultType;
     }
 
     public boolean isFunction() {
-        return null != getResultTypeName();
+        return null != getResultType();
     }
 }
