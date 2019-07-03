@@ -96,7 +96,12 @@ forStatement
  ;
 
 forControl
- : localVariableDeclaration SColon expression SColon assignment
+ : indexVariableDeclaration SColon expression SColon assignment
+ ;
+
+indexVariableDeclaration
+ : typeType variableDeclarator
+ | assignment
  ;
 
 whileStatement
