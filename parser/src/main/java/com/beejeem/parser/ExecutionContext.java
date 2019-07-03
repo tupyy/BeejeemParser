@@ -92,24 +92,14 @@ public class ExecutionContext {
     }
 
     /**
-     * walk the stack, top to bottom trying to find the function or procedure
-     */
-    private FunctionDefintion resolveFunctionOrProcedure(String name) {
-        for (final StackFrame stackFrame : stack) {
-            final FunctionDefintion functionOrProcedureDefinition = stackFrame.getFunctionOrProcedureDefinition(name);
-            if (null != functionOrProcedureDefinition) {
-                return functionOrProcedureDefinition;
-            }
-        }
-        return null;
-    }
-
-    /**
      * walk the stack, top to bottom trying to find the variable
      */
     public Value resolveVariable(String name) {
         for (final StackFrame stackFrame : stack) {
-            return stackFrame.getVariable(name);
+            Value value = stackFrame.getVariable(name);
+            if (value != null) {
+                return value;
+            }
         }
 
         final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
@@ -148,5 +138,19 @@ public class ExecutionContext {
         }
         return null;
     }
+
+    /**
+     * walk the stack, top to bottom trying to find the function or procedure
+     */
+    private FunctionDefintion resolveFunctionOrProcedure(String name) {
+        for (final StackFrame stackFrame : stack) {
+            final FunctionDefintion functionOrProcedureDefinition = stackFrame.getFunctionOrProcedureDefinition(name);
+            if (null != functionOrProcedureDefinition) {
+                return functionOrProcedureDefinition;
+            }
+        }
+        return null;
+    }
+
 
 }
