@@ -18,6 +18,7 @@
  */
 package com.beejeem.parser;
 
+import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.value.Value;
 
 import java.util.HashMap;
@@ -34,9 +35,9 @@ public class StackFrame {
    /**
     * functions and procedures
     */
-   private final HashMap<String, FunctionDefinition> functions = new HashMap<String, FunctionDefinition>();
+   private final HashMap<String, UserDefinedFunction> functions = new HashMap<String, UserDefinedFunction>();
 
-   public void declareFunction(FunctionDefinition functionOrProcedureDefinition) {
+   public void declareFunction(UserDefinedFunction functionOrProcedureDefinition) {
        functions.put(functionOrProcedureDefinition.getName(), functionOrProcedureDefinition);
    }
 
@@ -47,7 +48,7 @@ public class StackFrame {
       variables.put(name, value);
    }
 
-   public FunctionDefinition getFunctionDefinition(String name) {
+   public UserDefinedFunction getFunctionDefinition(String name) {
       return functions.get(name.toLowerCase());
    }
 

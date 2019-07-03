@@ -18,11 +18,6 @@
  */
 package com.beejeem.parser.function;
 
-import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.value.Value;
+public interface RuntimeFunction extends Function{
 
-import java.util.List;
-
-public interface RuntimeFunction {
-   Value execute(ExecutionContext executionContext, List<Value> args);
 }

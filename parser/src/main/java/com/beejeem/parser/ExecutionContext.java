@@ -19,12 +19,16 @@
 package com.beejeem.parser;
 
 import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.function.Function;
+import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.function.RuntimeFunction;
 import com.beejeem.parser.function.RuntimeFunctionFactory;
+import com.beejeem.parser.listeners.functionlisteners.ParametersListener;
 import com.beejeem.parser.type.*;
 import com.beejeem.parser.value.Value;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -67,16 +71,16 @@ public class ExecutionContext {
         return stack;
     }
 
-    public Value invokeFunction(String name, List<Value> values) {
+    public Value invokeFunction(String name, List<Value> args) {
         final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
         if (null != runtimeFunction) {
-            return runtimeFunction.execute(this, values);
+            return runtimeFunction.execute(this, args);
         } else {
-            final FunctionDefinition functionOrProcedureDefinition = resolveFunction(name);
-            if (null != functionOrProcedureDefinition) {
-                return functionOrProcedureDefinition.execute(this, values);
+            final UserDefinedFunction userDefinedFunction = resolveFunction(name);
+            if (userDefinedFunction != null) {
+                return userDefinedFunction.execute(this, args);
             } else {
-                throw new InterpreterException("Unknown procedure '" + name + "'");
+                throw new InterpreterException("Unknown function '" + name + "'");
             }
         }
     }
@@ -101,17 +105,7 @@ public class ExecutionContext {
                 return value;
             }
         }
-
-        final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
-        if (null != runtimeFunction) {
-            return runtimeFunction.execute(this, null);
-        } else {
-            final FunctionDefinition functionDefintion = resolveFunction(name);
-            if (functionDefintion != null) {
-                return functionDefintion.execute(this, null);
-            }
-        }
-        throw new InterpreterException("Unable to resolve '" + name + "'");
+        throw new InterpreterException("Variable not found: "+name);
     }
 
     /**
@@ -142,14 +136,31 @@ public class ExecutionContext {
     /**
      * walk the stack, top to bottom trying to find the function or procedure
      */
-    private FunctionDefinition resolveFunction(String name) {
+    private UserDefinedFunction resolveFunction(String name) {
         for (final StackFrame stackFrame : stack) {
-            final FunctionDefinition functionDefinition = stackFrame.getFunctionDefinition(name);
-            if (functionDefinition != null) {
-                return functionDefinition;
+            final UserDefinedFunction userDefinedFunction = stackFrame.getFunctionDefinition(name);
+            if (userDefinedFunction != null) {
+                return userDefinedFunction;
             }
         }
         return null;
+    }
+
+    private List<Value> getFunctionArguments(Function function) {
+        List<Value> args = new ArrayList<>();
+        for (ParametersListener.Parameter parameter: function.getParameters()) {
+            Value arg = this.getCurrentStackframe().getVariable(parameter.getName());
+
+            //check the type
+            if (! (arg.getType().equals(parameter.getParameterType()))) {
+                throw new InterpreterException(
+                        String.format("Type mismatch in function %s argument %s.",
+                                function.getName(),
+                                parameter.getName()));
+            }
+            args.add(arg);
+        }
+        return args;
     }
 
 
