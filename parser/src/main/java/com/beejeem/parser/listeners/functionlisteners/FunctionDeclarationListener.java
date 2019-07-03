@@ -19,7 +19,7 @@ package com.beejeem.parser.listeners.functionlisteners;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.FunctionDefinition;
+import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
@@ -47,9 +47,9 @@ public class FunctionDeclarationListener extends AbstractListener {
             parameters = parametersListener.getParameters();
         }
 
-        FunctionDefinition functionDefinition
-                = new FunctionDefinition(ctx.Identifier().getText(), parameters, ctx.block(), resultType);
-        this.getExecutionContext().getCurrentStackframe().declareFunction(functionDefinition);
+        UserDefinedFunction userDefinedFunction
+                = new UserDefinedFunction(ctx.Identifier().getText(), parameters, ctx.block(), resultType);
+        this.getExecutionContext().getCurrentStackframe().declareFunction(userDefinedFunction);
     }
 
     public Value getValue() {
