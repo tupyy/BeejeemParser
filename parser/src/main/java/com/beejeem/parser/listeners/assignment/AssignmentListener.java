@@ -34,9 +34,10 @@ public class AssignmentListener extends AbstractListener {
 
     public void enterAssignment(bjmParser.AssignmentContext assignmentContext) {
         String identifier = assignmentContext.Identifier().getText();
-        Value identifierValue = this.getExecutionContext().resolveVariable(identifier);
+        Value identifierValue = this.getExecutionContext().getCurrentStackframe().getVariable(identifier);
         if (identifierValue == null) {
-            throw new InvalidOperationException(String.format("Variable not defined: %s", identifier));
+            throw new InvalidOperationException(
+                    String.format("Line %d: Variable not defined: %s", assignmentContext.start.getLine(), identifier));
         }
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         assignmentContext.expression().enterRule(expressionListener);

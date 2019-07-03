@@ -50,7 +50,8 @@ public class ExpressionListener extends AbstractListener {
                 this.setValue(leftValue.mod(rhs.getValue()));
                 break;
             default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+                throw new InvalidOperationException(
+                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
         }
     }
 
@@ -70,7 +71,8 @@ public class ExpressionListener extends AbstractListener {
                 this.setValue(leftValue.subtract(rhs.getValue()));
                 break;
             default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+                throw new InvalidOperationException(
+                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
         }
     }
 
@@ -126,7 +128,8 @@ public class ExpressionListener extends AbstractListener {
                 this.setValue(leftValue.lte(rightExprListener.getValue()));
                 break;
             default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+                throw new InvalidOperationException(
+                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
         }
     }
 
@@ -147,7 +150,8 @@ public class ExpressionListener extends AbstractListener {
                 this.setValue(leftValue.neq(rightExprListener.getValue()));
                 break;
             default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+                throw new InvalidOperationException(
+                    String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
         }
     }
 
@@ -168,7 +172,8 @@ public class ExpressionListener extends AbstractListener {
                 this.setValue(leftValue.or(rightExprListener.getValue()));
                 break;
             default:
-                throw new InvalidOperationException( String.format("Unknown operator type: %s", ctx.getText()));
+                throw new InvalidOperationException(
+                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
         }
     }
 
@@ -192,7 +197,8 @@ public class ExpressionListener extends AbstractListener {
         String variableName = ctx.getText();
         Value value = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
         if (value == null) {
-            throw new InvalidOperationException(String.format("Variable not found: %s",variableName));
+            throw new InvalidOperationException(
+                    String.format("Line %d: Variable not found: %s",ctx.start.getLine(),variableName));
         }
         this.setValue(value);
     }
