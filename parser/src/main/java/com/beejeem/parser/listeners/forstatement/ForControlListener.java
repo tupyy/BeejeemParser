@@ -15,34 +15,31 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners.ifstatement;
+package com.beejeem.parser.listeners.forstatement;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
-import com.beejeem.parser.listeners.BlockListener;
-import com.beejeem.parser.listeners.expression.ExpressionListener;
-import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.Value;
 
-public class IfStatListener extends AbstractListener {
+public class ForControlListener extends AbstractListener {
 
     private Value value;
-
-    public IfStatListener(ExecutionContext executionContext) {
+    public ForControlListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
     @Override
-    public void enterIfStat(bjmParser.IfStatContext ctx) {
+    public void enterForControl(bjmParser.ForControlContext ctx) {
+        IndexVariableDeclarationListener indexValueListener
+                = new IndexVariableDeclarationListener(this.getExecutionContext());
+        ctx.indexVariableDeclaration().enterRule(indexValueListener);
 
     }
 
     public Value getValue() {
         return value;
     }
-
     public void setValue(Value value) {
         this.value = value;
     }
