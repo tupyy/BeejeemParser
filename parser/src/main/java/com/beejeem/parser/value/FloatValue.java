@@ -25,23 +25,22 @@ import com.beejeem.parser.type.Type;
 import static java.lang.Math.pow;
 
 public class FloatValue extends AbstractValue<Float> {
-    private float value;
     private Type type = new FloatType();
 
     public FloatValue() {
-        value = 0;
+        super(0f);
     }
 
     public FloatValue(float value) {
-        this.value = value;
+        super(value);
     }
 
     @Override
     public Value add(Value v) {
         if (v instanceof IntegerValue) {
-            return new FloatValue(value + ((IntegerValue) v).getValue());
+            return new FloatValue(this.get() + ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new FloatValue(value + ((FloatValue) v).getValue());
+            return new FloatValue(this.get() + ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -50,9 +49,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public Value div(Value v) {
         if (v instanceof IntegerValue) {
-            return new FloatValue(value / ((IntegerValue) v).getValue());
+            return new FloatValue(this.get() / ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new FloatValue(value / ((FloatValue) v).getValue());
+            return new FloatValue(this.get() / ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -61,24 +60,20 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public BooleanValue eq(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value == ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() == ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value == ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() == ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
     }
 
-    public Float getValue() {
-        return value;
-    }
-
     @Override
     public BooleanValue gt(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value > ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() > ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value > ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() > ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -87,9 +82,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public BooleanValue gte(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value >= ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() >= ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value >= ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() >= ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -98,9 +93,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public BooleanValue lt(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value < ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() < ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value < ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() < ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -109,9 +104,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public BooleanValue lte(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value <= ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() <= ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value <= ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() <= ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -120,9 +115,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public Value mult(Value v) {
         if (v instanceof IntegerValue) {
-            return new FloatValue(value * ((IntegerValue) v).getValue());
+            return new FloatValue(this.get() * ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new FloatValue(value * ((FloatValue) v).getValue());
+            return new FloatValue(this.get() * ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -131,9 +126,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public Value power(Value v) {
         if (v instanceof IntegerValue) {
-            return new FloatValue((float) pow(value ,((IntegerValue) v).getValue()));
+            return new FloatValue((float) pow(this.get() ,((IntegerValue) v).get()));
         } else if (v instanceof FloatValue) {
-            return new FloatValue((float) pow(value,((FloatValue) v).getValue()));
+            return new FloatValue((float) pow(this.get(),((FloatValue) v).get()));
         } else {
             throw new InvalidOperationException();
         }
@@ -142,9 +137,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public BooleanValue neq(Value v) {
         if (v instanceof IntegerValue) {
-            return new BooleanValue(value != ((IntegerValue) v).getValue());
+            return new BooleanValue(this.get().intValue() != ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(value != ((FloatValue) v).getValue());
+            return new BooleanValue(this.get() != ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -153,9 +148,9 @@ public class FloatValue extends AbstractValue<Float> {
     @Override
     public void set(Value v) {
         if (v instanceof FloatValue) {
-            value = ((FloatValue) v).getValue();
+            this.set(((FloatValue) v).get());
         } else if (v instanceof IntegerValue) {
-            value = ((IntegerValue) v).getValue();
+            this.set((float) ((IntegerValue) v).get());
         }
         else {
             throw new InvalidOperationException();
@@ -163,25 +158,16 @@ public class FloatValue extends AbstractValue<Float> {
     }
 
     @Override
-    public void set(Float v) {
-        this.value = v;
-    }
-
-    @Override
     public String toString() {
-        return Double.toString(value);
-    }
-
-    public void setValue(float value) {
-        this.value = value;
+        return Double.toString(this.get());
     }
 
     @Override
     public Value subtract(Value v) {
         if (v instanceof IntegerValue) {
-            return new FloatValue(value - ((IntegerValue) v).getValue());
+            return new FloatValue(this.get() - ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new FloatValue(value - ((FloatValue) v).getValue());
+            return new FloatValue(this.get() - ((FloatValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -194,6 +180,6 @@ public class FloatValue extends AbstractValue<Float> {
 
     @Override
     public Value clone() {
-        return new FloatValue(value);
+        return new FloatValue(this.get());
     }
 }

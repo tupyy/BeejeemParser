@@ -17,12 +17,9 @@
 
 package com.beejeem.parser.value;
 
-import com.beejeem.parser.exception.InvalidOperationException;
-import com.beejeem.parser.type.Type;
-
 public class VoidValue extends AbstractValue<Void> {
-    @Override
-    public void set(Void v) {
-        throw new InvalidOperationException();
+
+    public VoidValue() {
+        super(null);
     }
 }

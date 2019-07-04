@@ -116,18 +116,6 @@ public interface Value<T> extends Cloneable {
     Value or(Value v);
 
     /**
-     * Setter
-     * @param v new value
-     */
-    void set(Value v);
-
-    /**
-     * Setter
-     * @param v
-     */
-    void set(T v);
-
-    /**
      * Substract operation
      */
     Value subtract(Value v);
@@ -139,10 +127,22 @@ public interface Value<T> extends Cloneable {
     Type getType();
 
     /**
-     * Getter
-     * @return
+     * Setter
+     * @param v
      */
-    T getValue();
+    void set(T v);
+
+    /**
+     * Setter from Value
+     * @param v new value
+     */
+    void set(Value v);
+
+    /**
+     * getter
+     * @return value
+     */
+    T get();
 
     /**
      * Clone the current value

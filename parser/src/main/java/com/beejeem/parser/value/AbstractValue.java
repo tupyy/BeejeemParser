@@ -22,6 +22,12 @@ import com.beejeem.parser.type.Type;
 
 public abstract class AbstractValue<T> implements Value<T> {
 
+    private T value;
+
+    public AbstractValue(T value) {
+        this.value = value;
+    }
+
     @Override
     public Value add(Value v) {
         throw new InvalidOperationException();
@@ -107,6 +113,15 @@ public abstract class AbstractValue<T> implements Value<T> {
         throw new InvalidOperationException();
     }
 
+    @Override
+    public void set(T v) {
+        this.value = v;
+    }
+
+    @Override
+    public T get() {
+        return this.value;
+    }
 
     @Override
     public Value subtract(Value v) {
@@ -118,10 +133,10 @@ public abstract class AbstractValue<T> implements Value<T> {
         throw new InvalidOperationException();
     }
 
-    @Override
-    public T getValue() {
-        throw new InvalidOperationException();
-    }
+//    @Override
+//    public T getValue() {
+//        return this.value;
+//    }
 
     @Override
     public Value clone() {
