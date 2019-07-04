@@ -22,7 +22,7 @@ import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.StringType;
 import com.beejeem.parser.type.Type;
 
-public class StringValue implements Value<String> {
+public class StringValue extends AbstractValue<String> {
 
     private String value;
     private Type type = new StringType();
@@ -36,23 +36,8 @@ public class StringValue implements Value<String> {
     }
 
     @Override
-    public Value add(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value and(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
     public Value clone() {
         return new StringValue(value);
-    }
-
-    @Override
-    public Value div(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override
@@ -65,66 +50,6 @@ public class StringValue implements Value<String> {
     }
 
     @Override
-    public BooleanValue gt(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue gte(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue in(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue lt(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue lte(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value mod(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value mult(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value power(Value v) {
-        throw new InvalidOperationException("Power operation not allowed on string.");
-    }
-
-    @Override
-    public Value neg() {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue neq(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value not() {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value or(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
     public void set(Value v) {
         // FIXME remove only quote from the beginning of the word?
         value = v.toString().replace("\"","");
@@ -133,11 +58,6 @@ public class StringValue implements Value<String> {
     @Override
     public void set(String v) {
         this.value = v.replace("\"","");
-    }
-
-    @Override
-    public Value subtract(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override

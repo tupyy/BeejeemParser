@@ -24,7 +24,7 @@ import com.beejeem.parser.type.Type;
 
 import static java.lang.Math.pow;
 
-public class IntegerValue implements Value<Integer> {
+public class IntegerValue extends AbstractValue<Integer> {
 
     private final Type type = new IntegerType();
     private Integer value;
@@ -113,11 +113,6 @@ public class IntegerValue implements Value<Integer> {
         }
     }
 
-    @Override
-    public BooleanValue in(Value v) {
-        throw new InvalidOperationException();
-    }
-
     public void increment() {
         value = value + 1;
     }
@@ -183,16 +178,6 @@ public class IntegerValue implements Value<Integer> {
         } else {
             throw new InvalidOperationException();
         }
-    }
-
-    @Override
-    public Value not() {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value or(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override

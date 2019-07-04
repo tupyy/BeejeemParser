@@ -22,7 +22,7 @@ import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.BooleanType;
 import com.beejeem.parser.type.Type;
 
-public class BooleanValue implements Value<Boolean> {
+public class BooleanValue extends AbstractValue<Boolean> {
     private boolean value;
     private Type type = new BooleanType();
 
@@ -32,11 +32,6 @@ public class BooleanValue implements Value<Boolean> {
 
     public BooleanValue(boolean value) {
         this.value = value;
-    }
-
-    @Override
-    public Value add(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override
@@ -54,72 +49,12 @@ public class BooleanValue implements Value<Boolean> {
     }
 
     @Override
-    public Value div(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue eq(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
     public String toString() {
         return Boolean.toString(value);
     }
 
-    @Override
-    public BooleanValue gt(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue gte(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue in(Value v) {
-        throw new InvalidOperationException();
-    }
-
     public boolean isValue() {
         return value;
-    }
-
-    @Override
-    public BooleanValue lt(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue lte(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value mod(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value mult(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value power(Value v) {
-        throw new InvalidOperationException("Power operation not allowed on booleans.");
-    }
-
-    @Override
-    public Value neg() {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public BooleanValue neq(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override
@@ -152,11 +87,6 @@ public class BooleanValue implements Value<Boolean> {
 
     public void setValue(boolean value) {
         this.value = value;
-    }
-
-    @Override
-    public Value subtract(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override

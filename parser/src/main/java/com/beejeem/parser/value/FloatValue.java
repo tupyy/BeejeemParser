@@ -24,7 +24,7 @@ import com.beejeem.parser.type.Type;
 
 import static java.lang.Math.pow;
 
-public class FloatValue implements Value<Float> {
+public class FloatValue extends AbstractValue<Float> {
     private float value;
     private Type type = new FloatType();
 
@@ -46,12 +46,6 @@ public class FloatValue implements Value<Float> {
             throw new InvalidOperationException();
         }
     }
-
-    @Override
-    public Value and(Value v) {
-        throw new InvalidOperationException();
-    }
-
 
     @Override
     public Value div(Value v) {
@@ -102,11 +96,6 @@ public class FloatValue implements Value<Float> {
     }
 
     @Override
-    public BooleanValue in(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
     public BooleanValue lt(Value v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(value < ((IntegerValue) v).getValue());
@@ -126,11 +115,6 @@ public class FloatValue implements Value<Float> {
         } else {
             throw new InvalidOperationException();
         }
-    }
-
-    @Override
-    public Value mod(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override
@@ -156,11 +140,6 @@ public class FloatValue implements Value<Float> {
     }
 
     @Override
-    public Value neg() {
-        return new FloatValue(value * -1);
-    }
-
-    @Override
     public BooleanValue neq(Value v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(value != ((IntegerValue) v).getValue());
@@ -169,16 +148,6 @@ public class FloatValue implements Value<Float> {
         } else {
             throw new InvalidOperationException();
         }
-    }
-
-    @Override
-    public Value not() {
-        throw new InvalidOperationException();
-    }
-
-    @Override
-    public Value or(Value v) {
-        throw new InvalidOperationException();
     }
 
     @Override
