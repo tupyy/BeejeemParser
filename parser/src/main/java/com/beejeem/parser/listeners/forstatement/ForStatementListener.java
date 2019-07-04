@@ -47,7 +47,7 @@ public class ForStatementListener extends AbstractListener {
             ExpressionListener endValueExpressionListener = new ExpressionListener(this.getExecutionContext());
             ctx.forControl().expression().enterRule(endValueExpressionListener);
             Value endValue = endValueExpressionListener.getValue();
-            if ( !((BooleanValue) endValue).getValue() ) {
+            if ( !((BooleanValue) endValue).get() ) {
                 break;
             }
             BlockListener blockListener = new BlockListener(this.getExecutionContext());

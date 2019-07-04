@@ -35,11 +35,11 @@ public class TestParser {
 
         StackFrame stackFrame = programListener.getLastStack();
         Value var = stackFrame.getVariable("c");
-        assertEquals(1f, var.getValue());
-        assertEquals(8f, stackFrame.getVariable("cc").getValue());
-        assertEquals(4f, stackFrame.getVariable("p").getValue());
-        assertEquals(24, stackFrame.getVariable("i1").getValue());
-        assertEquals(false, stackFrame.getVariable("bb1").getValue());
+        assertEquals(1f, var.get());
+        assertEquals(8f, stackFrame.getVariable("cc").get());
+        assertEquals(4f, stackFrame.getVariable("p").get());
+        assertEquals(24, stackFrame.getVariable("i1").get());
+        assertEquals(false, stackFrame.getVariable("bb1").get());
     }
 
     @Test
@@ -53,16 +53,16 @@ public class TestParser {
         });
     }
 
-//    @Test
-//    public void testAssignmentErrors2() {
-//        String stringToInt = "bool a=\"string\";";
-//        ExecutionContext executionContext = new ExecutionContext();
-//        ProgramContext programContext =this.parse(new ByteArrayInputStream(stringToInt.getBytes()));
-//        assertThrows(InvalidOperationException.class, () -> {
-//            final ProgramListener programListener = new ProgramListener(executionContext);
-//            programContext.enterRule(programListener);
-//        });
-//    }
+    @Test
+    public void testAssignmentErrors2() {
+        String stringToInt = "bool a=\"string\";";
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext =this.parse(new ByteArrayInputStream(stringToInt.getBytes()));
+        assertThrows(InvalidOperationException.class, () -> {
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
+        });
+    }
 
     @Test
     public void testIfs() {
@@ -72,12 +72,12 @@ public class TestParser {
         programContext.enterRule(programListener);
 
         StackFrame stackFrame = programListener.getLastStack();
-        assertEquals(2, stackFrame.getVariable("c").getValue());
-        assertEquals(1, stackFrame.getVariable("d").getValue());
-        assertEquals(0, stackFrame.getVariable("e").getValue());
-        assertEquals(1, stackFrame.getVariable("f").getValue());
-        assertEquals(1, stackFrame.getVariable("g").getValue());
-        assertEquals(1, stackFrame.getVariable("h").getValue());
+        assertEquals(2, stackFrame.getVariable("c").get());
+        assertEquals(1, stackFrame.getVariable("d").get());
+        assertEquals(0, stackFrame.getVariable("e").get());
+        assertEquals(1, stackFrame.getVariable("f").get());
+        assertEquals(1, stackFrame.getVariable("g").get());
+        assertEquals(1, stackFrame.getVariable("h").get());
         assertEquals(null, stackFrame.getVariable("i"));
     }
 
@@ -89,10 +89,10 @@ public class TestParser {
         programContext.enterRule(programListener);
 
         StackFrame stackFrame = programListener.getLastStack();
-        assertEquals(5, stackFrame.getVariable("b").getValue());
-        assertEquals(4, stackFrame.getVariable("c").getValue());
-        assertEquals(450, stackFrame.getVariable("d").getValue());
-        assertEquals(4500, stackFrame.getVariable("f").getValue());
+        assertEquals(5, stackFrame.getVariable("b").get());
+        assertEquals(4, stackFrame.getVariable("c").get());
+        assertEquals(450, stackFrame.getVariable("d").get());
+        assertEquals(4500, stackFrame.getVariable("f").get());
     }
 
     @Test
@@ -127,10 +127,10 @@ public class TestParser {
         programContext.enterRule(programListener);
 
         StackFrame stackFrame = programListener.getLastStack();
-        assertEquals(4, stackFrame.getVariable("a").getValue());
-        assertEquals(2f, stackFrame.getVariable("b").getValue());
-        assertEquals("test", stackFrame.getVariable("c").getValue());
-        assertEquals(false, stackFrame.getVariable("d").getValue());
+        assertEquals(4, stackFrame.getVariable("a").get());
+        assertEquals(2f, stackFrame.getVariable("b").get());
+        assertEquals("test", stackFrame.getVariable("c").get());
+        assertEquals(false, stackFrame.getVariable("d").get());
     }
 
     private InputStream readTestFile(String filename) {

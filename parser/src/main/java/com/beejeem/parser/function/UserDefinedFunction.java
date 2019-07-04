@@ -64,7 +64,7 @@ public class UserDefinedFunction implements Function{
         final BlockListener blockListener = new BlockListener(executionContext);
         blockListener.enterBlock(blockContext);
         Value ret = executionContext.resolveVariable(getName());
-        if (blockListener.getValue().getValue() != null) {
+        if (blockListener.getValue().get() != null) {
             ret.set(blockListener.getValue());
         }
         executionContext.popStackframe();

@@ -23,21 +23,20 @@ import com.beejeem.parser.type.BooleanType;
 import com.beejeem.parser.type.Type;
 
 public class BooleanValue extends AbstractValue<Boolean> {
-    private boolean value;
     private Type type = new BooleanType();
 
     public BooleanValue() {
-        value = false;
+        super(false);
     }
 
     public BooleanValue(boolean value) {
-        this.value = value;
+        super(value);
     }
 
     @Override
     public Value and(Value v) {
         if (v instanceof BooleanValue) {
-            return new BooleanValue(value && ((BooleanValue) v).isValue());
+            return new BooleanValue(this.get() && ((BooleanValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -45,27 +44,23 @@ public class BooleanValue extends AbstractValue<Boolean> {
 
     @Override
     public Value clone() {
-        return new BooleanValue(value);
+        return new BooleanValue(this.get());
     }
 
     @Override
     public String toString() {
-        return Boolean.toString(value);
-    }
-
-    public boolean isValue() {
-        return value;
+        return Boolean.toString(this.get());
     }
 
     @Override
     public Value not() {
-        return new BooleanValue(!value);
+        return new BooleanValue(!this.get());
     }
 
     @Override
     public Value or(Value v) {
         if (v instanceof BooleanValue) {
-            return new BooleanValue(value | ((BooleanValue) v).isValue());
+            return new BooleanValue(this.get() | ((BooleanValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
@@ -74,28 +69,14 @@ public class BooleanValue extends AbstractValue<Boolean> {
     @Override
     public void set(Value v) {
         if (v instanceof BooleanValue) {
-            value = ((BooleanValue) v).isValue();
+            this.set(((BooleanValue) v).get());
         } else {
             throw new InvalidOperationException();
         }
     }
 
     @Override
-    public void set(Boolean v) {
-        this.value = v;
-    }
-
-    public void setValue(boolean value) {
-        this.value = value;
-    }
-
-    @Override
     public Type getType() {
         return this.type;
-    }
-
-    @Override
-    public Boolean getValue() {
-        return value;
     }
 }

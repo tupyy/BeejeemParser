@@ -24,20 +24,19 @@ import com.beejeem.parser.type.Type;
 
 public class StringValue extends AbstractValue<String> {
 
-    private String value;
     private Type type = new StringType();
 
     public StringValue() {
-        value = new String();
+        super("");
     }
 
     public StringValue(String value) {
-        this.value = value;
+        super(value);
     }
 
     @Override
     public Value clone() {
-        return new StringValue(value);
+        return new StringValue(this.get());
     }
 
     @Override
@@ -45,19 +44,10 @@ public class StringValue extends AbstractValue<String> {
         throw new InvalidOperationException();
     }
 
-    public String getValue() {
-        return value;
-    }
-
     @Override
     public void set(Value v) {
         // FIXME remove only quote from the beginning of the word?
-        value = v.toString().replace("\"","");
-    }
-
-    @Override
-    public void set(String v) {
-        this.value = v.replace("\"","");
+        super.set(v.toString().replace("\"",""));
     }
 
     @Override
@@ -67,6 +57,6 @@ public class StringValue extends AbstractValue<String> {
 
     @Override
     public String toString() {
-        return value;
+        return this.get();
     }
 }

@@ -38,7 +38,7 @@ public class IfStatementListener extends AbstractListener {
 
     @Override
     public void enterIfStatement(bjmParser.IfStatementContext ctx) {
-        if (this.evaluateCondionalExpression(ctx.ifStat().expression()).getValue()) {
+        if (this.evaluateCondionalExpression(ctx.ifStat().expression()).get()) {
             BlockListener blockListener = new BlockListener(this.getExecutionContext());
             ctx.ifStat().block().enterRule(blockListener);
         } else {
@@ -50,7 +50,7 @@ public class IfStatementListener extends AbstractListener {
                     ifElseConditionalValue.set(ifElseStatListener.getValue());
                 }
             }
-            if (!((BooleanValue) ifElseConditionalValue).getValue() && ctx.elseStat() != null) {
+            if (!((BooleanValue) ifElseConditionalValue).get() && ctx.elseStat() != null) {
                 IfStatementListener elseStatListener = new IfStatementListener(this.getExecutionContext());
                 ctx.elseStat().enterRule(elseStatListener);
             }
@@ -60,7 +60,7 @@ public class IfStatementListener extends AbstractListener {
     @Override
     public void enterElseIfStat(bjmParser.ElseIfStatContext ctx) {
         BooleanValue conditionalValue = this.evaluateCondionalExpression(ctx.expression());
-        if (conditionalValue.getValue()) {
+        if (conditionalValue.get()) {
             BlockListener blockListener = new BlockListener(this.getExecutionContext());
             ctx.block().enterRule(blockListener);
         }
