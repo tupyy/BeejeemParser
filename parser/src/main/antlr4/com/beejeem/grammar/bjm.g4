@@ -29,6 +29,7 @@ statement
  : assignment SColon
  | variableDeclaration
  | functionCall SColon
+ | collectionCall SColon
  | ifStatement
  | forStatement
  | whileStatement
@@ -134,14 +135,14 @@ expression
  | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
- | list indexes?                                        #listExpression
+ | collectionCall                                             #listCallExpression
  | Identifier indexes?                                  #identifierExpression
  | String indexes?                                      #stringExpression
  | '(' expression ')' indexes?                          #expressionExpression
  ;
 
-list
- : '[' exprList? ']'
+collectionCall
+ : Identifier '.' Identifier OParen exprList? CParen
  ;
 
 indexes
@@ -158,6 +159,12 @@ resultType
   | Int
   | Float
   | StringType
+  | collectionType
+  ;
+
+collectionType
+  : List LT typeType GT
+  | Map LT typeType Comma typeType GT
   ;
 
 fragment A
@@ -302,6 +309,8 @@ Int      : I N T;
 In       : I N;
 Float    : F L O A T;
 Void     : V O I D;
+List     : L I S T;
+Map      : M A P;
 
 Or       : '||';
 And      : '&&';
