@@ -126,17 +126,13 @@ public class StringValue implements Value<String> {
 
     @Override
     public void set(Value v) {
-        value = v.toString();
+        // FIXME remove only quote from the beginning of the word?
+        value = v.toString().replace("\"","");
     }
 
     @Override
     public void set(String v) {
-        this.value = v;
-    }
-
-
-    public void setValue(String value) {
-        this.value = value;
+        this.value = v.replace("\"","");
     }
 
     @Override
