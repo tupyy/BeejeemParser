@@ -27,8 +27,10 @@ block
 
 statement
  : assignment SColon
+ | incrementStatement SColon
  | variableDeclaration
  | functionCall SColon
+ | collectionCall SColon
  | ifStatement
  | forStatement
  | whileStatement
@@ -36,6 +38,10 @@ statement
 
 assignment
  : Identifier '=' expression
+ ;
+
+incrementStatement
+ : Identifier op=(Increment | Decrement)
  ;
 
 variableDeclaration
@@ -96,7 +102,7 @@ forStatement
  ;
 
 forControl
- : indexVariableDeclaration SColon expression SColon assignment
+ : indexVariableDeclaration SColon expression SColon (assignment | expression)
  ;
 
 indexVariableDeclaration
@@ -122,6 +128,7 @@ exprList
 expression
  : '-' expression                                       #unaryMinusExpression
  | '!' expression                                       #notExpression
+ | expression op=('++' | '--')                          #incrementExpression
  | <assoc=right> expression '^' expression              #powerExpression
  | expression op=( '*' | '/' | '%' ) expression         #multExpression
  | expression op=( '+' | '-' ) expression               #addExpression
@@ -134,14 +141,14 @@ expression
  | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
- | list indexes?                                        #listExpression
+ | collectionCall                                       #listCallExpression
  | Identifier indexes?                                  #identifierExpression
  | String indexes?                                      #stringExpression
  | '(' expression ')' indexes?                          #expressionExpression
  ;
 
-list
- : '[' exprList? ']'
+collectionCall
+ : Identifier '.' Identifier OParen exprList? CParen
  ;
 
 indexes
@@ -158,6 +165,12 @@ resultType
   | Int
   | Float
   | StringType
+  | collectionType
+  ;
+
+collectionType
+  : List LT typeType GT
+  | Map LT typeType Comma typeType GT
   ;
 
 fragment A
@@ -302,6 +315,8 @@ Int      : I N T;
 In       : I N;
 Float    : F L O A T;
 Void     : V O I D;
+List     : L I S T;
+Map      : M A P;
 
 Or       : '||';
 And      : '&&';
@@ -314,6 +329,8 @@ Excl     : '!';
 GT       : '>';
 LT       : '<';
 Add      : '+';
+Increment: '++';
+Decrement: '--';
 Subtract : '-';
 Multiply : '*';
 Divide   : '/';

@@ -19,9 +19,11 @@ package com.beejeem.parser.listeners;
 
 import com.beejeem.grammar.bjmBaseListener;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.value.Value;
 
 public abstract class AbstractListener extends bjmBaseListener {
 
+    private Value value;
     private final ExecutionContext executionContext;
 
     public AbstractListener(ExecutionContext executionContext) {
@@ -30,5 +32,13 @@ public abstract class AbstractListener extends bjmBaseListener {
 
     public ExecutionContext getExecutionContext() {
         return executionContext;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
     }
 }

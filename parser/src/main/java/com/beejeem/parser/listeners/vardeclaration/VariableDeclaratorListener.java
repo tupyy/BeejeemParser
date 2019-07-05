@@ -24,7 +24,6 @@ import com.beejeem.parser.value.Value;
 import com.beejeem.parser.value.VoidValue;
 
 public class VariableDeclaratorListener extends AbstractListener {
-    private Value value;
     private String variableName;
 
     public VariableDeclaratorListener(ExecutionContext executionContext) {
@@ -41,14 +40,6 @@ public class VariableDeclaratorListener extends AbstractListener {
             variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
             this.setValue(variableInitializerListener.getValue());
         }
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 
     public String getVariableName() {

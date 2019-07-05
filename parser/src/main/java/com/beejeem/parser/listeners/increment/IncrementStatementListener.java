@@ -15,32 +15,27 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.listeners.forstatement;
+package com.beejeem.parser.listeners.increment;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.ValueOperations;
+import com.beejeem.parser.exception.InterpreterException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
 
-public class ForControlListener extends AbstractListener {
+public class IncrementStatementListener extends AbstractListener {
 
-    private Value value;
-    public ForControlListener(ExecutionContext executionContext) {
+    public IncrementStatementListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
-    @Override
-    public void enterForControl(bjmParser.ForControlContext ctx) {
-        IndexVariableDeclarationListener indexValueListener
-                = new IndexVariableDeclarationListener(this.getExecutionContext());
-        ctx.indexVariableDeclaration().enterRule(indexValueListener);
-
-    }
-
-    public Value getValue() {
-        return value;
-    }
-    public void setValue(Value value) {
-        this.value = value;
+    public void enterIncrementStatement(bjmParser.IncrementStatementContext ctx) {
+        Value variable = this.getExecutionContext().getCurrentStackframe().getVariable(ctx.Identifier().getText());
+        if (variable == null) {
+            throw new InterpreterException(
+                    String.format("Line %d: Unknown variable %s", ctx.start.getLine(),ctx.Identifier().getText()));
+        }
+        variable.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(variable));
     }
 }

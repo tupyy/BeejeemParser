@@ -17,9 +17,9 @@
 
 package com.beejeem.parser.listeners.expression;
 
-import com.beejeem.grammar.bjmLexer;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.ValueOperations;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
@@ -35,46 +35,21 @@ public class ExpressionListener extends AbstractListener {
     public void enterMultExpression(bjmParser.MultExpressionContext ctx) {
         ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext)ctx.children.get(0)).enterRule(lhs);
-        Value leftValue = lhs.getValue();
 
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        switch (ctx.op.getType()) {
-            case bjmLexer.Multiply:
-                this.setValue(leftValue.mult(rhs.getValue()));
-                break;
-            case bjmLexer.Divide:
-                this.setValue(leftValue.div(rhs.getValue()));
-                break;
-            case bjmLexer.Modulus:
-                this.setValue(leftValue.mod(rhs.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException(
-                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
-        }
+        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
     }
 
     public void enterAddExpression(bjmParser.AddExpressionContext ctx) {
         ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext)ctx.children.get(0)).enterRule(lhs);
-        Value leftValue = lhs.getValue();
 
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        switch (ctx.op.getType()) {
-            case bjmLexer.Add:
-                this.setValue(leftValue.add(rhs.getValue()));
-                break;
-            case bjmLexer.Subtract:
-                this.setValue(leftValue.subtract(rhs.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException(
-                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
-        }
+        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
     }
 
     @Override
@@ -99,90 +74,51 @@ public class ExpressionListener extends AbstractListener {
     public void enterPowerExpression(bjmParser.PowerExpressionContext ctx) {
         ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(lhs);
-        Value lhsValue = lhs.getValue();
 
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(lhsValue.power(rhs.getValue()));
+        this.setValue(ValueOperations.getBiOperations().get(ctx.Pow().getSymbol().getType())
+                .apply(lhs.getValue(), rhs.getValue()));
     }
 
     public void enterCompExpression(bjmParser.CompExpressionContext ctx) {
-        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(leftExprListener);
-        Value leftValue = leftExprListener.getValue();
+        ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(lhs);
 
-        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rightExprListener);
+        ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        switch (ctx.op.getType()) {
-            case bjmLexer.GT:
-                this.setValue(leftValue.gt(rightExprListener.getValue()));
-                break;
-            case bjmLexer.GTEquals:
-                this.setValue(leftValue.gte(rightExprListener.getValue()));
-                break;
-            case bjmLexer.LT:
-                this.setValue(leftValue.lt(rightExprListener.getValue()));
-                break;
-            case bjmLexer.LTEquals:
-                this.setValue(leftValue.lte(rightExprListener.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException(
-                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
-        }
+        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
     }
 
     @Override
     public void enterEqExpression(bjmParser.EqExpressionContext ctx) {
-        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(leftExprListener);
-        Value leftValue = leftExprListener.getValue();
+        ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(lhs);
 
-        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rightExprListener);
+        ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        switch (ctx.op.getType()) {
-            case bjmLexer.Equals:
-                this.setValue(leftValue.eq(rightExprListener.getValue()));
-                break;
-            case bjmLexer.NEquals:
-                this.setValue(leftValue.neq(rightExprListener.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException(
-                    String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
-        }
+        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
     }
 
     @Override
     public void enterLogicExpression(bjmParser.LogicExpressionContext ctx) {
-        ExpressionListener leftExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(leftExprListener);
-        Value leftValue = leftExprListener.getValue();
+        ExpressionListener lhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(0)).enterRule(lhs);
 
-        ExpressionListener rightExprListener = new ExpressionListener(this.getExecutionContext());
-        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rightExprListener);
+        ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
+        ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        switch (ctx.op.getType()) {
-            case bjmLexer.And:
-                this.setValue(leftValue.and(rightExprListener.getValue()));
-                break;
-            case bjmLexer.Or:
-                this.setValue(leftValue.or(rightExprListener.getValue()));
-                break;
-            default:
-                throw new InvalidOperationException(
-                        String.format("Line %d: Unknown operator type: %s",ctx.start.getLine(),ctx.getText()));
-        }
+        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
     }
 
     public void enterNotExpression(bjmParser.NotExpressionContext ctx) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
         Value v = expressionListener.getValue();
-        this.setValue(v.not());
+        this.setValue(ValueOperations.getUniOperations().get(ctx.Excl().getSymbol().getType()).apply(v));
     }
 
     @Override
@@ -190,7 +126,18 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
         Value v = expressionListener.getValue();
-        this.setValue(v.mult(new IntegerValue(-1)));
+        this.setValue(ValueOperations.getUniOperations().get(ctx.Subtract().getSymbol().getType()).apply(v));
+    }
+
+    @Override
+    public void enterIncrementExpression(bjmParser.IncrementExpressionContext ctx) {
+        ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
+        ctx.expression().enterRule(expressionListener);
+        Value v = expressionListener.getValue();
+
+        //The value has to be set to listener in case we have an assignment.
+        v.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(v));
+        this.setValue(v);
     }
 
     @Override

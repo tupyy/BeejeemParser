@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class LocalVariableDeclarationListener extends AbstractListener {
 
-    private Value value;
     public LocalVariableDeclarationListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -41,7 +40,7 @@ public class LocalVariableDeclarationListener extends AbstractListener {
 
         // push variables to current stack
         for (Map.Entry<String, Value> entry: variableDeclaratorsListener.getValues().entrySet()) {
-            value = variableType.createValue();
+            Value value  = variableType.createValue();
             if (! (entry.getValue() instanceof VoidValue)) {
                 value.set(entry.getValue());
             }
@@ -54,11 +53,4 @@ public class LocalVariableDeclarationListener extends AbstractListener {
         }
     }
 
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
-    }
 }

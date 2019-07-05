@@ -133,11 +133,6 @@ public abstract class AbstractValue<T> implements Value<T> {
         throw new InvalidOperationException();
     }
 
-//    @Override
-//    public T getValue() {
-//        return this.value;
-//    }
-
     @Override
     public Value clone() {
         throw new InvalidOperationException();

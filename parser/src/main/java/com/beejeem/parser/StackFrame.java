@@ -19,6 +19,8 @@
 package com.beejeem.parser;
 
 import com.beejeem.parser.function.UserDefinedFunction;
+import com.beejeem.parser.value.AbstractValue;
+import com.beejeem.parser.value.IntegerValue;
 import com.beejeem.parser.value.Value;
 
 import java.util.HashMap;
@@ -28,14 +30,16 @@ import java.util.Map;
  * a stack frame, containing variables
  */
 public class StackFrame {
+
    /**
     * variables
     */
-   private Map<String, Value> variables = new HashMap<String, Value>();
+   private Map<String, Value> variables = new HashMap<>();
+
    /**
     * functions and procedures
     */
-   private final HashMap<String, UserDefinedFunction> functions = new HashMap<String, UserDefinedFunction>();
+   private final Map<String, UserDefinedFunction> functions = new HashMap<>();
 
    public void declareFunction(UserDefinedFunction functionOrProcedureDefinition) {
        functions.put(functionOrProcedureDefinition.getName(), functionOrProcedureDefinition);

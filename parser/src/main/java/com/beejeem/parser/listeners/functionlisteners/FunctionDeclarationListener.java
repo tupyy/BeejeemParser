@@ -22,14 +22,11 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.type.Type;
-import com.beejeem.parser.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionDeclarationListener extends AbstractListener {
-
-    private Value value;
 
     public FunctionDeclarationListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -52,11 +49,4 @@ public class FunctionDeclarationListener extends AbstractListener {
         this.getExecutionContext().getCurrentStackframe().declareFunction(userDefinedFunction);
     }
 
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
-    }
 }

@@ -25,9 +25,6 @@ import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
 
 public class AssignmentListener extends AbstractListener {
-
-    private Value value;
-
     public AssignmentListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -42,13 +39,5 @@ public class AssignmentListener extends AbstractListener {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         assignmentContext.expression().enterRule(expressionListener);
         identifierValue.set(expressionListener.getValue());
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }
