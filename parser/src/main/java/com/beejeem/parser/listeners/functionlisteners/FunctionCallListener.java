@@ -28,8 +28,6 @@ import java.util.List;
 
 public class FunctionCallListener extends AbstractListener {
 
-    private Value value;
-
     public FunctionCallListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -52,13 +50,5 @@ public class FunctionCallListener extends AbstractListener {
                 new FunctionCallListener(this.getExecutionContext());
         ctx.functionCall().enterRule(functionCallListener);
         this.setValue(functionCallListener.getValue());
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }

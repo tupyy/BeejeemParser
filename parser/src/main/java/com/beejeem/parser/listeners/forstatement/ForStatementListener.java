@@ -19,7 +19,6 @@ package com.beejeem.parser.listeners.forstatement;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.BlockListener;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
@@ -27,11 +26,7 @@ import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.Value;
 
-import java.util.Map;
-
 public class ForStatementListener extends AbstractListener {
-    private Value value;
-
     public ForStatementListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -57,13 +52,5 @@ public class ForStatementListener extends AbstractListener {
             AssignmentListener incrementAssignmentListener = new AssignmentListener(this.getExecutionContext());
             ctx.forControl().assignment().enterRule(incrementAssignmentListener);
         }
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }

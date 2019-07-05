@@ -24,7 +24,6 @@ import com.beejeem.parser.value.Value;
 
 public class ForControlListener extends AbstractListener {
 
-    private Value value;
     public ForControlListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -35,12 +34,5 @@ public class ForControlListener extends AbstractListener {
                 = new IndexVariableDeclarationListener(this.getExecutionContext());
         ctx.indexVariableDeclaration().enterRule(indexValueListener);
 
-    }
-
-    public Value getValue() {
-        return value;
-    }
-    public void setValue(Value value) {
-        this.value = value;
     }
 }

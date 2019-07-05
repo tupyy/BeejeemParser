@@ -28,7 +28,6 @@ import com.beejeem.parser.value.Value;
 
 public class IndexVariableDeclarationListener extends AbstractListener {
 
-    private Value value;
     public IndexVariableDeclarationListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -62,13 +61,5 @@ public class IndexVariableDeclarationListener extends AbstractListener {
             ctx.assignment().enterRule(assignmentListener);
             this.setValue(assignmentListener.getValue());
         }
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }

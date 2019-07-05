@@ -19,7 +19,6 @@ package com.beejeem.parser.listeners.ifstatement;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.BlockListener;
@@ -27,10 +26,7 @@ import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.Value;
 
-import java.util.Map;
-
 public class IfStatementListener extends AbstractListener {
-    private Value value;
 
     public IfStatementListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -71,14 +67,6 @@ public class IfStatementListener extends AbstractListener {
     public void enterElseStat(bjmParser.ElseStatContext ctx) {
         BlockListener blockListener = new BlockListener(this.getExecutionContext());
         ctx.block().enterRule(blockListener);
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 
     /**

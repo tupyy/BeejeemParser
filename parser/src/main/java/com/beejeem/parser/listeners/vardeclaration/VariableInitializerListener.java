@@ -21,10 +21,8 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
-import com.beejeem.parser.value.Value;
 
 public class VariableInitializerListener extends AbstractListener {
-    private Value value;
 
     public VariableInitializerListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -35,13 +33,5 @@ public class VariableInitializerListener extends AbstractListener {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         variableInitializerContext.expression().enterRule(expressionListener);
         this.setValue(expressionListener.getValue());
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }

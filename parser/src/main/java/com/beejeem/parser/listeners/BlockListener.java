@@ -21,11 +21,8 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionDeclarationListener;
-import com.beejeem.parser.value.Value;
 
 public class BlockListener extends AbstractListener {
-    private Value value;
-
     public BlockListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -53,13 +50,5 @@ public class BlockListener extends AbstractListener {
             blockContext.expression().enterRule(expressionListener);
             this.setValue(expressionListener.getValue());
         }
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
     }
 }
