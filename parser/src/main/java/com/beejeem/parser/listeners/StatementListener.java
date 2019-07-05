@@ -24,6 +24,7 @@ import com.beejeem.parser.listeners.assignment.AssignmentListener;
 import com.beejeem.parser.listeners.forstatement.ForStatementListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.listeners.ifstatement.IfStatementListener;
+import com.beejeem.parser.listeners.increment.IncrementStatementListener;
 import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
 import com.beejeem.parser.value.Value;
 
@@ -40,6 +41,8 @@ public class StatementListener extends AbstractListener {
                 new StatementListener(this.getExecutionContext());
         if (ctx.assignment() != null) {
             ctx.assignment().enterRule(statementListener);
+        } else if (ctx.incrementStatement() != null) {
+            ctx.incrementStatement().enterRule(statementListener);
         } else if (ctx.variableDeclaration() != null) {
             ctx.variableDeclaration().enterRule(statementListener);
         } else if (ctx.ifStatement() != null) {
@@ -57,6 +60,13 @@ public class StatementListener extends AbstractListener {
     public void enterAssignment(bjmParser.AssignmentContext ctx) {
         AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
         ctx.enterRule(assignmentListener);
+    }
+
+    @Override
+    public void enterIncrementStatement(bjmParser.IncrementStatementContext ctx) {
+        IncrementStatementListener incrementStatementListener =
+                new IncrementStatementListener(this.getExecutionContext());
+        ctx.enterRule(incrementStatementListener);
     }
 
     @Override

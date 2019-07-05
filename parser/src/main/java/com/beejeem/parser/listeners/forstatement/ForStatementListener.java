@@ -23,6 +23,7 @@ import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.BlockListener;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
+import com.beejeem.parser.listeners.increment.IncrementStatementListener;
 import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.Value;
 
@@ -33,14 +34,15 @@ public class ForStatementListener extends AbstractListener {
 
     @Override
     public void enterForStatement(bjmParser.ForStatementContext ctx) {
-        ForControlListener forControlListener = new ForControlListener(this.getExecutionContext());
-        ctx.forControl().enterRule(forControlListener);
+        IndexVariableDeclarationListener indexValueListener
+                = new IndexVariableDeclarationListener(this.getExecutionContext());
+        ctx.forControl().indexVariableDeclaration().enterRule(indexValueListener);
 
         //loop
         while(true) {
             //test for condition
             ExpressionListener endValueExpressionListener = new ExpressionListener(this.getExecutionContext());
-            ctx.forControl().expression().enterRule(endValueExpressionListener);
+            ctx.forControl().expression(0).enterRule(endValueExpressionListener);
             Value endValue = endValueExpressionListener.getValue();
             if ( !((BooleanValue) endValue).get() ) {
                 break;
@@ -50,7 +52,13 @@ public class ForStatementListener extends AbstractListener {
 
             //increment the index
             AssignmentListener incrementAssignmentListener = new AssignmentListener(this.getExecutionContext());
-            ctx.forControl().assignment().enterRule(incrementAssignmentListener);
+            if (ctx.forControl().assignment() != null) {
+                ctx.forControl().assignment().enterRule(incrementAssignmentListener);
+            } else {
+                ExpressionListener expressionListener
+                        = new ExpressionListener(this.getExecutionContext());
+                ctx.forControl().expression(1).enterRule(expressionListener);
+            }
         }
     }
 }

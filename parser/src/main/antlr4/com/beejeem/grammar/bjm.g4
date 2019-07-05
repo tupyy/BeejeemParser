@@ -27,6 +27,7 @@ block
 
 statement
  : assignment SColon
+ | incrementStatement SColon
  | variableDeclaration
  | functionCall SColon
  | collectionCall SColon
@@ -37,6 +38,10 @@ statement
 
 assignment
  : Identifier '=' expression
+ ;
+
+incrementStatement
+ : Identifier op=(Increment | Decrement)
  ;
 
 variableDeclaration
@@ -97,7 +102,7 @@ forStatement
  ;
 
 forControl
- : indexVariableDeclaration SColon expression SColon assignment
+ : indexVariableDeclaration SColon expression SColon (assignment | expression)
  ;
 
 indexVariableDeclaration
@@ -123,6 +128,7 @@ exprList
 expression
  : '-' expression                                       #unaryMinusExpression
  | '!' expression                                       #notExpression
+ | expression postfix=('++' | '--')                     #incrementExpression
  | <assoc=right> expression '^' expression              #powerExpression
  | expression op=( '*' | '/' | '%' ) expression         #multExpression
  | expression op=( '+' | '-' ) expression               #addExpression
@@ -135,7 +141,7 @@ expression
  | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
- | collectionCall                                             #listCallExpression
+ | collectionCall                                       #listCallExpression
  | Identifier indexes?                                  #identifierExpression
  | String indexes?                                      #stringExpression
  | '(' expression ')' indexes?                          #expressionExpression
@@ -323,6 +329,8 @@ Excl     : '!';
 GT       : '>';
 LT       : '<';
 Add      : '+';
+Increment: '++';
+Decrement: '--';
 Subtract : '-';
 Multiply : '*';
 Divide   : '/';
