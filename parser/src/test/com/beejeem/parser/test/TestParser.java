@@ -40,7 +40,8 @@ public class TestParser {
         assertEquals(4f, stackFrame.getVariable("p").get());
         assertEquals(24, stackFrame.getVariable("i1").get());
         assertEquals(2, stackFrame.getVariable("b").get());
-        assertEquals(3, stackFrame.getVariable("a").get());
+        assertEquals(2, stackFrame.getVariable("a").get());
+        assertEquals(2, stackFrame.getVariable("aa").get());
         assertEquals(false, stackFrame.getVariable("bb1").get());
     }
 

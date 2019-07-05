@@ -134,7 +134,10 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
         Value v = expressionListener.getValue();
-        v.set(ValueOperations.getUniOperations().get(ctx.Increment().getSymbol().getType()).apply(v));
+
+        //The value has to be set to listener in case we have an assignment.
+        v.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(v));
+        this.setValue(v);
     }
 
     @Override

@@ -128,7 +128,7 @@ exprList
 expression
  : '-' expression                                       #unaryMinusExpression
  | '!' expression                                       #notExpression
- | expression postfix=('++' | '--')                     #incrementExpression
+ | expression op=('++' | '--')                          #incrementExpression
  | <assoc=right> expression '^' expression              #powerExpression
  | expression op=( '*' | '/' | '%' ) expression         #multExpression
  | expression op=( '+' | '-' ) expression               #addExpression
