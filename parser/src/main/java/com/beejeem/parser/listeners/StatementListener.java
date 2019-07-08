@@ -98,11 +98,10 @@ public class StatementListener extends AbstractListener {
     public void enterForStatement(bjmParser.ForStatementContext ctx) {
         // push new frame on the stack and copy all global variables
         Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
+        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
+
         StackFrame stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setVariables(variables);
-
-        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
-        stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setLists(lists);
 
         ForStatementListener forStatementListener = new ForStatementListener(this.getExecutionContext());
