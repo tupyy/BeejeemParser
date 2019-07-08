@@ -146,13 +146,16 @@ public class TestParser {
         StackFrame stackFrame = programListener.getLastStack();
         assertEquals(0, stackFrame.getList("a").size());
 
-        assertEquals(3, stackFrame.getList("b").size());
-        assertEquals(2, stackFrame.getList("b").get(0).get());
+        assertEquals(4, stackFrame.getList("b").size());
+        assertEquals(1, stackFrame.getList("b").get(0).get());
 
         assertEquals(3, stackFrame.getList("c").size());
         assertEquals(true, stackFrame.getList("c").get(0).get());
 
         assertEquals(0, stackFrame.getList("d").size());
+        assertEquals(1, stackFrame.getVariable("aa").get());
+        assertEquals(1, stackFrame.getVariable("i").get());
+        assertEquals(4, stackFrame.getVariable("sum").get());
     }
 
     private InputStream readTestFile(String filename) {

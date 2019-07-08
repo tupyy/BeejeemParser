@@ -110,4 +110,8 @@ public class StackFrame {
    public void setVariables(Map<String, Value> variables) {
       this.variables = variables;
    }
+
+    public void setLists(Map<String, List<Value>> lists) {
+      this.lists = lists;
+    }
 }

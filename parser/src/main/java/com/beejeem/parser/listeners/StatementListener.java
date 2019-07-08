@@ -21,6 +21,7 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.StackFrame;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
+import com.beejeem.parser.listeners.collections.CollectionCallListener;
 import com.beejeem.parser.listeners.forstatement.ForStatementListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.listeners.ifstatement.IfStatementListener;
@@ -28,6 +29,7 @@ import com.beejeem.parser.listeners.increment.IncrementStatementListener;
 import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
 import com.beejeem.parser.value.Value;
 
+import java.util.List;
 import java.util.Map;
 
 public class StatementListener extends AbstractListener {
@@ -53,6 +55,8 @@ public class StatementListener extends AbstractListener {
             ctx.forStatement().exitRule(statementListener);
         } else if (ctx.functionCall() != null) {
             ctx.functionCall().enterRule(statementListener);
+        } else if (ctx.collectionCall() != null) {
+            ctx.collectionCall().enterRule(statementListener);
         }
     }
 
@@ -97,6 +101,10 @@ public class StatementListener extends AbstractListener {
         StackFrame stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setVariables(variables);
 
+        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
+        stackFrame = this.getExecutionContext().pushStackframe();
+        stackFrame.setLists(lists);
+
         ForStatementListener forStatementListener = new ForStatementListener(this.getExecutionContext());
         ctx.enterRule(forStatementListener);
     }
@@ -109,5 +117,11 @@ public class StatementListener extends AbstractListener {
     public void enterFunctionCall(bjmParser.FunctionCallContext ctx) {
         FunctionCallListener functionCallListener = new FunctionCallListener(this.getExecutionContext());
         ctx.enterRule(functionCallListener);
+    }
+
+    public void enterCollectionCall(bjmParser.CollectionCallContext collectionCallContext) {
+        CollectionCallListener collectionCallListener =
+                new CollectionCallListener(this.getExecutionContext());
+        collectionCallContext.enterRule(collectionCallListener);
     }
 }

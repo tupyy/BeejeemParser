@@ -1,4 +1,13 @@
 list a;
-list b = [ 2, 2, 1];
+list b = [ 1, 1, 1];
 list c = [true, false, "test"];
 list d = [];
+
+int aa = b.get(0);
+b.add(1);
+int i = b.get(b.size() -1); // = 1
+
+int sum = 0;
+for(int k=0; k<b.size(); k++) {
+    sum = sum + b.get(k);
+} // == 4

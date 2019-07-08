@@ -22,6 +22,7 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.ValueOperations;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.listeners.collections.CollectionCallListener;
 import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.value.*;
 
@@ -165,6 +166,13 @@ public class ExpressionListener extends AbstractListener {
                 new FunctionCallListener(this.getExecutionContext());
         ctx.enterRule(functionCallListener);
         this.setValue(functionCallListener.getValue());
+    }
+
+    public void enterCollectionCallExpression(bjmParser.CollectionCallExpressionContext collectionCallContext) {
+        CollectionCallListener collectionCallListener =
+                new CollectionCallListener(this.getExecutionContext());
+        collectionCallContext.enterRule(collectionCallListener);
+        this.setValue(collectionCallListener.getValue());
     }
 
     public Value getValue() {

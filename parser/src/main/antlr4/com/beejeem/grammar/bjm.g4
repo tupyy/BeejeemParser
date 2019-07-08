@@ -141,7 +141,7 @@ expression
  | FloatNumber                                          #floatExpression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
- | collectionCall                                       #listCallExpression
+ | collectionCall                                       #collectionCallExpression
  | Identifier indexes?                                  #identifierExpression
  | String indexes?                                      #stringExpression
  | '(' expression ')' indexes?                          #expressionExpression
