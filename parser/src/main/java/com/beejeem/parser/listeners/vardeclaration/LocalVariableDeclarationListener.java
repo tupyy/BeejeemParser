@@ -25,6 +25,7 @@ import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
 import com.beejeem.parser.value.VoidValue;
 
+import java.util.List;
 import java.util.Map;
 
 public class LocalVariableDeclarationListener extends AbstractListener {
@@ -35,17 +36,25 @@ public class LocalVariableDeclarationListener extends AbstractListener {
 
     public void enterLocalVariableDeclaration(bjmParser.LocalVariableDeclarationContext ctx) {
         Type variableType = this.getExecutionContext().resolveType(ctx.typeType().getText());
-        VariableDeclaratorsListener variableDeclaratorsListener = new VariableDeclaratorsListener(this.getExecutionContext());
+        VariableDeclaratorsListener variableDeclaratorsListener =
+                new VariableDeclaratorsListener(this.getExecutionContext(), variableType);
         ctx.variableDeclarators().enterRule(variableDeclaratorsListener);
 
         // push variables to current stack
         for (Map.Entry<String, Value> entry: variableDeclaratorsListener.getValues().entrySet()) {
-            Value value  = variableType.createValue();
-            if (! (entry.getValue() instanceof VoidValue)) {
-                value.set(entry.getValue());
-            }
             if (!this.getExecutionContext().getCurrentStackframe().hasVariable(entry.getKey())) {
-                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), value);
+                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
+            } else {
+                throw new InvalidOperationException(
+                        String.format("Line %d: Variable %s already defined.",ctx.start.getLine(),entry.getKey()));
+            }
+        }
+
+        //push lists
+        // push variables to current stack
+        for (Map.Entry<String, List<Value>> entry: variableDeclaratorsListener.getLists().entrySet()) {
+            if (!this.getExecutionContext().getCurrentStackframe().hasVariable(entry.getKey())) {
+                this.getExecutionContext().getCurrentStackframe().declareList(entry.getKey(), entry.getValue());
             } else {
                 throw new InvalidOperationException(
                         String.format("Line %d: Variable %s already defined.",ctx.start.getLine(),entry.getKey()));

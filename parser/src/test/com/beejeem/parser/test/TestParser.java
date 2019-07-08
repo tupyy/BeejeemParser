@@ -136,6 +136,25 @@ public class TestParser {
         assertEquals(false, stackFrame.getVariable("d").get());
     }
 
+    @Test
+    public void testLists() {
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext = this.parse(readTestFile("lists.txt"));
+        final ProgramListener programListener = new ProgramListener(executionContext);
+        programContext.enterRule(programListener);
+
+        StackFrame stackFrame = programListener.getLastStack();
+        assertEquals(0, stackFrame.getList("a").size());
+
+        assertEquals(3, stackFrame.getList("b").size());
+        assertEquals(2, stackFrame.getList("b").get(0).get());
+
+        assertEquals(3, stackFrame.getList("c").size());
+        assertEquals(true, stackFrame.getList("c").get(0).get());
+
+        assertEquals(0, stackFrame.getList("d").size());
+    }
+
     private InputStream readTestFile(String filename) {
         return getClass().getClassLoader().getResourceAsStream(filename);
     }

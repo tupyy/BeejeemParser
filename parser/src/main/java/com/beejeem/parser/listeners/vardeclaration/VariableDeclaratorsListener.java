@@ -20,17 +20,23 @@ package com.beejeem.parser.listeners.vardeclaration;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
+import com.beejeem.parser.type.ListType;
+import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VariableDeclaratorsListener extends AbstractListener {
 
+    private final Type valueType;
     private Map<String, Value> values = new HashMap<>();
+    private Map<String, List<Value>> lists = new HashMap<>();
 
-    public VariableDeclaratorsListener(ExecutionContext executionContext) {
+    public VariableDeclaratorsListener(ExecutionContext executionContext, Type valueType) {
         super(executionContext);
+        this.valueType = valueType;
     }
 
     public void enterVariableDeclarators(bjmParser.VariableDeclaratorsContext ctx) {
@@ -38,7 +44,21 @@ public class VariableDeclaratorsListener extends AbstractListener {
             VariableDeclaratorListener variableDeclaratorListener = new VariableDeclaratorListener(this.getExecutionContext());
             variableDeclaratorListener.enterVariableDeclarator(variableDeclaratorContext);
 
-            this.getValues().put(variableDeclaratorListener.getVariableName(), variableDeclaratorListener.getValue());
+            if ( !(this.getValueType() instanceof ListType) ) {
+                Value newValue = this.getValueType().createValue();
+                if (variableDeclaratorListener.getValue() != null) {
+                    newValue.set(variableDeclaratorListener.getValue());
+                    this.getValues().put(variableDeclaratorListener.getVariableName(), newValue);
+                } else {
+                    this.getValues().put(variableDeclaratorListener.getVariableName(), this.getValueType().createValue());
+                }
+            } else {
+                if (variableDeclaratorListener.getValueList() != null) {
+                    this.getLists().put(variableDeclaratorListener.getVariableName(), variableDeclaratorListener.getValueList());
+                } else {
+                    this.getLists().put(variableDeclaratorListener.getVariableName(), ((ListType) this.getValueType()).createList());
+                }
+            }
         }
     }
 
@@ -46,4 +66,15 @@ public class VariableDeclaratorsListener extends AbstractListener {
         return values;
     }
 
+    public Map<String, List<Value>> getLists() {
+        return lists;
+    }
+
+    public void setLists(Map<String, List<Value>> lists) {
+        this.lists = lists;
+    }
+
+    public Type getValueType() {
+        return valueType;
+    }
 }

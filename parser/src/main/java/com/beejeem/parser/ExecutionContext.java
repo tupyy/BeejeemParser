@@ -129,6 +129,8 @@ public class ExecutionContext {
             return new StringType();
         } else if (name.toLowerCase().compareTo("bool") == 0) {
             return new BooleanType();
+        } else if (name.toLowerCase().compareTo("list") == 0) {
+            return new ListType();
         }
         return null;
     }

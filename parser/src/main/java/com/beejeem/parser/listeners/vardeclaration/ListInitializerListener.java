@@ -23,27 +23,22 @@ import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VariableInitializerListener extends AbstractListener {
+public class ListInitializerListener extends AbstractListener {
+    private List<Value> list = new ArrayList<>();
 
-    private List<Value> list;
-
-    public VariableInitializerListener(ExecutionContext executionContext) {
+    public ListInitializerListener(ExecutionContext executionContext) {
         super(executionContext);
     }
 
-    @Override
-    public void enterVariableInitializer(bjmParser.VariableInitializerContext variableInitializerContext) {
-        if (variableInitializerContext.listInitializer() != null) {
-            ListInitializerListener listInitializerListener =
-                    new ListInitializerListener(this.getExecutionContext());
-            variableInitializerContext.listInitializer().enterRule(listInitializerListener);
-            this.setList(listInitializerListener.getList());
-        } else {
-            ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
-            variableInitializerContext.expression().enterRule(expressionListener);
-            this.setValue(expressionListener.getValue());
+    public void enterListInitializer(bjmParser.ListInitializerContext ctx) {
+        for(bjmParser.ExpressionContext context: ctx.expression()) {
+            ExpressionListener expressionListener =
+                    new ExpressionListener(this.getExecutionContext());
+            context.enterRule(expressionListener);
+            this.getList().add(expressionListener.getValue());
         }
     }
 

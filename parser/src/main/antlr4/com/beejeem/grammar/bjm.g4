@@ -65,12 +65,12 @@ variableDeclaratorId
     ;
 
 variableInitializer
-    : arrayInitializer
+    : listInitializer
     | expression
     ;
 
-arrayInitializer
-    : '{' (variableInitializer (',' variableInitializer)* (',')? )? '}'
+listInitializer
+    : '[' (expression (',' expression)* (',')? )? ']'
     ;
 
 functionCall
@@ -169,8 +169,8 @@ resultType
   ;
 
 collectionType
-  : List LT typeType GT
-  | Map LT typeType Comma typeType GT
+  : List
+  | Map
   ;
 
 fragment A

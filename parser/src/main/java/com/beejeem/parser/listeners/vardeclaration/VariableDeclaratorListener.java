@@ -23,8 +23,11 @@ import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
 import com.beejeem.parser.value.VoidValue;
 
+import java.util.List;
+
 public class VariableDeclaratorListener extends AbstractListener {
     private String variableName;
+    private List<Value> valueList;
 
     public VariableDeclaratorListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -34,15 +37,27 @@ public class VariableDeclaratorListener extends AbstractListener {
     public void enterVariableDeclarator(bjmParser.VariableDeclaratorContext variableDeclaratorContext) {
         this.variableName = variableDeclaratorContext.variableDeclaratorId().getText();
 
-        this.setValue(new VoidValue());
         if (variableDeclaratorContext.variableInitializer() != null) {
             VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
             variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
-            this.setValue(variableInitializerListener.getValue());
+
+            if (variableInitializerListener.getValue() != null) {
+                this.setValue(variableInitializerListener.getValue());
+            } else {
+                this.setValueList(variableInitializerListener.getList());
+            }
         }
     }
 
     public String getVariableName() {
         return variableName;
+    }
+
+    public List<Value> getValueList() {
+        return valueList;
+    }
+
+    public void setValueList(List<Value> valueList) {
+        this.valueList = valueList;
     }
 }

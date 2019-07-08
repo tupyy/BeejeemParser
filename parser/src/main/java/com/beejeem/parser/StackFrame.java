@@ -24,6 +24,7 @@ import com.beejeem.parser.value.IntegerValue;
 import com.beejeem.parser.value.Value;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,9 +38,16 @@ public class StackFrame {
    private Map<String, Value> variables = new HashMap<>();
 
    /**
+    * Lists
+    */
+   private Map<String, List<Value>> lists = new HashMap<>();
+   /**
     * functions and procedures
     */
    private final Map<String, UserDefinedFunction> functions = new HashMap<>();
+
+   public StackFrame() {}
+
 
    public void declareFunction(UserDefinedFunction functionOrProcedureDefinition) {
        functions.put(functionOrProcedureDefinition.getName(), functionOrProcedureDefinition);
@@ -49,8 +57,11 @@ public class StackFrame {
     * variable name and its value (which has it's type)
     */
    public void declareVariable(String name, Value value) {
-      variables.put(name, value);
+      this.variables.put(name, value);
    }
+
+
+   public void declareList(String name, List<Value> valueList) {this.lists.put(name,valueList);}
 
    public UserDefinedFunction getFunctionDefinition(String name) {
       return functions.get(name.toLowerCase());
@@ -62,6 +73,8 @@ public class StackFrame {
    public Value getVariable(String name) {
       return variables.get(name);
    }
+
+   public List<Value> getList(String name) {return this.lists.get(name);}
 
    public boolean hasVariable(String name) {
       return this.variables.containsKey(name);
@@ -77,6 +90,14 @@ public class StackFrame {
          variables.put(entry.getKey(), entry.getValue());
       }
       return variables;
+   }
+
+   public Map<String,List<Value>> getLists() {
+      Map<String,List<Value>> l = new HashMap<>();
+      for(Map.Entry<String,List<Value>> entry: this.lists.entrySet()) {
+         l.put(entry.getKey(), entry.getValue());
+      }
+      return l;
    }
 
    /**

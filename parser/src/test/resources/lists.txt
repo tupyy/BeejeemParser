@@ -1,0 +1,4 @@
+list a;
+list b = [ 2, 2, 1];
+list c = [true, false, "test"];
+list d = [];
