@@ -19,13 +19,14 @@ package com.beejeem.parser.listeners.forstatement;
 
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.BlockListener;
 import com.beejeem.parser.listeners.assignment.AssignmentListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
-import com.beejeem.parser.listeners.increment.IncrementStatementListener;
 import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 public class ForStatementListener extends AbstractListener {
     public ForStatementListener(ExecutionContext executionContext) {
@@ -43,7 +44,8 @@ public class ForStatementListener extends AbstractListener {
             //test for condition
             ExpressionListener endValueExpressionListener = new ExpressionListener(this.getExecutionContext());
             ctx.forControl().expression(0).enterRule(endValueExpressionListener);
-            Value endValue = endValueExpressionListener.getValue();
+
+            Value endValue = (Value) endValueExpressionListener.getVariable();
             if ( !((BooleanValue) endValue).get() ) {
                 break;
             }

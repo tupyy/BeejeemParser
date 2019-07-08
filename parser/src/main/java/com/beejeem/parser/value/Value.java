@@ -20,7 +20,7 @@ package com.beejeem.parser.value;
 
 import com.beejeem.parser.type.Type;
 
-public interface Value<T> extends Cloneable {
+public interface Value<T> extends Variable<T> {
 
     /**
      * Addition operation

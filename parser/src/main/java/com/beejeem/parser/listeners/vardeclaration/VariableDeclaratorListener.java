@@ -21,7 +21,6 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
-import com.beejeem.parser.value.VoidValue;
 
 import java.util.List;
 
@@ -41,8 +40,8 @@ public class VariableDeclaratorListener extends AbstractListener {
             VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
             variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
 
-            if (variableInitializerListener.getValue() != null) {
-                this.setValue(variableInitializerListener.getValue());
+            if (variableInitializerListener.getVariable() != null) {
+                this.setVariable(variableInitializerListener.getVariable());
             } else {
                 this.setValueList(variableInitializerListener.getList());
             }

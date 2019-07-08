@@ -142,9 +142,9 @@ expression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
  | collectionCall                                       #collectionCallExpression
- | Identifier indexes?                                  #identifierExpression
+ | Identifier                                           #identifierExpression
  | String indexes?                                      #stringExpression
- | '(' expression ')' indexes?                          #expressionExpression
+ | '(' expression ')'                                   #expressionExpression
  ;
 
 collectionCall

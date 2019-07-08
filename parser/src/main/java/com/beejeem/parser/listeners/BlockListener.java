@@ -48,7 +48,7 @@ public class BlockListener extends AbstractListener {
         if (blockContext.Return() != null) {
             ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
             blockContext.expression().enterRule(expressionListener);
-            this.setValue(expressionListener.getValue());
+            this.setVariable(expressionListener.getVariable());
         }
     }
 }

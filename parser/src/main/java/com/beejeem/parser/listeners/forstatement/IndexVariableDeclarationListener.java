@@ -48,7 +48,7 @@ public class IndexVariableDeclarationListener extends AbstractListener {
 
             ctx.variableDeclarator().enterRule(variableDeclaratorListener);
             Value indexValue = this.getExecutionContext().resolveType(ctx.typeType().getText()).createValue();
-            indexValue.set(variableDeclaratorListener.getValue());
+            indexValue.set(variableDeclaratorListener.getVariable());
             if ( !(indexValue instanceof IntegerValue) ) {
                 throw new InvalidOperationException(
                         String.format("Line %d: For variables must be integers.", ctx.start.getLine()));
@@ -59,7 +59,7 @@ public class IndexVariableDeclarationListener extends AbstractListener {
         } else {
             AssignmentListener assignmentListener = new AssignmentListener(this.getExecutionContext());
             ctx.assignment().enterRule(assignmentListener);
-            this.setValue(assignmentListener.getValue());
+            this.setVariable(assignmentListener.getVariable());
         }
     }
 }

@@ -18,10 +18,12 @@
  */
 package com.beejeem.parser;
 
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.value.AbstractValue;
 import com.beejeem.parser.value.IntegerValue;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +37,7 @@ public class StackFrame {
    /**
     * variables
     */
-   private Map<String, Value> variables = new HashMap<>();
-
-   /**
-    * Lists
-    */
-   private Map<String, List<Value>> lists = new HashMap<>();
+   private Map<String, Variable> variables = new HashMap<>();
 
    /**
     * functions and procedures
@@ -57,12 +54,10 @@ public class StackFrame {
     /**
     * variable name and its value (which has it's type)
     */
-   public void declareVariable(String name, Value value) {
+   public void declareVariable(String name, Variable value) {
       this.variables.put(name, value);
    }
 
-
-   public void declareList(String name, List<Value> valueList) {this.lists.put(name,valueList);}
 
    public UserDefinedFunction getFunctionDefinition(String name) {
       return functions.get(name.toLowerCase());
@@ -71,41 +66,35 @@ public class StackFrame {
    /**
     * get variable
     */
-   public Value getVariable(String name) {
-      return variables.get(name);
-   }
+   public Variable getVariable(String name) {
+      if (this.variables.containsKey(name)) {
+         return variables.get(name);
+      }
 
-   public List<Value> getList(String name) {return this.lists.get(name);}
+      throw new InvalidOperationException(String.format("Variable %s doesn't exist.",name));
+   }
 
    public boolean hasVariable(String name) {
-      return this.variables.containsKey(name) || this.lists.containsKey(name);
+      return this.variables.containsKey(name);
    }
 
+   public boolean isValue(Object obj) {
+      return obj instanceof Value;
+   }
    /**
     * Get the map of stack variables
     * @return map
     */
-   public Map<String,Value> getVariables() {
-      Map<String,Value> variables = new HashMap<>();
-      for(Map.Entry<String,Value> entry: this.variables.entrySet()) {
+   public Map<String,Variable> getVariables() {
+      Map<String,Variable> variables = new HashMap<>();
+      for(Map.Entry<String,Variable> entry: this.variables.entrySet()) {
          variables.put(entry.getKey(), entry.getValue());
       }
       return variables;
    }
 
-   public Map<String,List<Value>> getLists() {
-      Map<String,List<Value>> l = new HashMap<>();
-      for(Map.Entry<String,List<Value>> entry: this.lists.entrySet()) {
-         l.put(entry.getKey(), entry.getValue());
-      }
-      return l;
-   }
-
-   public void setVariables(Map<String, Value> variables) {
+   public void setVariables(Map<String, Variable> variables) {
       this.variables = variables;
    }
 
-    public void setLists(Map<String, List<Value>> lists) {
-      this.lists = lists;
-    }
 }

@@ -20,10 +20,12 @@ package com.beejeem.parser.listeners.collections;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.IntegerValue;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class CollectionCallListener extends AbstractListener {
         CollectionCallListener collectionCallListener =
                 new CollectionCallListener(this.getExecutionContext());
         ctx.collectionCall().enterRule(collectionCallListener);
-        this.setValue(collectionCallListener.getValue());
+        this.setVariable(collectionCallListener.getVariable());
     }
 
     public void enterCollectionCall(bjmParser.CollectionCallContext ctx) {
@@ -51,19 +53,18 @@ public class CollectionCallListener extends AbstractListener {
                 ExpressionListener expressionListener =
                         new ExpressionListener(this.getExecutionContext());
                 expressionContext.enterRule(expressionListener);
-                args.add(expressionListener.getValue());
+                args.add((Value)expressionListener.getVariable());
             }
         }
 
-        List<Value> valueList = this.getExecutionContext().getCurrentStackframe().getList(variableName);
-        try {
-            if (valueList != null) {
-                this.setValue(invokeListGetMethod(valueList, methodName, args));
-            }
+        Variable variable = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
+        if ( !(variable instanceof List)) {
+            throw new InvalidOperationException(
+                    String.format("Line %d: Variable %s is not a list.",ctx.start.getLine(),variableName));
         }
-        catch (InterpreterException ex) {
-            throw new InterpreterException(String.format("Line %d: Error: %s", ctx.start.getLine(),ex.getMessage()));
-        }
+
+        List<Value> valueList = (List<Value>) variable;
+        this.setVariable(invokeListGetMethod(valueList, methodName, args));
      }
 
     /**

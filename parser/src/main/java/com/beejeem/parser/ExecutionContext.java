@@ -26,6 +26,7 @@ import com.beejeem.parser.function.RuntimeFunctionFactory;
 import com.beejeem.parser.listeners.functionlisteners.ParametersListener;
 import com.beejeem.parser.type.*;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class ExecutionContext {
         return stack;
     }
 
-    public Value invokeFunction(String name, List<Value> args) {
+    public Variable invokeFunction(String name, List<Variable> args) {
         final RuntimeFunction runtimeFunction = runtimeFunctionFactory.getRuntimeFunction(name);
         if (null != runtimeFunction) {
             return runtimeFunction.execute(this, args);
@@ -98,11 +99,11 @@ public class ExecutionContext {
     /**
      * walk the stack, top to bottom trying to find the variable
      */
-    public Value resolveVariable(String name) {
+    public Variable resolveVariable(String name) {
         for (final StackFrame stackFrame : stack) {
-            Value value = stackFrame.getVariable(name);
-            if (value != null) {
-                return value;
+            Variable variable = stackFrame.getVariable(name);
+            if (variable != null) {
+                return variable;
             }
         }
         throw new InterpreterException("Variable not found: "+name);
@@ -147,23 +148,5 @@ public class ExecutionContext {
         }
         return null;
     }
-
-    private List<Value> getFunctionArguments(Function function) {
-        List<Value> args = new ArrayList<>();
-        for (ParametersListener.Parameter parameter: function.getParameters()) {
-            Value arg = this.getCurrentStackframe().getVariable(parameter.getName());
-
-            //check the type
-            if (! (arg.getType().equals(parameter.getParameterType()))) {
-                throw new InterpreterException(
-                        String.format("Type mismatch in function %s argument %s.",
-                                function.getName(),
-                                parameter.getName()));
-            }
-            args.add(arg);
-        }
-        return args;
-    }
-
 
 }

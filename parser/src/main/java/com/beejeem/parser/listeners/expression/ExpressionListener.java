@@ -27,7 +27,7 @@ import com.beejeem.parser.listeners.functionlisteners.FunctionCallListener;
 import com.beejeem.parser.value.*;
 
 public class ExpressionListener extends AbstractListener {
-    private Value value;
+
     public ExpressionListener(ExecutionContext executionContext) {
         super(executionContext);
     }
@@ -40,7 +40,10 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     public void enterAddExpression(bjmParser.AddExpressionContext ctx) {
@@ -50,25 +53,28 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     @Override
     public void enterIntegerExpression(bjmParser.IntegerExpressionContext ctx) {
-        this.setValue(new IntegerValue(Integer.valueOf(ctx.getText())));
+        this.setVariable(new IntegerValue(Integer.valueOf(ctx.getText())));
     }
 
     @Override
     public void enterFloatExpression(bjmParser.FloatExpressionContext ctx) {
-        this.setValue(new FloatValue(Float.valueOf(ctx.getText())));
+        this.setVariable(new FloatValue(Float.valueOf(ctx.getText())));
     }
 
     public void enterBoolExpression(bjmParser.BoolExpressionContext ctx) {
-        this.setValue(new BooleanValue(Boolean.valueOf(ctx.getText())));
+        this.setVariable(new BooleanValue(Boolean.valueOf(ctx.getText())));
     }
 
     public void enterStringExpression(bjmParser.StringExpressionContext ctx) {
-        this.setValue(new StringValue(ctx.getText()));
+        this.setVariable(new StringValue(ctx.getText()));
     }
 
     @Override
@@ -79,8 +85,11 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.Pow().getSymbol().getType())
-                .apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.Pow().getSymbol().getType())
+                .apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     public void enterCompExpression(bjmParser.CompExpressionContext ctx) {
@@ -90,7 +99,10 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value)lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     @Override
@@ -101,7 +113,10 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value)lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     @Override
@@ -112,44 +127,61 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener rhs = new ExpressionListener(this.getExecutionContext());
         ((bjmParser.ExpressionContext) ctx.children.get(2)).enterRule(rhs);
 
-        this.setValue(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getValue(), rhs.getValue()));
+        if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value)lhs.getVariable(), (Value)rhs.getVariable()));
     }
 
     public void enterNotExpression(bjmParser.NotExpressionContext ctx) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
-        Value v = expressionListener.getValue();
-        this.setValue(ValueOperations.getUniOperations().get(ctx.Excl().getSymbol().getType()).apply(v));
+
+        if ( !(expressionListener.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        Value v = (Value) expressionListener.getVariable();
+        this.setVariable(ValueOperations.getUniOperations().get(ctx.Excl().getSymbol().getType()).apply(v));
     }
 
     @Override
     public void enterUnaryMinusExpression(bjmParser.UnaryMinusExpressionContext ctx) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
-        Value v = expressionListener.getValue();
-        this.setValue(ValueOperations.getUniOperations().get(ctx.Subtract().getSymbol().getType()).apply(v));
+        if ( !(expressionListener.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        Value v = (Value) expressionListener.getVariable();
+        this.setVariable(ValueOperations.getUniOperations().get(ctx.Subtract().getSymbol().getType()).apply(v));
     }
 
     @Override
     public void enterIncrementExpression(bjmParser.IncrementExpressionContext ctx) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
-        Value v = expressionListener.getValue();
+        if ( !(expressionListener.getVariable() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
+        }
+        Value v = (Value) expressionListener.getVariable();
 
         //The value has to be set to listener in case we have an assignment.
         v.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(v));
-        this.setValue(v);
+        this.setVariable(v);
     }
 
     @Override
     public void enterIdentifierExpression(bjmParser.IdentifierExpressionContext ctx) {
         String variableName = ctx.getText();
-        Value value = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
-        if (value == null) {
+        Variable variable = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
+        if (variable == null) {
             throw new InvalidOperationException(
                     String.format("Line %d: Variable not found: %s",ctx.start.getLine(),variableName));
         }
-        this.setValue(value);
+        if ( !(variable.getType() instanceof Value)) {
+            throw new InvalidOperationException(String.format("Line %d: Cannot use list in this context",ctx.start.getLine()));
+        }
+
+        this.setVariable((Value) variable);
     }
 
     @Override
@@ -157,7 +189,7 @@ public class ExpressionListener extends AbstractListener {
         ExpressionListener expressionListener =
                 new ExpressionListener(this.getExecutionContext());
         ctx.expression().enterRule(expressionListener);
-        this.setValue(expressionListener.getValue());
+        this.setVariable(expressionListener.getVariable());
     }
 
     @Override
@@ -165,21 +197,13 @@ public class ExpressionListener extends AbstractListener {
         FunctionCallListener functionCallListener =
                 new FunctionCallListener(this.getExecutionContext());
         ctx.enterRule(functionCallListener);
-        this.setValue(functionCallListener.getValue());
+        this.setVariable(functionCallListener.getVariable());
     }
 
     public void enterCollectionCallExpression(bjmParser.CollectionCallExpressionContext collectionCallContext) {
         CollectionCallListener collectionCallListener =
                 new CollectionCallListener(this.getExecutionContext());
         collectionCallContext.enterRule(collectionCallListener);
-        this.setValue(collectionCallListener.getValue());
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
+        this.setVariable(collectionCallListener.getVariable());
     }
 }

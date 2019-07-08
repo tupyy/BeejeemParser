@@ -21,13 +21,13 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
-import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListInitializerListener extends AbstractListener {
-    private List<Value> list = new ArrayList<>();
+    private List<Variable> variables = new ArrayList<>();
 
     public ListInitializerListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -38,15 +38,15 @@ public class ListInitializerListener extends AbstractListener {
             ExpressionListener expressionListener =
                     new ExpressionListener(this.getExecutionContext());
             context.enterRule(expressionListener);
-            this.getList().add(expressionListener.getValue());
+            this.getVariables().add(expressionListener.getVariable());
         }
     }
 
-    public List<Value> getList() {
-        return list;
+    public List<Variable> getVariables() {
+        return variables;
     }
 
-    public void setList(List<Value> list) {
-        this.list = list;
+    public void setVariables(List<Variable> list) {
+        this.variables = list;
     }
 }

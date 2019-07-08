@@ -43,7 +43,7 @@ public class VariableInitializerListener extends AbstractListener {
         } else {
             ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
             variableInitializerContext.expression().enterRule(expressionListener);
-            this.setValue(expressionListener.getValue());
+            this.setVariable(expressionListener.getVariable());
         }
     }
 

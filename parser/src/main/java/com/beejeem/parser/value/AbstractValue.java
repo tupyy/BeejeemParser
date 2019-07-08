@@ -118,6 +118,15 @@ public abstract class AbstractValue<T> implements Value<T> {
         this.value = v;
     }
 
+    public void set(Variable<T> variable) {
+        if (variable instanceof Value) {
+            Value<T> value = (Value<T>) variable;
+            this.set(value.get());
+        } else {
+            throw new InvalidOperationException("Cannot set a list to a variable.");
+        }
+    }
+
     @Override
     public T get() {
         return this.value;
