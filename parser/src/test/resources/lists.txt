@@ -10,5 +10,7 @@ int i = b.get(b.size() -1); // = 1
 int sum = 0;
 for(int k=0; k<b.size(); k++) {
     sum = sum + b.get(k);
-    a.add(k);
-} // == 4
+    if (k != 0) {
+        a.add(k);
+    }
+} // sum == 4, a.size() == 3

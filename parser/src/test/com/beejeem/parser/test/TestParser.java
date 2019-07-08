@@ -144,7 +144,7 @@ public class TestParser {
         programContext.enterRule(programListener);
 
         StackFrame stackFrame = programListener.getLastStack();
-        assertEquals(4, stackFrame.getList("a").size());
+        assertEquals(3, stackFrame.getList("a").size());
 
         assertEquals(4, stackFrame.getList("b").size());
         assertEquals(1, stackFrame.getList("b").get(0).get());

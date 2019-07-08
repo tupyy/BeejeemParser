@@ -84,8 +84,10 @@ public class StatementListener extends AbstractListener {
     public void enterIfStatement(bjmParser.IfStatementContext ctx) {
         // push new frame on the stack and copy all global variables
         Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
+        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
         StackFrame stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setVariables(variables);
+        stackFrame.setLists(lists);
 
         IfStatementListener ifStatementListener = new IfStatementListener(this.getExecutionContext());
         ctx.enterRule(ifStatementListener);
