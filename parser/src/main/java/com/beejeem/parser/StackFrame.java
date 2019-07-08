@@ -41,6 +41,7 @@ public class StackFrame {
     * Lists
     */
    private Map<String, List<Value>> lists = new HashMap<>();
+
    /**
     * functions and procedures
     */
@@ -77,7 +78,7 @@ public class StackFrame {
    public List<Value> getList(String name) {return this.lists.get(name);}
 
    public boolean hasVariable(String name) {
-      return this.variables.containsKey(name);
+      return this.variables.containsKey(name) || this.lists.containsKey(name);
    }
 
    /**
@@ -98,13 +99,6 @@ public class StackFrame {
          l.put(entry.getKey(), entry.getValue());
       }
       return l;
-   }
-
-   /**
-    * remove variable
-    */
-   public void removeVariable(String name) {
-      variables.remove(name);
    }
 
    public void setVariables(Map<String, Value> variables) {
