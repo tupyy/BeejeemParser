@@ -18,23 +18,22 @@
 package com.beejeem.parser.type;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ListType implements Type {
-    @Override
-    public boolean builtIn() {
-        return false;
-    }
+public class ListType<T> implements Type {
 
     @Override
-    public Value createValue() {
+    public Value<T> createValue() {
         throw new InvalidOperationException("Cannot create value.");
     }
 
-    public List<Value> createList() {
-        return new ArrayList<>();
+    @Override
+    public boolean isEqual(Type anotherType) {
+        return anotherType instanceof ListType;
+    }
+
+    public ListValue<T> createList() {
+        return new ListValue<>(this);
     }
 }

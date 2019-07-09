@@ -16,36 +16,28 @@
  */
 package com.beejeem.parser.type;
 
+import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.StringValue;
 import com.beejeem.parser.value.Value;
 
 public class StringType implements Type {
-   public final int UNBOUNDED = -1;
-   private final int length;
 
-   public StringType() {
-      length = UNBOUNDED;
-   }
+    public StringType() {
+    }
 
-   public StringType(int length) {
-      this.length = length;
-   }
+    @Override
+    public Value createValue() {
+        return new StringValue();
+    }
 
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
+    @Override
+    public ListValue createList() {
+        throw new InvalidOperationException("Cannot create a list from a string.");
+    }
 
-   @Override
-   public Value createValue() {
-      return new StringValue();
-   }
-
-   public int getLength() {
-      return length;
-   }
-
-   public String toString() {
-      return "String";
-   }
+    @Override
+    public boolean isEqual(Type anotherType) {
+        return anotherType instanceof StringType;
+    }
 }

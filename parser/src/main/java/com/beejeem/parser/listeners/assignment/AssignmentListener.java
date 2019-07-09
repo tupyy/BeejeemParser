@@ -22,6 +22,7 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
+import com.beejeem.parser.value.Value;
 import com.beejeem.parser.value.Variable;
 
 public class AssignmentListener extends AbstractListener {
@@ -31,13 +32,19 @@ public class AssignmentListener extends AbstractListener {
 
     public void enterAssignment(bjmParser.AssignmentContext assignmentContext) {
         String identifier = assignmentContext.Identifier().getText();
-        Variable identifierValue = this.getExecutionContext().getCurrentStackframe().getVariable(identifier);
-        if (identifierValue == null) {
+        Variable variable = this.getExecutionContext().getCurrentStackframe().getVariable(identifier);
+        if (variable == null) {
             throw new InvalidOperationException(
                     String.format("Line %d: Variable not defined: %s", assignmentContext.start.getLine(), identifier));
         }
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         assignmentContext.expression().enterRule(expressionListener);
-        identifierValue.set(expressionListener.getVariable());
+        if (variable.isValue()) {
+            ((Value<?>)variable).setValue((Value)expressionListener.getVariable());
+            this.setVariable(variable);
+        } else if (variable.isList()) {
+
+        }
+
     }
 }

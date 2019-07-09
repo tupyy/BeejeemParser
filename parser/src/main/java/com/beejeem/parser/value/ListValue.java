@@ -5,7 +5,7 @@ import com.beejeem.parser.type.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListValue<T> implements Variable<T> {
+public class ListValue<T> implements Variable {
 
     private List<T> values = new ArrayList<>();
     private Type type;
@@ -14,12 +14,20 @@ public class ListValue<T> implements Variable<T> {
         this.type = type;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Variable<T> clone() {
-        List<T> clone = new ArrayList<>();
-        clone.addAll(this.values);
-        return (Variable<T>) clone;
+    public void add(T value) {
+        this.values.add(value);
+    }
+
+    public T get(int index) {
+        try {
+            return this.values.get(index);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return null;
+        }
+    }
+
+    public int size() {
+        return this.values.size();
     }
 
     @Override
@@ -27,23 +35,32 @@ public class ListValue<T> implements Variable<T> {
         return null;
     }
 
-    public T get(int index) {
-        return values.get(index);
-    }
-
-    @SuppressWarnings("unchecked")
-    public Value<T> getValue(int index) {
-        Value<T> value = this.type.createValue();
-        value.set(this.values.get(index));
-        return value;
+    @Override
+    public boolean isValue() {
+        return false;
     }
 
     @Override
-    public void set(Variable<T> variable) {
-        if (variable instanceof ListValue) {
-            this.values = (List<T>) variable;
-        } else {
-            this.values.add(((Value<T>) variable).get());
+    public boolean isList() {
+        return true;
+    }
+
+    @Override
+    public boolean isMap() {
+        return false;
+    }
+
+    @Override
+    public Value<?> asValue() {
+        return null;
+    }
+
+    @Override
+    public ListValue<T> asList() {
+        ListValue<T> newList = new ListValue<>(this.getType());
+        for (T element: this.values) {
+            newList.add(element);
         }
+        return newList;
     }
 }

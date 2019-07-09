@@ -40,19 +40,28 @@ public class StringValue extends AbstractValue<String> {
     }
 
     @Override
-    public BooleanValue eq(Value v) {
+    public BooleanValue eq(Value<?> v) {
         throw new InvalidOperationException();
     }
 
 
-    public void set(Value v) {
+    public void set(String v) {
         // FIXME remove only quote from the beginning of the word?
-        super.set(v.toString().replace("\"",""));
+        super.set(v.replace("\"",""));
     }
+
 
     @Override
     public Type getType() {
         return this.type;
+    }
+
+    @Override
+    public void setValue(Value<?> value) {
+        if (value instanceof StringValue) {
+            this.set((String) value.get());
+        }
+        throw new InvalidOperationException("Cannot set a string from other variable than string");
     }
 
     @Override
