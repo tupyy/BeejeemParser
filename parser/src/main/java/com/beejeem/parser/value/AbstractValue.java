@@ -143,7 +143,7 @@ public abstract class AbstractValue<T> implements Value<T> {
 
     @Override
     public ListValue<T> asList() {
-        ListValue<T> listValue = new ListValue<>(this.getType());
+        ListValue<T> listValue = new ListValue<>();
         listValue.add(this.value);
         return listValue;
     }

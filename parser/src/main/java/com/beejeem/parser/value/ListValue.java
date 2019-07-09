@@ -1,5 +1,6 @@
 package com.beejeem.parser.value;
 
+import com.beejeem.parser.type.ListType;
 import com.beejeem.parser.type.Type;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class ListValue<T> implements Variable {
     private List<T> values = new ArrayList<>();
     private Type type;
 
-    public ListValue(Type type) {
-        this.type = type;
+    public ListValue() {
+        this.type = new ListType();
     }
 
     public void add(T value) {
@@ -21,9 +22,25 @@ public class ListValue<T> implements Variable {
     public T get(int index) {
         try {
             return this.values.get(index);
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             return null;
         }
+    }
+
+    public Value<?> getAsValue(int index) {
+        T value = this.get(index);
+        if (value != null) {
+            if (value instanceof Integer) {
+                return new IntegerValue((Integer) value);
+            } else if (value instanceof Float) {
+                return new FloatValue((Float) value);
+            } else if (value instanceof String) {
+                return new StringValue((String) value);
+            } else if (value instanceof Boolean) {
+                return new BooleanValue((Boolean) value);
+            }
+        }
+        return null;
     }
 
     public int size() {
@@ -57,7 +74,7 @@ public class ListValue<T> implements Variable {
 
     @Override
     public ListValue<T> asList() {
-        ListValue<T> newList = new ListValue<>(this.getType());
+        ListValue<T> newList = new ListValue<>();
         for (T element: this.values) {
             newList.add(element);
         }
