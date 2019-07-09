@@ -175,7 +175,6 @@ public class IntegerValue extends AbstractValue<Integer> {
         }
     }
 
-    @Override
     public void set(Value v) {
         if (v instanceof IntegerValue) {
             this.set(((IntegerValue) v).get());

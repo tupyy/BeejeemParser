@@ -109,11 +109,6 @@ public abstract class AbstractValue<T> implements Value<T> {
     }
 
     @Override
-    public void set(Value v) {
-        throw new InvalidOperationException();
-    }
-
-    @Override
     public void set(T v) {
         this.value = v;
     }

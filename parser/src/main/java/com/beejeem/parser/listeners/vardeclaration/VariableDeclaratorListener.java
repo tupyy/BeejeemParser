@@ -26,7 +26,6 @@ import java.util.List;
 
 public class VariableDeclaratorListener extends AbstractListener {
     private String variableName;
-    private List<Value> valueList;
 
     public VariableDeclaratorListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -42,21 +41,11 @@ public class VariableDeclaratorListener extends AbstractListener {
 
             if (variableInitializerListener.getVariable() != null) {
                 this.setVariable(variableInitializerListener.getVariable());
-            } else {
-                this.setValueList(variableInitializerListener.getList());
             }
         }
     }
 
     public String getVariableName() {
         return variableName;
-    }
-
-    public List<Value> getValueList() {
-        return valueList;
-    }
-
-    public void setValueList(List<Value> valueList) {
-        this.valueList = valueList;
     }
 }

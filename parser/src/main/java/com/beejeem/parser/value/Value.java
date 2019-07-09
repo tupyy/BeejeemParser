@@ -133,12 +133,6 @@ public interface Value<T> extends Variable<T> {
     void set(T v);
 
     /**
-     * Setter from Value
-     * @param v new value
-     */
-    void set(Value v);
-
-    /**
      * getter
      * @return value
      */

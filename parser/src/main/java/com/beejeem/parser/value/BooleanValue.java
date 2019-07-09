@@ -66,7 +66,6 @@ public class BooleanValue extends AbstractValue<Boolean> {
         }
     }
 
-    @Override
     public void set(Value v) {
         if (v instanceof BooleanValue) {
             this.set(((BooleanValue) v).get());

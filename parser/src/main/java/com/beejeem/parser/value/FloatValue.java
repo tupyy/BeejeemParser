@@ -145,7 +145,6 @@ public class FloatValue extends AbstractValue<Float> {
         }
     }
 
-    @Override
     public void set(Value v) {
         if (v instanceof FloatValue) {
             this.set(((FloatValue) v).get());

@@ -44,7 +44,7 @@ public class StringValue extends AbstractValue<String> {
         throw new InvalidOperationException();
     }
 
-    @Override
+
     public void set(Value v) {
         // FIXME remove only quote from the beginning of the word?
         super.set(v.toString().replace("\"",""));
