@@ -34,6 +34,6 @@ public class ListType<T> implements Type {
     }
 
     public ListValue<T> createList() {
-        return new ListValue<>(this);
+        return new ListValue<>();
     }
 }
