@@ -38,7 +38,7 @@ public class IncrementStatementListener extends AbstractListener {
             throw new InterpreterException(
                     String.format("Line %d: Unknown variable %s", ctx.start.getLine(),ctx.Identifier().getText()));
         }
-        if (variable.getType() instanceof Value) {
+        if (variable instanceof Value) {
             ((Value)variable).set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply((Value)variable));
         } else {
             throw new InvalidOperationException(String.format("Line %d: A list cannot be incremented.", ctx.start.getLine()));

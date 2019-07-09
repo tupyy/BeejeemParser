@@ -82,7 +82,9 @@ public class TestParser {
         assertEquals(1, ((Value)stackFrame.getVariable("f")).get());
         assertEquals(1, ((Value)stackFrame.getVariable("g")).get());
         assertEquals(1, ((Value)stackFrame.getVariable("h")).get());
-        assertNull(stackFrame.getVariable("i"));
+        assertThrows(InvalidOperationException.class, () -> {
+            stackFrame.getVariable("i");
+        });
     }
 
     @Test

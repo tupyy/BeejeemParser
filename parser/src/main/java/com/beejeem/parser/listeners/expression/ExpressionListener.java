@@ -177,7 +177,7 @@ public class ExpressionListener extends AbstractListener {
             throw new InvalidOperationException(
                     String.format("Line %d: Variable not found: %s",ctx.start.getLine(),variableName));
         }
-        if ( !(variable.getType() instanceof Value)) {
+        if ( !(variable instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Cannot use list in this context",ctx.start.getLine()));
         }
 
