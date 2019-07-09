@@ -62,7 +62,7 @@ public class FloatValue extends AbstractValue<Float> {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get().intValue() == ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(this.get() == ((FloatValue) v).get());
+            return new BooleanValue(this.get().equals(((FloatValue) v).get()));
         } else {
             throw new InvalidOperationException();
         }
@@ -139,7 +139,7 @@ public class FloatValue extends AbstractValue<Float> {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get().intValue() != ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
-            return new BooleanValue(this.get() != ((FloatValue) v).get());
+            return new BooleanValue(!this.get().equals(((FloatValue) v).get()));
         } else {
             throw new InvalidOperationException();
         }
