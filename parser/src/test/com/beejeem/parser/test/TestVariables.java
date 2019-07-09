@@ -1,15 +1,11 @@
 package com.beejeem.parser.test;
 
 import com.beejeem.parser.exception.InvalidOperationException;
-import com.beejeem.parser.value.BooleanValue;
-import com.beejeem.parser.value.FloatValue;
-import com.beejeem.parser.value.IntegerValue;
-import com.beejeem.parser.value.StringValue;
-import org.junit.jupiter.api.BeforeAll;
+import com.beejeem.parser.value.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestVariables {
 
@@ -141,5 +137,15 @@ public class TestVariables {
     public void testBoolean() {
         assertTrue(booleanValue.and(new BooleanValue(true)).get());
         assertTrue(booleanValue.or(new BooleanValue(false)).get());
+    }
+
+    @Test
+    public void testList() {
+        ListValue<Integer> listValue = new ListValue<>();
+        listValue.add(1);
+        listValue.add(2);
+
+        assertTrue(listValue.getAsValue(0) instanceof IntegerValue);
+        assertNull(listValue.getAsValue(3));
     }
 }
