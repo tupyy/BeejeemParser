@@ -1,6 +1,7 @@
 package com.beejeem.parser.test;
 
 import com.beejeem.parser.exception.InvalidOperationException;
+import com.beejeem.parser.type.IntegerType;
 import com.beejeem.parser.value.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -152,7 +153,7 @@ public class TestVariables {
     }
     @Test
     public void testList() {
-        ListValue<Integer> listValue = new ListValue<>();
+        ListValue<Integer> listValue = new ListValue<>(new IntegerType());
         listValue.add(1);
         listValue.add(2);
 

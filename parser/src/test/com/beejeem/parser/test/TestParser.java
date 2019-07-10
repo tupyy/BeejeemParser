@@ -137,34 +137,6 @@ public class TestParser {
         assertEquals(false, ((Value)stackFrame.getVariable("d")).get());
     }
 
-    @Test
-    public void testLists() {
-        ExecutionContext executionContext = new ExecutionContext();
-        ProgramContext programContext = this.parse(readTestFile("lists.txt"));
-        final ProgramListener programListener = new ProgramListener(executionContext);
-        programContext.enterRule(programListener);
-
-        StackFrame stackFrame = programListener.getLastStack();
-        assertEquals(3, ((List<?>)stackFrame.getVariable("a")).size());
-
-        assertEquals(4, ((List<?>)stackFrame.getVariable("b")).size());
-
-        List<?> myList = (List<?>) stackFrame.getVariable("b");
-        Value b = (Value) myList.get(0);
-        assertEquals(1, b.get());
-
-        assertEquals(3, ((List<?>)stackFrame.getVariable("c")).size());
-
-        List<?> myList1 = (List<?>) stackFrame.getVariable("c");
-        Value c = (Value) myList1.get(0);
-        assertEquals(true, c.get());
-
-        assertEquals(0, ((List<?>)stackFrame.getVariable("d")).size());
-        assertEquals(1, ((Value)stackFrame.getVariable("aa")).get());
-        assertEquals(1, ((Value)stackFrame.getVariable("i")).get());
-        assertEquals(4, ((Value)stackFrame.getVariable("sum")).get());
-    }
-
     private InputStream readTestFile(String filename) {
         return getClass().getClassLoader().getResourceAsStream(filename);
     }

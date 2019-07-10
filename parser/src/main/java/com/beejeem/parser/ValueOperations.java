@@ -34,7 +34,7 @@ public class ValueOperations {
 
     static {
         Map<Integer, BiFunction<Value<?>,Value<?>,Value<?>>> map = new HashMap<>();
-        map.put(bjmLexer.Add, Value::add);
+        map.put(bjmLexer.Addition, Value::add);
         map.put(bjmLexer.Subtract, Value::subtract);
         map.put(bjmLexer.Multiply, Value::mult);
         map.put(bjmLexer.Divide, Value::div);
