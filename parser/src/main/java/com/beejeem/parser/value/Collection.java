@@ -15,25 +15,15 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.beejeem.parser.type;
+package com.beejeem.parser.value;
 
-import com.beejeem.parser.exception.InvalidOperationException;
-import com.beejeem.parser.value.ListValue;
-import com.beejeem.parser.value.Value;
+public interface Collection {
 
-public class ListType<T> implements Type {
-
-    @Override
-    public Value<T> createValue() {
-        throw new InvalidOperationException("Cannot create value.");
+    public enum Methods {
+        GET,
+        ADD,
+        SIZE,
+        PUT
     }
 
-    @Override
-    public boolean isEqual(Type anotherType) {
-        return anotherType instanceof ListType;
-    }
-
-    public ListValue<T> createList() {
-        return new ListValue<>();
-    }
 }
