@@ -122,15 +122,18 @@ public class TestVariables {
         assertTrue(integerValue.gte(new FloatValue(2.0f)).get());
         assertTrue(integerValue.gte(new IntegerValue(2)).get());
 
+
+        assertEquals(1,integerValue.decrement().get());
+
         assertThrows(InvalidOperationException.class, () -> {
             integerValue.eq(new FloatValue(2.0f));
         });
-        assertTrue(integerValue.eq(new IntegerValue(2)).get());
+        assertTrue(integerValue.eq(new IntegerValue(1)).get());
 
         assertThrows(InvalidOperationException.class, () -> {
             integerValue.neq(new FloatValue(2.0f));
         });
-        assertFalse(integerValue.neq(new IntegerValue(2)).get());
+        assertFalse(integerValue.neq(new IntegerValue(1)).get());
     }
 
     @Test
