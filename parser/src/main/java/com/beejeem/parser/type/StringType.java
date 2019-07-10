@@ -40,4 +40,8 @@ public class StringType implements Type<String> {
     public boolean isEqual(Type anotherType) {
         return anotherType instanceof StringType;
     }
+
+    public String toString() {
+        return "String";
+    }
 }

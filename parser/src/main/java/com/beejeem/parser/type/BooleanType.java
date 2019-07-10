@@ -37,4 +37,7 @@ public class BooleanType implements Type<Boolean> {
       return anotherType instanceof BooleanType;
    }
 
+   public String toString() {
+      return "Boolean";
+   }
 }
