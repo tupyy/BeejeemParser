@@ -60,8 +60,9 @@ public class StringValue extends AbstractValue<String> {
     public void setValue(Value<?> value) {
         if (value instanceof StringValue) {
             this.set((String) value.get());
+        } else {
+            throw new InvalidOperationException("Cannot set a string from other variable than string");
         }
-        throw new InvalidOperationException("Cannot set a string from other variable than string");
     }
 
     @Override

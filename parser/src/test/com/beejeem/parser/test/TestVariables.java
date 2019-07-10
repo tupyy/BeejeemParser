@@ -143,6 +143,14 @@ public class TestVariables {
     }
 
     @Test
+    public void testString() {
+        stringValue.setValue(new StringValue("string1"));
+        assertEquals("string1", stringValue.get());
+
+        stringValue.set("string2");
+        assertEquals("string2", stringValue.get());
+    }
+    @Test
     public void testList() {
         ListValue<Integer> listValue = new ListValue<>();
         listValue.add(1);
