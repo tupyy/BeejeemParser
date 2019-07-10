@@ -27,4 +27,9 @@ public class VoidValue extends AbstractValue<Void> {
     public void setValue(Value value) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String toString() {
+        return "Void value";
+    }
 }

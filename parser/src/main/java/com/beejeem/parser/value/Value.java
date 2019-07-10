@@ -99,6 +99,16 @@ public interface Value<T> extends Variable {
     Value<?> power(Value<?> v);
 
     /**
+     * Increment function
+     */
+    Value<?> increment();
+
+    /**
+     * Decrement function
+     */
+    Value<?> decrement();
+
+    /**
      * Not equal
      */
     BooleanValue neq(Value<?> v);

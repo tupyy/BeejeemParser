@@ -52,10 +52,6 @@ public class IntegerValue extends AbstractValue<Integer> {
         throw new InvalidOperationException();
     }
 
-    public void decrement() {
-        this.set(this.get() - 1);
-    }
-
     @Override
     public Value<?> div(Value<?> v) {
         if (v instanceof IntegerValue) {
@@ -103,8 +99,14 @@ public class IntegerValue extends AbstractValue<Integer> {
         }
     }
 
-    public void increment() {
+    public Value<Integer> increment() {
         this.set(this.get() + 1);
+        return this.asValue();
+    }
+
+    public Value<Integer> decrement() {
+        this.set(this.get() - 1);
+        return this.asValue();
     }
 
     @Override

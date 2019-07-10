@@ -112,6 +112,16 @@ public abstract class AbstractValue<T> implements Value<T> {
     }
 
     @Override
+    public Value<?> increment() {
+        throw new InvalidOperationException();
+    }
+
+    @Override
+    public Value<?> decrement() {
+        throw new InvalidOperationException();
+    }
+
+    @Override
     public Type getType() {
         throw new InvalidOperationException();
     }
@@ -154,4 +164,6 @@ public abstract class AbstractValue<T> implements Value<T> {
         value.set(this.value);
         return value;
     }
+
+    public abstract String toString();
 }
