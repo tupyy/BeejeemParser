@@ -133,7 +133,7 @@ public class TestParser {
         StackFrame stackFrame = programListener.getLastStack();
         assertEquals(4, ((Value)stackFrame.getVariable("a")).get());
         assertEquals(2f, ((Value)stackFrame.getVariable("b")).get());
-        assertEquals("test", ((Value)stackFrame.getVariable("c")).get());
+        assertEquals("test func3", ((Value)stackFrame.getVariable("c")).get());
         assertEquals(false, ((Value)stackFrame.getVariable("d")).get());
     }
 

@@ -67,7 +67,7 @@ public class UserDefinedFunction implements Function{
         Variable ret = executionContext.resolveVariable(getName());
 
         if (ret instanceof Value) {
-            ((Value)ret).set(blockListener.getVariable());
+            ((Value<?>)ret).setValue(blockListener.getVariable().asValue());
         }
         executionContext.popStackframe();
 
