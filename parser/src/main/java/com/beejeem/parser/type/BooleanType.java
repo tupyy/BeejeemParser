@@ -16,12 +16,11 @@
  */
 package com.beejeem.parser.type;
 
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.BooleanValue;
 import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public class BooleanType implements Type {
+public class BooleanType implements Type<Boolean> {
 
    @Override
    public Value createValue() {
@@ -29,8 +28,8 @@ public class BooleanType implements Type {
    }
 
    @Override
-   public ListValue createList() {
-      throw new InvalidOperationException("Cannot create a list from a boolean.");
+   public ListValue<Boolean> createList() {
+      return new ListValue<>(new BooleanType());
    }
 
    @Override

@@ -16,24 +16,24 @@
  */
 package com.beejeem.parser.type;
 
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.StringValue;
 import com.beejeem.parser.value.Value;
 
-public class StringType implements Type {
+public class StringType implements Type<String> {
 
     public StringType() {
     }
 
     @Override
-    public Value createValue() {
+    public Value<String> createValue() {
         return new StringValue();
     }
 
+
     @Override
-    public ListValue createList() {
-        throw new InvalidOperationException("Cannot create a list from a string.");
+    public ListValue<String> createList() {
+        return new ListValue<>(new StringType());
     }
 
     @Override

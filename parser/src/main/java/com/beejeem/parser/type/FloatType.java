@@ -16,12 +16,11 @@
  */
 package com.beejeem.parser.type;
 
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.FloatValue;
 import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public class FloatType implements Type {
+public class FloatType implements Type<Float> {
 
    @Override
    public Value createValue() {
@@ -29,8 +28,8 @@ public class FloatType implements Type {
    }
 
    @Override
-   public ListValue createList() {
-      throw new InvalidOperationException("Cannot create a list from a float.");
+   public ListValue<Float> createList() {
+      return new ListValue<>(new FloatType());
    }
 
    @Override

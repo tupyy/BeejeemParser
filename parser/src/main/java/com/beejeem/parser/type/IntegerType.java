@@ -16,12 +16,11 @@
  */
 package com.beejeem.parser.type;
 
-import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.IntegerValue;
 import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public class IntegerType implements Type {
+public class IntegerType implements Type<Integer> {
 
    @Override
    public Value createValue() {
@@ -29,8 +28,8 @@ public class IntegerType implements Type {
    }
 
    @Override
-   public ListValue createList() {
-      throw new InvalidOperationException("Cannot create a list from a integer.");
+   public ListValue<Integer> createList() {
+      return new ListValue<>(new IntegerType());
    }
 
    @Override
