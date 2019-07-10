@@ -44,9 +44,9 @@ public class VariableDeclaratorsListener extends AbstractListener {
             variableDeclaratorListener.enterVariableDeclarator(variableDeclaratorContext);
 
             if ( !(this.getValueType() instanceof ListType) ) {
-                Value newValue = this.getValueType().createValue();
+                Value<?> newValue = this.getValueType().createValue();
                 if (variableDeclaratorListener.getVariable() != null) {
-                    newValue.set(variableDeclaratorListener.getVariable());
+                    newValue.setValue(variableDeclaratorListener.getVariable().asValue());
                     this.getVariables().put(variableDeclaratorListener.getVariableName(), newValue);
                 } else {
                     this.getVariables().put(variableDeclaratorListener.getVariableName(), this.getValueType().createValue());
