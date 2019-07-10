@@ -24,6 +24,7 @@ import com.beejeem.parser.listeners.BlockListener;
 import com.beejeem.parser.listeners.functionlisteners.ParametersListener.Parameter;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class UserDefinedFunction implements Function{
     }
 
     @Override
-    public Value execute(ExecutionContext executionContext, List<Value> args) {
+    public Variable execute(ExecutionContext executionContext, List<Variable> args) {
         /*
          * new stack frame
          */
@@ -63,9 +64,10 @@ public class UserDefinedFunction implements Function{
          */
         final BlockListener blockListener = new BlockListener(executionContext);
         blockListener.enterBlock(blockContext);
-        Value ret = executionContext.resolveVariable(getName());
-        if (blockListener.getValue().get() != null) {
-            ret.set(blockListener.getValue());
+        Variable ret = executionContext.resolveVariable(getName());
+
+        if (ret instanceof Value) {
+            ((Value<?>)ret).setValue(blockListener.getVariable().asValue());
         }
         executionContext.popStackframe();
 

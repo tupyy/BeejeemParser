@@ -14,27 +14,32 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.beejeem.parser.type;
 
-import com.beejeem.parser.value.BooleanValue;
+package com.beejeem.parser;
+
+import com.beejeem.grammar.bjmLexer;
+import com.beejeem.parser.value.Collection;
 import com.beejeem.parser.value.ListValue;
-import com.beejeem.parser.value.Value;
 
-public class BooleanType implements Type<Boolean> {
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-   @Override
-   public Value createValue() {
-      return new BooleanValue();
-   }
+public class CollectionMethods {
 
-   @Override
-   public ListValue<Boolean> createList() {
-      return new ListValue<>(new BooleanType());
-   }
+    private static Map<Integer, Collection.Methods> listMethodID;
+    private static Map<Integer, Collection.Methods> mapMethodID;
 
-   @Override
-   public boolean isEqual(Type anotherType) {
-      return anotherType instanceof BooleanType;
-   }
+    static {
+        Map<Integer, Collection.Methods> map = new HashMap<>();
+        map.put(bjmLexer.Add, ListValue.Methods.ADD);
+        map.put(bjmLexer.Get, ListValue.Methods.GET);
+        map.put(bjmLexer.Size, ListValue.Methods.SIZE);
+        listMethodID = Collections.unmodifiableMap(map);
 
+    }
+
+    public static Map<Integer, Collection.Methods> getListMethodID() {
+        return listMethodID;
+    }
 }

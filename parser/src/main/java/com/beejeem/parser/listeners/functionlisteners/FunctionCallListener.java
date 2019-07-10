@@ -22,6 +22,7 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +34,15 @@ public class FunctionCallListener extends AbstractListener {
     }
 
     public void enterFunctionCall(bjmParser.FunctionCallContext ctx) {
-        List<Value> args = new ArrayList<>();
+        List<Variable> args = new ArrayList<>();
         if (ctx.exprList() != null) {
             for (bjmParser.ExpressionContext expressionContext : ctx.exprList().expression()) {
                 ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
                 expressionContext.enterRule(expressionListener);
-                args.add(expressionListener.getValue());
+                args.add(expressionListener.getVariable());
             }
         }
-        this.setValue(this.getExecutionContext().invokeFunction(ctx.Identifier().getText(),args));
+        this.setVariable(this.getExecutionContext().invokeFunction(ctx.Identifier().getText(),args));
     }
 
     @Override
@@ -49,6 +50,6 @@ public class FunctionCallListener extends AbstractListener {
         FunctionCallListener functionCallListener =
                 new FunctionCallListener(this.getExecutionContext());
         ctx.functionCall().enterRule(functionCallListener);
-        this.setValue(functionCallListener.getValue());
+        this.setVariable(functionCallListener.getVariable());
     }
 }

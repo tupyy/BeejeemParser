@@ -49,11 +49,12 @@ variableDeclaration
  ;
 
 localVariableDeclaration
- : typeType variableDeclarators
+ : variableDeclarators
+ | collectionVariableDeclarator
  ;
 
 variableDeclarators
-    : variableDeclarator (',' variableDeclarator)*
+    : typeType variableDeclarator (',' variableDeclarator)*
     ;
 
 variableDeclarator
@@ -67,6 +68,10 @@ variableDeclaratorId
 variableInitializer
     : listInitializer
     | expression
+    ;
+
+collectionVariableDeclarator
+    : List '<' typeType '>' variableDeclarator
     ;
 
 listInitializer
@@ -142,13 +147,13 @@ expression
  | Bool                                                 #boolExpression
  | functionCall                                         #functionCallExpression
  | collectionCall                                       #collectionCallExpression
- | Identifier indexes?                                  #identifierExpression
+ | Identifier                                           #identifierExpression
  | String indexes?                                      #stringExpression
- | '(' expression ')' indexes?                          #expressionExpression
+ | '(' expression ')'                                   #expressionExpression
  ;
 
 collectionCall
- : Identifier '.' Identifier OParen exprList? CParen
+ : Identifier '.' method=(Add| Get| Put| Size) OParen expression? CParen
  ;
 
 indexes
@@ -165,12 +170,6 @@ resultType
   | Int
   | Float
   | StringType
-  | collectionType
-  ;
-
-collectionType
-  : List
-  | Map
   ;
 
 fragment A
@@ -317,6 +316,10 @@ Float    : F L O A T;
 Void     : V O I D;
 List     : L I S T;
 Map      : M A P;
+Get      : G E T;
+Put      : P U T;
+Add      : A D D;
+Size     : S I Z E;
 
 Or       : '||';
 And      : '&&';
@@ -328,7 +331,7 @@ Pow      : '^';
 Excl     : '!';
 GT       : '>';
 LT       : '<';
-Add      : '+';
+Addition : '+';
 Increment: '++';
 Decrement: '--';
 Subtract : '-';

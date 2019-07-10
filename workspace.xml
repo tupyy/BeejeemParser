@@ -4,14 +4,14 @@
     <list default="true" id="cb8ff575-9457-4c31-bcbd-4e1bfc716cf6" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="SHOW_DIALOG" value="false" />
-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-    <option name="LAST_RESOLUTION" value="IGNORE" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" variable="true" />
+    <option name="SHOW_DIALOG" variable="false" />
+    <option name="HIGHLIGHT_CONFLICTS" variable="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" variable="false" />
+    <option name="LAST_RESOLUTION" variable="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
+    <option name="isMigrated" variable="true" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="parser_test" />
@@ -68,7 +68,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option variable="Class" />
       </list>
     </option>
   </component>
@@ -87,31 +87,31 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/TestParlerListener.java" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/test.g4" />
-        <option value="$PROJECT_DIR$/src/main/java/antlr4/ExprLexer.java" />
-        <option value="$PROJECT_DIR$/target/generated-sources/antlr4/ExprLexer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ExprListener.java" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/Expr.g4" />
-        <option value="$PROJECT_DIR$/src/main/java/TestExpr.java" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/Chat.g4" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/beejeem.g4" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer.tokens" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer.g4" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/Beejeem.g4" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/antlr4/Jobfile.g4" />
-        <option value="$PROJECT_DIR$/src/main/java/com.beejeem.core.Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DefaultJobfileListener.java" />
+        <option variable="$PROJECT_DIR$/src/main/java/com/company/com.beejeem.domain.parser/TestLexer.java" />
+        <option variable="$PROJECT_DIR$/src/main/java/TestParlerListener.java" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/test.g4" />
+        <option variable="$PROJECT_DIR$/src/main/java/antlr4/ExprLexer.java" />
+        <option variable="$PROJECT_DIR$/target/generated-sources/antlr4/ExprLexer.java" />
+        <option variable="$PROJECT_DIR$/src/main/java/ExprListener.java" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/Expr.g4" />
+        <option variable="$PROJECT_DIR$/src/main/java/TestExpr.java" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/Chat.g4" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/beejeem.g4" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer.tokens" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/BeejeemLexer.g4" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/Beejeem.g4" />
+        <option variable="$PROJECT_DIR$/pom.xml" />
+        <option variable="$PROJECT_DIR$/src/main/antlr4/Jobfile.g4" />
+        <option variable="$PROJECT_DIR$/src/main/java/com.beejeem.core.Main.java" />
+        <option variable="$PROJECT_DIR$/src/main/java/DefaultJobfileListener.java" />
       </list>
     </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
+        <option name="importAutomatically" variable="true" />
       </MavenImportingSettings>
     </option>
   </component>
@@ -136,14 +136,14 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" variable="-8" />
+    <option name="y" variable="-8" />
+    <option name="width" variable="1696" />
+    <option name="height" variable="1026" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
+      <foldersAlwaysOnTop variable="true" />
     </navigator>
     <panes>
       <pane id="Scope" />
@@ -211,16 +211,16 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/auto-gen" value="false" />
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-listener" value="true" />
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-visitor" value="false" />
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/output-dir" value="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java" />
-    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/package" value="com.company.com.beejeem.domain.parser" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Desktop/dice-notation-java-master" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/auto-gen" variable="false" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-listener" variable="true" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/gen-visitor" variable="false" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/output-dir" variable="C:\Users\Teodor-Cosmin.TUPANG\Trash\src\main\java" />
+    <property name="$PROJECT_DIR$/src/main/resources/test.g4::/package" variable="com.company.com.beejeem.domain.parser" />
+    <property name="last_opened_file_path" variable="$PROJECT_DIR$/../Desktop/dice-notation-java-master" />
+    <property name="project.structure.last.edited" variable="Project" />
+    <property name="project.structure.proportion" variable="0.0" />
+    <property name="project.structure.side.proportion" variable="0.0" />
+    <property name="settings.editor.selected.configurable" variable="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -234,17 +234,17 @@
     <option name="ruleStates">
       <list>
         <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+          <option name="name" variable="ConfigurationTypeDashboardGroupingRule" />
         </RuleState>
         <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
+          <option name="name" variable="StatusDashboardGroupingRule" />
         </RuleState>
       </list>
     </option>
   </component>
   <component name="RunManager" selected="Application.Unnamed">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.beejeem.core.Main" />
+      <option name="MAIN_CLASS_NAME" variable="com.beejeem.core.Main" />
       <module name="Trash" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -261,16 +261,16 @@
             </option>
             <option name="goals">
               <list>
-                <option value="clean" />
-                <option value="antlr4:antlr4" />
+                <option variable="clean" />
+                <option variable="antlr4:antlr4" />
               </list>
             </option>
             <option name="pomFileName" />
             <option name="profilesMap">
               <map />
             </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
+            <option name="resolveToWorkspace" variable="false" />
+            <option name="workingDirPath" variable="$PROJECT_DIR$" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
@@ -285,8 +285,8 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="cb8ff575-9457-4c31-bcbd-4e1bfc716cf6" name="Default Changelist" comment="" />
       <created>1555050567283</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
+      <option name="number" variable="Default" />
+      <option name="presentableId" variable="Default" />
       <updated>1555050567283</updated>
     </task>
     <servers />
@@ -462,7 +462,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -473,7 +473,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -484,7 +484,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -495,7 +495,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -506,7 +506,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -518,7 +518,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -529,7 +529,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option variable="0.2" />
               </list>
             </option>
           </splitter-proportions>

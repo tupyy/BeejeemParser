@@ -20,105 +20,114 @@ package com.beejeem.parser.value;
 
 import com.beejeem.parser.type.Type;
 
-public interface Value<T> extends Cloneable {
+public interface Value<T> extends Variable {
 
     /**
      * Addition operation
      * @param v value to be added to the current one
      * @return result
      */
-    Value add(Value v);
+    Value<?> add(Value<?> v);
 
     /**
      * Logic and operation
      * @param v operand
      * @return result
      */
-    Value and(Value v);
+    Value<?> and(Value<?> v);
 
     /**
      * Division operation
      * @param v value
      * @return result
      */
-    Value div(Value v);
+    Value<?> div(Value<?> v);
 
     /**
      * Test if the values are equal
      * @param v value to be test against
      * @return result
      */
-    BooleanValue eq(Value v);
+    BooleanValue eq(Value<?> v);
 
     /**
      * Greater than
      * @param v value to be test against
      * @return result
      */
-    BooleanValue gt(Value v);
+    BooleanValue gt(Value<?> v);
 
     /**
      * Greater or equal test
      * @param v value to be test against
      * @return result
      */
-    BooleanValue gte(Value v);
+    BooleanValue gte(Value<?> v);
 
     /**
      * Less than test
      * @param v value to be test against
      */
-    BooleanValue lt(Value v);
+    BooleanValue lt(Value<?> v);
 
     /**
      * Less or equal test
      * @param v value to be test against
      */
-    BooleanValue lte(Value v);
+    BooleanValue lte(Value<?> v);
 
     /**
      * Test for list. Test if a value is found in a list
      * @param v test value
      * @return true if value is contained in the list
      */
-    BooleanValue in(Value v);
+    BooleanValue in(Value<?> v);
 
     /**
      * Mod operation
      */
-    Value mod(Value v);
+    Value<?> mod(Value<?> v);
 
     /**
      * Multiplication operation
      */
-    Value mult(Value v);
+    Value<?> mult(Value<?> v);
 
     /**
      * Power function
      */
-    Value power(Value v);
+    Value<?> power(Value<?> v);
+
+    /**
+     * Increment function
+     */
+    Value<?> increment();
+
+    /**
+     * Decrement function
+     */
+    Value<?> decrement();
 
     /**
      * Not equal
      */
-    Value neg();
+    BooleanValue neq(Value<?> v);
 
     /**
-     * Not equal
+     * Logical negation
+     * @return !Value
      */
-    BooleanValue neq(Value v);
-
-    Value not();
+    Value<?> not();
 
     /**
      * Logic or
      */
-    Value or(Value v);
+    Value<?> or(Value<?> v);
 
     /**
-     * Substract operation
+     * Subtract operation
      */
-    Value subtract(Value v);
+    Value<?> subtract(Value<?> v);
 
     /**
      * Return the type of the value
@@ -128,27 +137,17 @@ public interface Value<T> extends Cloneable {
 
     /**
      * Setter
-     * @param v
+     * @param value
      */
-    void set(T v);
+    void set(T value);
 
-    /**
-     * Setter from Value
-     * @param v new value
-     */
-    void set(Value v);
+    void setValue(Value<?> value);
 
     /**
      * getter
      * @return value
      */
     T get();
-
-    /**
-     * Clone the current value
-     * @return clone value
-     */
-    Value clone();
 
     /**
      * To string

@@ -20,10 +20,11 @@ package com.beejeem.parser.listeners;
 import com.beejeem.grammar.bjmBaseListener;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 public abstract class AbstractListener extends bjmBaseListener {
 
-    private Value value;
+    private Variable variable;
     private final ExecutionContext executionContext;
 
     public AbstractListener(ExecutionContext executionContext) {
@@ -34,11 +35,12 @@ public abstract class AbstractListener extends bjmBaseListener {
         return executionContext;
     }
 
-    public Value getValue() {
-        return value;
+    public Variable getVariable() {
+        return variable;
     }
 
-    public void setValue(Value value) {
-        this.value = value;
+    public void setVariable(Variable variable) {
+        this.variable = variable;
     }
+
 }

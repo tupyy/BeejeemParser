@@ -21,6 +21,8 @@ import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.functionlisteners.ParametersListener;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
+import com.google.errorprone.annotations.Var;
 
 import java.util.List;
 
@@ -50,5 +52,5 @@ public interface Function {
      * @param args arguments
      * @return Value
      */
-    Value execute(ExecutionContext executionContext, List<Value> args);
+    Variable execute(ExecutionContext executionContext, List<Variable> args);
 }

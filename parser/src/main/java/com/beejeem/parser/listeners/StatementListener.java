@@ -28,6 +28,8 @@ import com.beejeem.parser.listeners.ifstatement.IfStatementListener;
 import com.beejeem.parser.listeners.increment.IncrementStatementListener;
 import com.beejeem.parser.listeners.vardeclaration.LocalVariableDeclarationListener;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
+import com.google.errorprone.annotations.Var;
 
 import java.util.List;
 import java.util.Map;
@@ -83,11 +85,9 @@ public class StatementListener extends AbstractListener {
     @Override
     public void enterIfStatement(bjmParser.IfStatementContext ctx) {
         // push new frame on the stack and copy all global variables
-        Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
-        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
-        StackFrame stackFrame = this.getExecutionContext().pushStackframe();
+        Map<String, Variable> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
+         StackFrame stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setVariables(variables);
-        stackFrame.setLists(lists);
 
         IfStatementListener ifStatementListener = new IfStatementListener(this.getExecutionContext());
         ctx.enterRule(ifStatementListener);
@@ -99,12 +99,10 @@ public class StatementListener extends AbstractListener {
 
     public void enterForStatement(bjmParser.ForStatementContext ctx) {
         // push new frame on the stack and copy all global variables
-        Map<String, Value> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
-        Map<String, List<Value>> lists = this.getExecutionContext().getCurrentStackframe().getLists();
+        Map<String, Variable> variables = this.getExecutionContext().getCurrentStackframe().getVariables();
 
         StackFrame stackFrame = this.getExecutionContext().pushStackframe();
         stackFrame.setVariables(variables);
-        stackFrame.setLists(lists);
 
         ForStatementListener forStatementListener = new ForStatementListener(this.getExecutionContext());
         ctx.enterRule(forStatementListener);

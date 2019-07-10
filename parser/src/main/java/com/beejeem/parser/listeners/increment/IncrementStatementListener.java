@@ -21,8 +21,10 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.ValueOperations;
 import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 public class IncrementStatementListener extends AbstractListener {
 
@@ -31,11 +33,16 @@ public class IncrementStatementListener extends AbstractListener {
     }
 
     public void enterIncrementStatement(bjmParser.IncrementStatementContext ctx) {
-        Value variable = this.getExecutionContext().getCurrentStackframe().getVariable(ctx.Identifier().getText());
+        Variable variable = this.getExecutionContext().getCurrentStackframe().getVariable(ctx.Identifier().getText());
         if (variable == null) {
             throw new InterpreterException(
                     String.format("Line %d: Unknown variable %s", ctx.start.getLine(),ctx.Identifier().getText()));
         }
-        variable.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(variable));
+        if (variable instanceof Value) {
+            Value<?> value = variable.asValue();
+            ((Value<?>)variable).setValue(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(value));
+        } else {
+            throw new InvalidOperationException(String.format("Line %d: A list cannot be incremented.", ctx.start.getLine()));
+        }
     }
 }

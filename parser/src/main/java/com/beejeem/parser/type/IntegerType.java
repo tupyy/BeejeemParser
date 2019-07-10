@@ -17,17 +17,24 @@
 package com.beejeem.parser.type;
 
 import com.beejeem.parser.value.IntegerValue;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public class IntegerType implements Type {
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
+public class IntegerType implements Type<Integer> {
 
    @Override
    public Value createValue() {
       return new IntegerValue();
+   }
+
+   @Override
+   public ListValue<Integer> createList() {
+      return new ListValue<>(new IntegerType());
+   }
+
+   @Override
+   public boolean isEqual(Type anotherType) {
+      return anotherType instanceof IntegerType;
    }
 
    public String toString() {

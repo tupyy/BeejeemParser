@@ -17,12 +17,14 @@
 
 package com.beejeem.parser.type;
 
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public interface Type {
-   boolean builtIn();
+public interface Type<T> {
 
-   Value createValue();
+   public Value<T> createValue();
 
-   String toString();
+   public ListValue<T> createList();
+
+   public boolean isEqual(Type anotherType);
 }

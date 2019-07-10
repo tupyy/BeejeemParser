@@ -11,7 +11,7 @@ float function func2() {
 }
 
 string function func3() {
-    return "test";
+    return "test func3";
 }
 
 bool function func4(bool x) {

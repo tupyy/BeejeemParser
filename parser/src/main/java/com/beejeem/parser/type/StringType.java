@@ -16,36 +16,28 @@
  */
 package com.beejeem.parser.type;
 
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.StringValue;
 import com.beejeem.parser.value.Value;
 
-public class StringType implements Type {
-   public final int UNBOUNDED = -1;
-   private final int length;
+public class StringType implements Type<String> {
 
-   public StringType() {
-      length = UNBOUNDED;
-   }
+    public StringType() {
+    }
 
-   public StringType(int length) {
-      this.length = length;
-   }
+    @Override
+    public Value<String> createValue() {
+        return new StringValue();
+    }
 
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
 
-   @Override
-   public Value createValue() {
-      return new StringValue();
-   }
+    @Override
+    public ListValue<String> createList() {
+        return new ListValue<>(new StringType());
+    }
 
-   public int getLength() {
-      return length;
-   }
-
-   public String toString() {
-      return "String";
-   }
+    @Override
+    public boolean isEqual(Type anotherType) {
+        return anotherType instanceof StringType;
+    }
 }

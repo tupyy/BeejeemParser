@@ -17,17 +17,24 @@
 package com.beejeem.parser.type;
 
 import com.beejeem.parser.value.FloatValue;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
-public class FloatType implements Type {
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
+public class FloatType implements Type<Float> {
 
    @Override
    public Value createValue() {
       return new FloatValue();
+   }
+
+   @Override
+   public ListValue<Float> createList() {
+      return new ListValue<>(new FloatType());
+   }
+
+   @Override
+   public boolean isEqual(Type anotherType) {
+      return anotherType instanceof FloatType;
    }
 
    public String toString() {

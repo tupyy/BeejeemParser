@@ -20,14 +20,13 @@ package com.beejeem.parser.listeners.vardeclaration;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
-import com.beejeem.parser.value.Value;
-import com.beejeem.parser.value.VoidValue;
+import com.beejeem.parser.value.Variable;
 
 import java.util.List;
 
 public class VariableDeclaratorListener extends AbstractListener {
     private String variableName;
-    private List<Value> valueList;
+    private List<Variable> listInitValues;
 
     public VariableDeclaratorListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -41,10 +40,10 @@ public class VariableDeclaratorListener extends AbstractListener {
             VariableInitializerListener variableInitializerListener = new VariableInitializerListener(this.getExecutionContext());
             variableDeclaratorContext.variableInitializer().enterRule(variableInitializerListener);
 
-            if (variableInitializerListener.getValue() != null) {
-                this.setValue(variableInitializerListener.getValue());
+            if (variableInitializerListener.getVariable() != null) {
+                this.setVariable(variableInitializerListener.getVariable());
             } else {
-                this.setValueList(variableInitializerListener.getList());
+                this.setListInitValues(variableInitializerListener.getList());
             }
         }
     }
@@ -53,11 +52,11 @@ public class VariableDeclaratorListener extends AbstractListener {
         return variableName;
     }
 
-    public List<Value> getValueList() {
-        return valueList;
+    public List<Variable> getListInitValues() {
+        return listInitValues;
     }
 
-    public void setValueList(List<Value> valueList) {
-        this.valueList = valueList;
+    public void setListInitValues(List<Variable> listInitValues) {
+        this.listInitValues = listInitValues;
     }
 }

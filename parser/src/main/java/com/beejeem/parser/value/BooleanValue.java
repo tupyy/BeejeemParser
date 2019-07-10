@@ -34,7 +34,7 @@ public class BooleanValue extends AbstractValue<Boolean> {
     }
 
     @Override
-    public Value and(Value v) {
+    public BooleanValue and(Value<?> v) {
         if (v instanceof BooleanValue) {
             return new BooleanValue(this.get() && ((BooleanValue) v).get());
         } else {
@@ -43,22 +43,17 @@ public class BooleanValue extends AbstractValue<Boolean> {
     }
 
     @Override
-    public Value clone() {
-        return new BooleanValue(this.get());
-    }
-
-    @Override
     public String toString() {
         return Boolean.toString(this.get());
     }
 
     @Override
-    public Value not() {
+    public BooleanValue not() {
         return new BooleanValue(!this.get());
     }
 
     @Override
-    public Value or(Value v) {
+    public BooleanValue or(Value<?> v) {
         if (v instanceof BooleanValue) {
             return new BooleanValue(this.get() | ((BooleanValue) v).get());
         } else {
@@ -66,8 +61,7 @@ public class BooleanValue extends AbstractValue<Boolean> {
         }
     }
 
-    @Override
-    public void set(Value v) {
+    public void setValue(Value v) {
         if (v instanceof BooleanValue) {
             this.set(((BooleanValue) v).get());
         } else {

@@ -37,7 +37,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public Value add(Value v) {
+    public Value<?> add(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new IntegerValue(this.get() + ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -52,17 +52,8 @@ public class IntegerValue extends AbstractValue<Integer> {
         throw new InvalidOperationException();
     }
 
-    public void decrement() {
-        this.set(this.get() - 1);
-    }
-
     @Override
-    public Value clone() {
-        return new IntegerValue(this.get());
-    }
-
-    @Override
-    public Value div(Value v) {
+    public Value<?> div(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new FloatValue((float) this.get() / ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -73,7 +64,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public BooleanValue eq(Value v) {
+    public BooleanValue eq(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get().equals( ((IntegerValue)v).get()));
         } else {
@@ -87,7 +78,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public BooleanValue gt(Value v) {
+    public BooleanValue gt(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get() > ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -98,7 +89,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public BooleanValue gte(Value v) {
+    public BooleanValue gte(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get() >= ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -108,12 +99,18 @@ public class IntegerValue extends AbstractValue<Integer> {
         }
     }
 
-    public void increment() {
+    public Value<Integer> increment() {
         this.set(this.get() + 1);
+        return this.asValue();
+    }
+
+    public Value<Integer> decrement() {
+        this.set(this.get() - 1);
+        return this.asValue();
     }
 
     @Override
-    public BooleanValue lt(Value v) {
+    public BooleanValue lt(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get() < ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -124,7 +121,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public BooleanValue lte(Value v) {
+    public BooleanValue lte(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get() <= ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -135,12 +132,12 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public Value mod(Value v) {
+    public Value<?> mod(Value<?> v) {
         throw new InvalidOperationException();
     }
 
     @Override
-    public Value mult(Value v) {
+    public Value<?> mult(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new IntegerValue(this.get() * ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -151,7 +148,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public Value power(Value v) {
+    public FloatValue power(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new FloatValue((float) pow(this.get() ,((IntegerValue) v).get()));
         } else if (v instanceof FloatValue) {
@@ -162,12 +159,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public Value neg() {
-        return new IntegerValue(this.get() * -1);
-    }
-
-    @Override
-    public BooleanValue neq(Value v) {
+    public BooleanValue neq(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new BooleanValue(this.get() != ((IntegerValue) v).get().intValue());
         } else {
@@ -176,7 +168,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public void set(Value v) {
+    public void setValue(Value<?> v) {
         if (v instanceof IntegerValue) {
             this.set(((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {
@@ -189,7 +181,7 @@ public class IntegerValue extends AbstractValue<Integer> {
     }
 
     @Override
-    public Value subtract(Value v) {
+    public Value<?> subtract(Value<?> v) {
         if (v instanceof IntegerValue) {
             return new IntegerValue(this.get() - ((IntegerValue) v).get());
         } else if (v instanceof FloatValue) {

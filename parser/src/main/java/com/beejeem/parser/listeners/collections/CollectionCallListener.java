@@ -18,15 +18,14 @@
 package com.beejeem.parser.listeners.collections;
 
 import com.beejeem.grammar.bjmParser;
+import com.beejeem.parser.CollectionMethods;
 import com.beejeem.parser.ExecutionContext;
-import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.listeners.expression.ExpressionListener;
-import com.beejeem.parser.value.IntegerValue;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.beejeem.parser.value.Variable;
 
 public class CollectionCallListener extends AbstractListener {
 
@@ -38,60 +37,28 @@ public class CollectionCallListener extends AbstractListener {
         CollectionCallListener collectionCallListener =
                 new CollectionCallListener(this.getExecutionContext());
         ctx.collectionCall().enterRule(collectionCallListener);
-        this.setValue(collectionCallListener.getValue());
+        this.setVariable(collectionCallListener.getVariable());
     }
 
     public void enterCollectionCall(bjmParser.CollectionCallContext ctx) {
-        String variableName = ctx.Identifier().get(0).getText();
-        String methodName = ctx.Identifier().get(1).getText();
+        String variableName = ctx.Identifier().getText();
+        Integer methodID = ctx.method.getType();
 
-        List<Value> args = new ArrayList<>();
-        if (ctx.exprList() != null) {
-            for(bjmParser.ExpressionContext expressionContext: ctx.exprList().expression()) {
-                ExpressionListener expressionListener =
-                        new ExpressionListener(this.getExecutionContext());
-                expressionContext.enterRule(expressionListener);
-                args.add(expressionListener.getValue());
-            }
+        Value<?> argument = null;
+        if (ctx.expression() != null) {
+            ExpressionListener expressionListener =
+                    new ExpressionListener(this.getExecutionContext());
+            ctx.expression().enterRule(expressionListener);
+            argument = expressionListener.getVariable().asValue();
         }
 
-        List<Value> valueList = this.getExecutionContext().getCurrentStackframe().getList(variableName);
-        try {
-            if (valueList != null) {
-                this.setValue(invokeListGetMethod(valueList, methodName, args));
-            }
+        Variable variable = this.getExecutionContext().getCurrentStackframe().getVariable(variableName);
+        if ( !(variable.isList())) {
+            throw new InvalidOperationException(
+                    String.format("Line %d: Variable %s is not a list.",ctx.start.getLine(),variableName));
         }
-        catch (InterpreterException ex) {
-            throw new InterpreterException(String.format("Line %d: Error: %s", ctx.start.getLine(),ex.getMessage()));
-        }
+
+        ListValue<?> valueList = (ListValue<?>) variable;
+        this.setVariable(valueList.invokeMethod(CollectionMethods.getListMethodID().get(methodID), argument));
      }
-
-    /**
-     * Invoke list method like: get, add and size
-     * @param list list to be invoked
-     * @param methodName method name. It has to be "get", "add", "size"
-     * @param args list of arguments
-     * @return Value from list
-     * @throws InterpreterException if the method is unknown or the number(type) of args is not correct.
-     */
-    private Value invokeListGetMethod(List<Value> list, String methodName, List<Value> args) throws InterpreterException{
-
-        if (args.size() != 1 && !methodName.equals("size")) {
-            throw new InterpreterException("Invalid number of arguments");
-        }
-
-        if (methodName.equals("get")) {
-            if ( ! (args.get(0) instanceof IntegerValue)) {
-                throw new InterpreterException("Argument type mismatch. Integer value is required");
-            }
-            return list.get((Integer) args.get(0).get());
-        } else if (methodName.equals("add")) {
-            list.add(args.get(0));
-            return args.get(0);
-        } else if (methodName.equals("size")) {
-            return new IntegerValue(list.size());
-        }
-
-        throw new InterpreterException("Method unknown");
-    }
 }

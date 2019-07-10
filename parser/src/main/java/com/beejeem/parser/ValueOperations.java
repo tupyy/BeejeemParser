@@ -29,12 +29,12 @@ import java.util.function.Function;
 
 public class ValueOperations {
 
-    private static Map<Integer, BiFunction<Value,Value,Value>> biOperations;
-    private static Map<Integer, Function<Value,Value>> uniOperations;
+    private static Map<Integer, BiFunction<Value<?>,Value<?>,Value<?>>> biOperations;
+    private static Map<Integer, Function<Value<?>,Value<?>>> uniOperations;
 
     static {
-        Map<Integer, BiFunction<Value,Value,Value>> map = new HashMap<>();
-        map.put(bjmLexer.Add, Value::add);
+        Map<Integer, BiFunction<Value<?>,Value<?>,Value<?>>> map = new HashMap<>();
+        map.put(bjmLexer.Addition, Value::add);
         map.put(bjmLexer.Subtract, Value::subtract);
         map.put(bjmLexer.Multiply, Value::mult);
         map.put(bjmLexer.Divide, Value::div);
@@ -49,18 +49,18 @@ public class ValueOperations {
         map.put(bjmLexer.Pow, Value::power);
         biOperations = Collections.unmodifiableMap(map);
 
-        Map<Integer, Function<Value,Value>> unimap = new HashMap<>();
+        Map<Integer, Function<Value<?>,Value<?>>> unimap = new HashMap<>();
         unimap.put(bjmLexer.Excl, Value::not);
         unimap.put(bjmLexer.Subtract, (value) -> value.mult(new IntegerValue(-1)));
-        unimap.put(bjmLexer.Increment, (value) -> value.add(new IntegerValue(1)));
-        unimap.put(bjmLexer.Decrement, (value) -> value.subtract(new IntegerValue(1)));
+        unimap.put(bjmLexer.Increment, Value::increment);
+        unimap.put(bjmLexer.Decrement, Value::decrement);
         uniOperations = Collections.unmodifiableMap(unimap);
     }
 
-    public static Map<Integer, BiFunction<Value,Value,Value>> getBiOperations() {
+    public static Map<Integer, BiFunction<Value<?>,Value<?>,Value<?>>> getBiOperations() {
         return biOperations;
     }
 
-    public static Map<Integer, Function<Value,Value>> getUniOperations() {return uniOperations;}
+    public static Map<Integer, Function<Value<?>,Value<?>>> getUniOperations() {return uniOperations;}
 
 }
