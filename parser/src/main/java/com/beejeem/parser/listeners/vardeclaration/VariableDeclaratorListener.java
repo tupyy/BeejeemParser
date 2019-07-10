@@ -20,12 +20,13 @@ package com.beejeem.parser.listeners.vardeclaration;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.listeners.AbstractListener;
-import com.beejeem.parser.value.Value;
+import com.beejeem.parser.value.Variable;
 
 import java.util.List;
 
 public class VariableDeclaratorListener extends AbstractListener {
     private String variableName;
+    private List<Variable> listInitValues;
 
     public VariableDeclaratorListener(ExecutionContext executionContext) {
         super(executionContext);
@@ -41,11 +42,21 @@ public class VariableDeclaratorListener extends AbstractListener {
 
             if (variableInitializerListener.getVariable() != null) {
                 this.setVariable(variableInitializerListener.getVariable());
+            } else {
+                this.setListInitValues(variableInitializerListener.getList());
             }
         }
     }
 
     public String getVariableName() {
         return variableName;
+    }
+
+    public List<Variable> getListInitValues() {
+        return listInitValues;
+    }
+
+    public void setListInitValues(List<Variable> listInitValues) {
+        this.listInitValues = listInitValues;
     }
 }

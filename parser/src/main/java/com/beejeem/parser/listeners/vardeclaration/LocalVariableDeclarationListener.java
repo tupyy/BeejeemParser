@@ -17,6 +17,7 @@
 
 package com.beejeem.parser.listeners.vardeclaration;
 
+import com.beejeem.grammar.bjmListener;
 import com.beejeem.grammar.bjmParser;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.exception.InvalidOperationException;
@@ -24,6 +25,7 @@ import com.beejeem.parser.listeners.AbstractListener;
 import com.beejeem.parser.type.Type;
 import com.beejeem.parser.value.Variable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LocalVariableDeclarationListener extends AbstractListener {
@@ -33,20 +35,24 @@ public class LocalVariableDeclarationListener extends AbstractListener {
     }
 
     public void enterLocalVariableDeclaration(bjmParser.LocalVariableDeclarationContext ctx) {
-        Type variableType = this.getExecutionContext().resolveType(ctx.typeType().getText());
-        VariableDeclaratorsListener variableDeclaratorsListener =
-                new VariableDeclaratorsListener(this.getExecutionContext(), variableType);
-        ctx.variableDeclarators().enterRule(variableDeclaratorsListener);
+        Map<String,Variable> variables = new HashMap<>();
+
+        if (ctx.variableDeclarators() != null) {
+            VariableDeclaratorsListener variableDeclaratorsListener =
+                    new VariableDeclaratorsListener(this.getExecutionContext());
+            ctx.variableDeclarators().enterRule(variableDeclaratorsListener);
+            variables.putAll(variableDeclaratorsListener.getVariables());
+        } else {
+            CollectionVariableDeclarator collectionVariableDeclarator =
+                    new CollectionVariableDeclarator(this.getExecutionContext());
+            ctx.collectionVariableDeclarator().enterRule(collectionVariableDeclarator);
+            variables.put(collectionVariableDeclarator.getVariableName(),collectionVariableDeclarator.getVariable());
+        }
 
         // push variables to current stack
-        for (Map.Entry<String, Variable> entry: variableDeclaratorsListener.getVariables().entrySet()) {
+        for (Map.Entry<String, Variable> entry: variables.entrySet()) {
             if (!this.getExecutionContext().getCurrentStackframe().hasVariable(entry.getKey())) {
-                if (variableType.isEqual(entry.getValue().getType())) {
-                    this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
-                } else {
-                    throw new InvalidOperationException(
-                            String.format("Line %d: Type mistmatch.",ctx.start.getLine(),entry.getKey()));
-                }
+                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
             } else {
                 throw new InvalidOperationException(
                         String.format("Line %d: Variable %s already defined.",ctx.start.getLine(),entry.getKey()));
