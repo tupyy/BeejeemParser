@@ -102,7 +102,8 @@ public class ExpressionListener extends AbstractListener {
         if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value)lhs.getVariable(), (Value)rhs.getVariable()));
+
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getVariable().asValue(), rhs.getVariable().asValue()));
     }
 
     @Override
@@ -140,7 +141,7 @@ public class ExpressionListener extends AbstractListener {
         if ( !(expressionListener.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        Value v = (Value) expressionListener.getVariable();
+        Value<?> v = expressionListener.getVariable().asValue();
         this.setVariable(ValueOperations.getUniOperations().get(ctx.Excl().getSymbol().getType()).apply(v));
     }
 
@@ -151,7 +152,7 @@ public class ExpressionListener extends AbstractListener {
         if ( !(expressionListener.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        Value v = (Value) expressionListener.getVariable();
+        Value<?> v = expressionListener.getVariable().asValue();
         this.setVariable(ValueOperations.getUniOperations().get(ctx.Subtract().getSymbol().getType()).apply(v));
     }
 
@@ -162,11 +163,12 @@ public class ExpressionListener extends AbstractListener {
         if ( !(expressionListener.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        Value v = (Value) expressionListener.getVariable();
+        Variable variable = expressionListener.getVariable();
+        Value<?> v = variable.asValue(); // clone !!!
 
         //The value has to be set to listener in case we have an assignment.
-        v.set(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(v));
-        this.setVariable(v);
+        ((Value<?> )variable).setValue(ValueOperations.getUniOperations().get(ctx.op.getType()).apply(v));
+        this.setVariable(variable);
     }
 
     @Override
@@ -181,7 +183,7 @@ public class ExpressionListener extends AbstractListener {
             throw new InvalidOperationException(String.format("Line %d: Cannot use list in this context",ctx.start.getLine()));
         }
 
-        this.setVariable((Value) variable);
+        this.setVariable(variable);
     }
 
     @Override
