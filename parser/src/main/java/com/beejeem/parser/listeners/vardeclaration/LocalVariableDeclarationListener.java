@@ -41,7 +41,12 @@ public class LocalVariableDeclarationListener extends AbstractListener {
         // push variables to current stack
         for (Map.Entry<String, Variable> entry: variableDeclaratorsListener.getVariables().entrySet()) {
             if (!this.getExecutionContext().getCurrentStackframe().hasVariable(entry.getKey())) {
-                this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
+                if (variableType.isEqual(entry.getValue().getType())) {
+                    this.getExecutionContext().getCurrentStackframe().declareVariable(entry.getKey(), entry.getValue());
+                } else {
+                    throw new InvalidOperationException(
+                            String.format("Line %d: Type mistmatch.",ctx.start.getLine(),entry.getKey()));
+                }
             } else {
                 throw new InvalidOperationException(
                         String.format("Line %d: Variable %s already defined.",ctx.start.getLine(),entry.getKey()));
