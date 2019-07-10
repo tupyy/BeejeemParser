@@ -20,9 +20,6 @@ package com.beejeem.parser.value;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.Type;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public abstract class AbstractValue<T> implements Value<T> {
 
     private T value;
@@ -150,13 +147,6 @@ public abstract class AbstractValue<T> implements Value<T> {
 
     @Override
     public boolean isMap() {return false;}
-
-    @Override
-    public ListValue<T> asList() {
-        ListValue<T> listValue = new ListValue<>();
-        listValue.add(this.value);
-        return listValue;
-    }
 
     @Override
     public Value<T> asValue() {

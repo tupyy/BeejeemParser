@@ -35,12 +35,4 @@ public interface Variable {
      */
     public Value<?> asValue();
 
-    /**
-     * Return the list if any
-     * @return
-     */
-    public ListValue<?> asList();
-
-
-
 }

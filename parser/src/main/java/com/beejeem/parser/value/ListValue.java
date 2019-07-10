@@ -1,18 +1,18 @@
 package com.beejeem.parser.value;
 
-import com.beejeem.parser.type.ListType;
+import com.beejeem.parser.exception.InterpreterException;
 import com.beejeem.parser.type.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListValue<T> implements Variable {
+public class ListValue<T> implements Variable,Collection {
 
     private List<T> values = new ArrayList<>();
-    private Type type;
+    private final Type type;
 
-    public ListValue() {
-        this.type = new ListType();
+    public ListValue(Type type) {
+        this.type = type;
     }
 
     public void add(T value) {
@@ -41,6 +41,25 @@ public class ListValue<T> implements Variable {
             }
         }
         return null;
+    }
+
+    public Value<?> invokeMethod(Collection.Methods methodID, Value<?> argument) {
+        switch (methodID) {
+            case GET:
+                if (! (argument instanceof IntegerValue)) {
+                    throw new InterpreterException("List get method index has to be an integer.");
+                }
+                Value<T> value = this.type.createValue();
+                value.set(this.values.get(((IntegerValue) argument).get()));
+                return value;
+            case ADD:
+                this.values.add((T) argument.get());
+            case SIZE:
+                return new IntegerValue(this.values.size());
+            case PUT:
+                break;
+        }
+        return new VoidValue();
     }
 
     public int size() {
@@ -72,12 +91,7 @@ public class ListValue<T> implements Variable {
         return null;
     }
 
-    @Override
-    public ListValue<T> asList() {
-        ListValue<T> newList = new ListValue<>();
-        for (T element: this.values) {
-            newList.add(element);
-        }
-        return newList;
+    public void fromList(List<T> values) {
+        this.values.addAll(values);
     }
 }
