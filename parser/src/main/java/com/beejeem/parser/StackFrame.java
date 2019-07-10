@@ -70,8 +70,7 @@ public class StackFrame {
       if (this.variables.containsKey(name)) {
          return variables.get(name);
       }
-
-      throw new InvalidOperationException(String.format("Variable %s doesn't exist.",name));
+      return null;
    }
 
    public boolean hasVariable(String name) {
