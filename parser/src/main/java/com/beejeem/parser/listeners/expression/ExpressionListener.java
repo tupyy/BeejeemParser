@@ -43,7 +43,7 @@ public class ExpressionListener extends AbstractListener {
         if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getVariable().asValue(), rhs.getVariable().asValue()));
     }
 
     public void enterAddExpression(bjmParser.AddExpressionContext ctx) {
@@ -56,7 +56,7 @@ public class ExpressionListener extends AbstractListener {
         if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getVariable().asValue(), rhs.getVariable().asValue()));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ExpressionListener extends AbstractListener {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
         this.setVariable(ValueOperations.getBiOperations().get(ctx.Pow().getSymbol().getType())
-                .apply((Value) lhs.getVariable(), (Value)rhs.getVariable()));
+                .apply(lhs.getVariable().asValue(), rhs.getVariable().asValue()));
     }
 
     public void enterCompExpression(bjmParser.CompExpressionContext ctx) {
@@ -117,7 +117,7 @@ public class ExpressionListener extends AbstractListener {
         if ( !(lhs.getVariable() instanceof Value) || !(rhs.getVariable() instanceof Value)) {
             throw new InvalidOperationException(String.format("Line %d: Only values are allowed here.", ctx.start.getLine()));
         }
-        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply((Value)lhs.getVariable(), (Value)rhs.getVariable()));
+        this.setVariable(ValueOperations.getBiOperations().get(ctx.op.getType()).apply(lhs.getVariable().asValue(), rhs.getVariable().asValue()));
     }
 
     @Override
