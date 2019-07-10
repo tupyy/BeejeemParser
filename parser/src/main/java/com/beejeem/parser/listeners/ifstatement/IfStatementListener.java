@@ -34,16 +34,16 @@ public class IfStatementListener extends AbstractListener {
 
     @Override
     public void enterIfStatement(bjmParser.IfStatementContext ctx) {
-        if (this.evaluateCondionalExpression(ctx.ifStat().expression()).get()) {
+        if (this.evaluateConditionalExpression(ctx.ifStat().expression()).get()) {
             BlockListener blockListener = new BlockListener(this.getExecutionContext());
             ctx.ifStat().block().enterRule(blockListener);
         } else {
-            Value ifElseConditionalValue = new BooleanValue(false);
+            Value<?> ifElseConditionalValue = new BooleanValue(false);
             if (ctx.elseIfStat() != null) {
                 for (bjmParser.ElseIfStatContext elseIfStatContext : ctx.elseIfStat()) {
                     IfStatementListener ifElseStatListener = new IfStatementListener(this.getExecutionContext());
                     elseIfStatContext.enterRule(ifElseStatListener);
-                    ifElseConditionalValue.set(ifElseStatListener.getVariable());
+                    ifElseConditionalValue.setValue(ifElseStatListener.getVariable().asValue());
                 }
             }
             if (!((BooleanValue) ifElseConditionalValue).get() && ctx.elseStat() != null) {
@@ -55,7 +55,7 @@ public class IfStatementListener extends AbstractListener {
 
     @Override
     public void enterElseIfStat(bjmParser.ElseIfStatContext ctx) {
-        BooleanValue conditionalValue = this.evaluateCondionalExpression(ctx.expression());
+        BooleanValue conditionalValue = this.evaluateConditionalExpression(ctx.expression());
         if (conditionalValue.get()) {
             BlockListener blockListener = new BlockListener(this.getExecutionContext());
             ctx.block().enterRule(blockListener);
@@ -75,10 +75,10 @@ public class IfStatementListener extends AbstractListener {
      * @throws InvalidOperationException if the expression is not boolean
      * @return true or false
      */
-    private BooleanValue evaluateCondionalExpression(bjmParser.ExpressionContext expressionContext) {
+    private BooleanValue evaluateConditionalExpression(bjmParser.ExpressionContext expressionContext) {
         ExpressionListener expressionListener = new ExpressionListener(this.getExecutionContext());
         expressionContext.enterRule(expressionListener);
-        Value ifStatExpressionValue = (Value) expressionListener.getVariable();
+        Value<?> ifStatExpressionValue = expressionListener.getVariable().asValue();
         if (! (ifStatExpressionValue instanceof BooleanValue)) {
             throw new InvalidOperationException("If statement expects a boolean value.");
         }
