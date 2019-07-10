@@ -16,21 +16,26 @@
  */
 package com.beejeem.parser.type;
 
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.BooleanValue;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
 public class BooleanType implements Type {
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
 
    @Override
    public Value createValue() {
       return new BooleanValue();
    }
 
-   public String toString() {
-      return "Boolean";
+   @Override
+   public ListValue createList() {
+      throw new InvalidOperationException("Cannot create a list from a boolean.");
    }
+
+   @Override
+   public boolean isEqual(Type anotherType) {
+      return anotherType instanceof BooleanType;
+   }
+
 }

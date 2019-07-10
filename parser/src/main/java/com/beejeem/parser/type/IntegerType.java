@@ -16,18 +16,26 @@
  */
 package com.beejeem.parser.type;
 
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.value.IntegerValue;
+import com.beejeem.parser.value.ListValue;
 import com.beejeem.parser.value.Value;
 
 public class IntegerType implements Type {
-   @Override
-   public boolean builtIn() {
-      return true;
-   }
 
    @Override
    public Value createValue() {
       return new IntegerValue();
+   }
+
+   @Override
+   public ListValue createList() {
+      throw new InvalidOperationException("Cannot create a list from a integer.");
+   }
+
+   @Override
+   public boolean isEqual(Type anotherType) {
+      return anotherType instanceof IntegerType;
    }
 
    public String toString() {
