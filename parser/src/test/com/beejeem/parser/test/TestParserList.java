@@ -22,6 +22,7 @@ import com.beejeem.grammar.bjmParser;
 import com.beejeem.grammar.bjmParser.ProgramContext;
 import com.beejeem.parser.ExecutionContext;
 import com.beejeem.parser.StackFrame;
+import com.beejeem.parser.exception.InterpreterException;
 import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.listeners.ProgramListener;
@@ -70,6 +71,39 @@ public class TestParserList {
 
         assertEquals(1, ((Value)stackFrame.getVariable("i")).get());
         assertEquals(4, ((Value)stackFrame.getVariable("sum")).get());
+    }
+
+    @Test
+    public void testDeformatedListDecl() {
+        String decl = "list<string> a=[1];"; //should break integer in a string list
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext = this.parse(new ByteArrayInputStream(decl.getBytes()));
+        assertThrows(InterpreterException.class, () -> {
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
+        });
+    }
+
+    @Test
+    public void testDeformatedListDecl2() {
+        String decl = "list<string> a=[];\n a.get(1);";
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext = this.parse(new ByteArrayInputStream(decl.getBytes()));
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
+        });
+    }
+
+    @Test
+    public void testDeformatedList3() {
+        String decl = "list<string> a=[];\n a.add(1);"; // should break add integer to stirng list
+        ExecutionContext executionContext = new ExecutionContext();
+        ProgramContext programContext = this.parse(new ByteArrayInputStream(decl.getBytes()));
+        assertThrows(InvalidOperationException.class, () -> {
+            final ProgramListener programListener = new ProgramListener(executionContext);
+            programContext.enterRule(programListener);
+        });
     }
 
     private InputStream readTestFile(String filename) {

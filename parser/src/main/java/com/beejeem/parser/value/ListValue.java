@@ -1,6 +1,7 @@
 package com.beejeem.parser.value;
 
 import com.beejeem.parser.exception.InterpreterException;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.type.Type;
 
 import java.util.ArrayList;
@@ -53,6 +54,11 @@ public class ListValue<T> implements Variable,Collection {
                 value.set(this.values.get(((IntegerValue) argument).get()));
                 return value;
             case ADD:
+                if ( !argument.getType().isEqual(this.type) ) {
+                    throw new InvalidOperationException(
+                            String.format("Type mismatch. Trying to add an element of " +
+                                          "type %s into a list of %s",argument.getType().toString(), this.getType().toString()));
+                }
                 this.values.add((T) argument.get());
             case SIZE:
                 return new IntegerValue(this.values.size());
@@ -68,7 +74,7 @@ public class ListValue<T> implements Variable,Collection {
 
     @Override
     public Type getType() {
-        return null;
+        return this.type;
     }
 
     @Override
