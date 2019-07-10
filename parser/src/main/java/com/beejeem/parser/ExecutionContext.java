@@ -19,17 +19,14 @@
 package com.beejeem.parser;
 
 import com.beejeem.parser.exception.InterpreterException;
-import com.beejeem.parser.function.Function;
-import com.beejeem.parser.function.UserDefinedFunction;
+import com.beejeem.parser.exception.InvalidOperationException;
 import com.beejeem.parser.function.RuntimeFunction;
 import com.beejeem.parser.function.RuntimeFunctionFactory;
-import com.beejeem.parser.listeners.functionlisteners.ParametersListener;
+import com.beejeem.parser.function.UserDefinedFunction;
 import com.beejeem.parser.type.*;
-import com.beejeem.parser.value.Value;
 import com.beejeem.parser.value.Variable;
 
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -106,7 +103,7 @@ public class ExecutionContext {
                 return variable;
             }
         }
-        throw new InterpreterException("Variable not found: "+name);
+        throw new InvalidOperationException("Variable not found: "+name);
     }
 
     /**
