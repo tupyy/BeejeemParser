@@ -1,3 +1,12 @@
 .idea/*
 *.iml
 target/*
+*.tokens
+antlr4/target/
+parser/target/
+
+*.class
+
+core/target/classes/META-INF/core\.kotlin_module
+
+*.kotlin_module

@@ -1,0 +1,6 @@
+x=true
+y=2
+z=2.2
+
+copy "arg1" "arg2"
+run "22"

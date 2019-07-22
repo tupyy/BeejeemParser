@@ -1,0 +1,17 @@
+list<int> a;
+list<int> b = [1, 1, 1];
+list<bool> c = [true, false];
+
+
+int aa = b.get(0);
+b.add(1);
+int i = b.get(b.size() -1); // = 1
+
+
+int sum = 0;
+for(int k=0; k<b.size(); k++) {
+    sum = sum + b.get(k);
+    if (k != 0) {
+        a.add(k);
+    }
+} // sum == 4, a.size() == 3

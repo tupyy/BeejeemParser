@@ -1,0 +1,58 @@
+int a = 2;
+int b=1;
+int c;
+
+if (a == 2) {
+   c = 2;
+} else {
+    c = 1;
+}
+
+
+int d;
+if (a < 2) {
+    // do nothing
+} else if (a > 2) {
+    //nothing
+} else {
+    d = 1;
+}
+
+int e;
+if ( a != 2 && b < 0) {
+    e = 1;
+}
+
+int f;
+if ( a == 2 || b < 0) {
+    f = 1;
+}
+
+int g;
+if ( a == 2 || b < 0) {
+    if (d > 1) {
+        //nothing
+    } else {
+        if (e == 0) {
+            g = 1;
+        }
+    }
+}
+
+int h;
+if (a < 2) {
+    //nothing
+} else if (a>2) {
+    //nothing
+} else if (a< 0) {
+    //nothing
+} else {
+    h=1;
+}
+
+/**
+i should be null because is not in the global scope and we test only variables int the global scope
+*/
+if ( (a+2) > 4 || (b*2) == 2) {
+    int i= 1;
+}
